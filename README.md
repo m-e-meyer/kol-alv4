@@ -1,4 +1,4 @@
-# kol-alv
+# kol-alv4
 
 This is a fork of Phazic's Ascension Log Visualizer, a utility for parsing KoLmafia ascension logs into standard, more readable formats.  My intent is to bring this tool back to the present.
 
@@ -6,9 +6,9 @@ This is a fork of Phazic's Ascension Log Visualizer, a utility for parsing KoLma
 
 Go to a Git directory and run 
 
-`git clone https://github.com/m-e-meyer/kol-alv`
+`git clone https://github.com/m-e-meyer/kol-alv4`
 
-This will create a directory named kol-alv.  Go into that directory and, assuming you have ant, just run
+This will create a directory named kol-alv4.  Go into that directory and, assuming you have ant, just run
 
 `ant`
 

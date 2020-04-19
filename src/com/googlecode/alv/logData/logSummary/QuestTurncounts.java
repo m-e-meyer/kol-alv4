@@ -61,6 +61,10 @@ public final class QuestTurncounts {
     public final int spookyravenFirstFloor;
 
     public final int spookyravenSecondFloor;
+    
+    public final int copperheadClubTurns;
+    
+    public final int redZeppelinTurns;
 
     public final int pirateQuestTurns;
 
@@ -94,17 +98,18 @@ public final class QuestTurncounts {
      * @param droppedItems
      *            All dropped items during the ascension.
      */
-    public QuestTurncounts(
-            final Collection<TurnInterval> turns, final Collection<Item> droppedItems) {
+    public QuestTurncounts(final Collection<TurnInterval> turns, 
+                           final Collection<Item> droppedItems) 
+    {
         if (turns == null)
             throw new NullPointerException("Turn rundown set must not be null.");
         if (droppedItems == null)
             throw new NullPointerException("Dropped items list must not be null.");
 
         mosquitoQuestTurns = getTurnsUntilItemFound("The Spooky Forest",
-                "mosquito larva",
-                turns,
-                droppedItems);
+                                                    "mosquito larva",
+                                                    turns,
+                                                    droppedItems);
 
         templeOpeningTurns = getTurnsInLocation("The Spooky Forest", turns);
 
@@ -148,17 +153,17 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("Throne Room", turns);
 
         friarsQuestTurns = getTurnsUntilItemFound("The Dark Neck of the Woods",
-                "dodecagram",
-                turns,
-                droppedItems)
-                + getTurnsUntilItemFound("The Dark Heart of the Woods",
-                        "box of birthday candles",
-                        turns,
-                        droppedItems)
+                                                  "dodecagram",
+                                                  turns,
+                                                  droppedItems)
+                        + getTurnsUntilItemFound("The Dark Heart of the Woods",
+                                                 "box of birthday candles",
+                                                 turns,
+                                                 droppedItems)
                         + getTurnsUntilItemFound("The Dark Elbow of the Woods",
-                                "eldritch butterknife",
-                                turns,
-                                droppedItems);
+                                                 "eldritch butterknife",
+                                                 turns,
+                                                 droppedItems);
 
         pandamoniumQuestTurns = getTurnsInLocation("Hey Deze Arena", turns)
                 + getTurnsInLocation("Belilafs Comedy Club", turns);
@@ -183,9 +188,9 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("Twin Peak", turns);
 
         airshipQuestTurns = getTurnsUntilItemFound("The Penultimate Fantasy Airship",
-                "S.O.C.K.",
-                turns,
-                droppedItems);
+                                                   "S.O.C.K.",
+                                                   turns,
+                                                   droppedItems);
 
         castleQuestTurns = getTurnsInLocation("The Castle in the Clouds in the Sky (Basement)", turns)
                 + getTurnsInLocation("The Castle in the Clouds in the Sky (Ground Floor)", turns)
@@ -208,6 +213,17 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("The Poop Deck", turns)
                 + getTurnsInLocation("Belowdecks", turns);
 
+        copperheadClubTurns = getTurnsUntilItemFound("The Copperhead Club", 
+                                                     "Copperhead Charm",
+                                                     turns,
+                                                     droppedItems);
+        
+        redZeppelinTurns = getTurnsInLocation("A Mob of Zeppelin Protesters", turns)
+                           + getTurnsUntilItemFound("The Red Zeppelin", 
+                                                    "Copperhead Charm (rampant)",
+                                                    turns,
+                                                    droppedItems);
+        
         blackForrestQuestTurns = getTurnsInLocation("The Black Forest", turns)
                 + getTurnsInLocation("Wu Tang the Betrayer", turns);
 
@@ -239,10 +255,9 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("The Lower Chamber", turns)
                 + getTurnsInLocation("The Lower Chambers (Token/Empty)", turns)
                 + getTurnsInLocation("The Lower Chambers (Rubble/Bomb)", turns)
-                + getTurnsInLocation("The Lower Chambers (Empty/Empty/Ed's Chamber)",
-                        turns)
-                        + getTurnsInLocation("The Lower Chambers (Empty/Rubble)", turns)
-                        + getTurnsInLocation("Ed the Undying", turns);
+                + getTurnsInLocation("The Lower Chambers (Empty/Empty/Ed's Chamber)", turns)
+                + getTurnsInLocation("The Lower Chambers (Empty/Rubble)", turns)
+                + getTurnsInLocation("Ed the Undying", turns);
 
         warIslandOpeningTurns = getTurnsInLocation("Hippy Camp", turns)
                 + getTurnsInLocation("Wartime Hippy Camp (Hippy Disguise)", turns)
@@ -275,10 +290,7 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("The Man", turns);
 
         dodQuestTurns = getTurnsInLocation("The Enormous Greater-Than Sign", turns)
-                + getTurnsUntilItemFound("The Dungeons of Doom",
-                        "dead mimic",
-                        turns,
-                        droppedItems);
+                        + getTurnsUntilItemFound("The Dungeons of Doom", "dead mimic", turns, droppedItems);
 
         dailyDungeonTurns = getTurnsInLocation("The Daily Dungeon", turns);
 
@@ -305,10 +317,6 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("Tower Level 4", turns)
                 + getTurnsInLocation("Tower Level 5", turns)
                 + getTurnsInLocation("The Naughty Sorceress' Chamber", turns);
-
-
-
-
     }
 
     /**
@@ -318,9 +326,9 @@ public final class QuestTurncounts {
      *            All dropped items during the ascension.
      * @return Turns spent.
      */
-    private int calculateTempleOpening(
-            final Collection<TurnInterval> turns,
-            final Collection<Item> droppedItems) {
+    /*private int calculateTempleOpening(final Collection<TurnInterval> turns,
+                                       final Collection<Item> droppedItems) 
+    {
         final int templeMap = getTurnsUntilItemFound("The Spooky Forest",
                 "Spooky Temple map",
                 turns,
@@ -343,7 +351,7 @@ public final class QuestTurncounts {
                 droppedItems);
 
         return Math.max(mosquito, Math.max(coin, Math.max(templeMap, Math.max(spookyGro, sapling))));
-    }
+    }*/
 
     /**
      * @param areaName
@@ -352,8 +360,8 @@ public final class QuestTurncounts {
      *            The turn rundown of the ascension.
      * @return Turns spent.
      */
-    private int getTurnsInLocation(
-            final String areaName, final Collection<TurnInterval> turns) {
+    private int getTurnsInLocation(final String areaName, final Collection<TurnInterval> turns) 
+    {
         int turnsSpent = 0;
 
         for (final TurnInterval ti : turns)
@@ -372,9 +380,10 @@ public final class QuestTurncounts {
      *            The turn rundown of the ascension.
      * @return Turns spent.
      */
-    private int getTurnsUntilOtherLocationOpen(
-            final String areaName, final String openedLocation,
-            final Collection<TurnInterval> turns) {
+    /*private int getTurnsUntilOtherLocationOpen(final String areaName, 
+                                               final String openedLocation,
+                                               final Collection<TurnInterval> turns) 
+    {
         int turnsSpent = 0;
         int firstTurnInOpenedLocation = Integer.MAX_VALUE;
         for (final TurnInterval ti : turns)
@@ -390,7 +399,7 @@ public final class QuestTurncounts {
                 turnsSpent += ti.getTotalTurns();
 
         return turnsSpent;
-    }
+    }*/
 
     /**
      * @param areaName
@@ -402,14 +411,15 @@ public final class QuestTurncounts {
      *            The turn rundown of the ascension.
      * @return Turns spent.
      */
-    private int getTurnsAfterLocationOpen(
-            final String areaName, final String alreadyOpenLocation,
-            final Collection<TurnInterval> turns) {
+    /*private int getTurnsAfterLocationOpen(final String areaName, 
+                                          final String alreadyOpenLocation,
+                                          final Collection<TurnInterval> turns) 
+    {
         return getTurnsAfterLocationOpenUntilOtherLocationOpen(areaName,
                 alreadyOpenLocation,
                 "",
                 turns);
-    }
+    }*/
 
     /**
      * @param areaName
@@ -423,11 +433,11 @@ public final class QuestTurncounts {
      *            The turn rundown of the ascension.
      * @return Turns spent.
      */
-    private int getTurnsAfterLocationOpenUntilOtherLocationOpen(
-            final String areaName,
-            final String alreadyOpenLocation,
-            final String toBeOpenedLocation,
-            final Collection<TurnInterval> turns) {
+    /*private int getTurnsAfterLocationOpenUntilOtherLocationOpen(final String areaName,
+                                                                final String alreadyOpenLocation,
+                                                                final String toBeOpenedLocation,
+                                                                final Collection<TurnInterval> turns) 
+    {
         int turnsSpent = 0;
         int firstTurnInAlreadyOpenedLocation = Integer.MIN_VALUE;
         int firstTurnInToBeOpenedLocation = Integer.MAX_VALUE;
@@ -449,7 +459,7 @@ public final class QuestTurncounts {
                     turnsSpent += ti.getTotalTurns();
 
         return turnsSpent;
-    }
+    }*/
 
     /**
      * @param areaName
@@ -462,10 +472,11 @@ public final class QuestTurncounts {
      *            All dropped items during the ascension.
      * @return Turns spent.
      */
-    private int getTurnsUntilItemFound(
-            final String areaName, final String itemName,
-            final Collection<TurnInterval> turns,
-            final Collection<Item> droppedItems) {
+    private int getTurnsUntilItemFound(final String areaName, 
+                                       final String itemName,
+                                       final Collection<TurnInterval> turns,
+                                       final Collection<Item> droppedItems) 
+    {
         int turnsSpent = 0;
         int finishedOnTurn = Integer.MAX_VALUE;
         for (final Item i : droppedItems)
