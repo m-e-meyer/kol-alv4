@@ -57,43 +57,44 @@ final class SummaryDataCalculator {
 
     private static final String GIANT_MOXIE_WEED = "giant moxie weed";
 
-    private static final Set<String> HIPSTER_COMBAT_NAMES_SET = Sets.immutableSetOf("angry bassist",
-                                                                                    "blue-haired girl",
-                                                                                    "evil ex-girlfriend",
-                                                                                    "peeved roommate",
-                                                                                    "random scenester",
-                                                                                    "black crayon beast",
-                                                                                    "black crayon beetle",
-                                                                                    "black crayon constellation",
-                                                                                    "black crayon golem",
-                                                                                    "black crayon demon",
-                                                                                    "black crayon man",
-                                                                                    "black crayon elemental",
-                                                                                    "black crayon crimbo elf",
-                                                                                    "black crayon fish",
-                                                                                    "black crayon goblin",
-                                                                                    "black crayon hippy",
-                                                                                    "black crayon hobo",
-                                                                                    "black crayon shambling monstrosity",
-                                                                                    "black crayon manloid",
-                                                                                    "black crayon mer-kin",
-                                                                                    "black crayon frat orc",
-                                                                                    "black crayon penguin",
-                                                                                    "black crayon pirate",
-                                                                                    "black crayon flower",
-                                                                                    "black crayon slime",
-                                                                                    "black crayon undead thing",
-                                                                                    "black crayon spiraling shape");
+    private static final Set<String> HIPSTER_COMBAT_NAMES_SET 
+        = Sets.immutableSetOf("angry bassist",
+                            "blue-haired girl",
+                            "evil ex-girlfriend",
+                            "peeved roommate",
+                            "random scenester",
+                            "black crayon beast",
+                            "black crayon beetle",
+                            "black crayon constellation",
+                            "black crayon golem",
+                            "black crayon demon",
+                            "black crayon man",
+                            "black crayon elemental",
+                            "black crayon crimbo elf",
+                            "black crayon fish",
+                            "black crayon goblin",
+                            "black crayon hippy",
+                            "black crayon hobo",
+                            "black crayon shambling monstrosity",
+                            "black crayon manloid",
+                            "black crayon mer-kin",
+                            "black crayon frat orc",
+                            "black crayon penguin",
+                            "black crayon pirate",
+                            "black crayon flower",
+                            "black crayon slime",
+                            "black crayon undead thing",
+                            "black crayon spiraling shape");
 
-    private static final Map<Integer, Integer> LEVEL_STAT_BOARDERS_MAP;
+    private static final Map<Integer, Integer> LEVEL_STAT_BORDERS_MAP;
 
     static {
-        LEVEL_STAT_BOARDERS_MAP = Maps.newHashMap(45);
+        LEVEL_STAT_BORDERS_MAP = Maps.newHashMap(45);
 
-        // Sets the stat boarders from level 1 to 35.
-        LEVEL_STAT_BOARDERS_MAP.put(1, 0);
+        // Sets the stat borders from level 1 to 35.
+        LEVEL_STAT_BORDERS_MAP.put(1, 0);
         for (int i = 2; i <= 35; i++)
-            LEVEL_STAT_BOARDERS_MAP.put(i, (i - 1) * (i - 1) + 4);
+            LEVEL_STAT_BORDERS_MAP.put(i, (i - 1) * (i - 1) + 4);
     }
 
     private final CountableSet<Consumable> consumablesUsed = new CountableSet<Consumable>();
@@ -168,8 +169,8 @@ final class SummaryDataCalculator {
 
     private final int totalTurnsOther;
 
-    SummaryDataCalculator(
-                          final LogDataHolder logData) {
+    SummaryDataCalculator(final LogDataHolder logData) 
+    {
         if (logData == null)
             throw new NullPointerException("Log data holder must not be null.");
 
@@ -388,11 +389,11 @@ final class SummaryDataCalculator {
      * Automatically creates the level summary from the turn rundown of the
      * ascension log.
      */
-    private void createLevelSummaryData(
-                                        final LogDataHolder logData) {
+    private void createLevelSummaryData(final LogDataHolder logData) 
+    {
         final Iterator<PlayerSnapshot> plSsIter = logData.getPlayerSnapshots().iterator();
         PlayerSnapshot currentPlayerSnapshot = plSsIter.hasNext() ? plSsIter.next() : null;
-        int currentStatBoarder = LEVEL_STAT_BOARDERS_MAP.get(2);
+        int currentStatBorder = LEVEL_STAT_BORDERS_MAP.get(2);
         Statgain stats = Statgain.NO_STATS;
         int combatTurns = 0;
         int noncombatTurns = 0;
@@ -446,6 +447,9 @@ final class SummaryDataCalculator {
             case ACCORDION_THIEF:
                 stats = new Statgain(1, 4, 9);
                 break;
+            default:
+                stats = new Statgain(4, 4, 4);  // I really don't know about the special classes
+                break;
         }
         // Set level 1.
         levels.add(new LevelData(1, 0));
@@ -490,10 +494,12 @@ final class SummaryDataCalculator {
                     case OTHER:
                         otherTurns++;
                         break;
+                    default:
+                        break;
                 }
 
                 // Check whether a new level is reached and act accordingly.
-                while (isNewLevelReached(logData, currentStatBoarder, stats)) {
+                while (isNewLevelReached(logData, currentStatBorder, stats)) {
                     final LevelData newLevel = computeNewLevelReached(st.getTurnNumber(),
                                                                       stats,
                                                                       combatTurns,
@@ -502,7 +508,7 @@ final class SummaryDataCalculator {
 
                     levels.add(newLevel);
 
-                    currentStatBoarder = LEVEL_STAT_BOARDERS_MAP.get(newLevel.getLevelNumber() + 1);
+                    currentStatBorder = LEVEL_STAT_BORDERS_MAP.get(newLevel.getLevelNumber() + 1);
                     combatTurns = 0;
                     noncombatTurns = 0;
                     otherTurns = 0;
@@ -516,19 +522,28 @@ final class SummaryDataCalculator {
                 logData.addLevel(lvl);
     }
 
-    private boolean isNewLevelReached(
-                                      final LogDataHolder logData, final int currentStatBoarder,
-                                      final Statgain stats) {
+    private boolean isNewLevelReached(final LogDataHolder logData, 
+                                      final int currentStatBorder,
+                                      final Statgain stats)
+    {
         boolean isNewLevelReached = false;
         switch (logData.getCharacterClass().getStatClass()) {
             case MUSCLE:
-                isNewLevelReached = currentStatBoarder <= Math.sqrt(stats.mus);
+                isNewLevelReached = currentStatBorder <= Math.sqrt(stats.mus);
                 break;
             case MYSTICALITY:
-                isNewLevelReached = currentStatBoarder <= Math.sqrt(stats.myst);
+                isNewLevelReached = currentStatBorder <= Math.sqrt(stats.myst);
                 break;
             case MOXIE:
-                isNewLevelReached = currentStatBoarder <= Math.sqrt(stats.mox);
+                isNewLevelReached = currentStatBorder <= Math.sqrt(stats.mox);
+                break;
+            case MAXIMUM:   // Plumber
+                int max = stats.mus;
+                if (max < stats.myst)
+                    max = stats.myst;
+                if (max < stats.mox)
+                    max = stats.mox;
+                isNewLevelReached = currentStatBorder <= Math.sqrt(max);
                 break;
         }
 
@@ -539,18 +554,20 @@ final class SummaryDataCalculator {
      * Adds the still missing data to the current level and returns the next
      * level.
      */
-    private LevelData computeNewLevelReached(
-                                             final int currentTurnNumber,
-                                             final Statgain currentStats, final int combatTurns,
-                                             final int noncombatTurns, final int otherTurns) {
+    private LevelData computeNewLevelReached(final int currentTurnNumber,
+                                             final Statgain currentStats, 
+                                             final int combatTurns,
+                                             final int noncombatTurns, 
+                                             final int otherTurns) 
+    {
         final LevelData currentLevel = levels.get(levels.size() - 1);
         final LevelData newLevel = new LevelData(currentLevel.getLevelNumber() + 1,
                                                  currentTurnNumber);
         final int turnDifference = currentTurnNumber - currentLevel.getLevelReachedOnTurn();
-        final int substatAmountCurrentLevel = LEVEL_STAT_BOARDERS_MAP.get(currentLevel.getLevelNumber())
-                                              * LEVEL_STAT_BOARDERS_MAP.get(currentLevel.getLevelNumber());
-        final int substatAmountNewLevel = LEVEL_STAT_BOARDERS_MAP.get(newLevel.getLevelNumber())
-                                          * LEVEL_STAT_BOARDERS_MAP.get(newLevel.getLevelNumber());
+        final int substatAmountCurrentLevel = LEVEL_STAT_BORDERS_MAP.get(currentLevel.getLevelNumber())
+                                              * LEVEL_STAT_BORDERS_MAP.get(currentLevel.getLevelNumber());
+        final int substatAmountNewLevel = LEVEL_STAT_BORDERS_MAP.get(newLevel.getLevelNumber())
+                                          * LEVEL_STAT_BORDERS_MAP.get(newLevel.getLevelNumber());
 
         currentLevel.setCombatTurns(combatTurns);
         currentLevel.setNoncombatTurns(noncombatTurns);
@@ -569,53 +586,61 @@ final class SummaryDataCalculator {
     /**
      * @return A list of areas and the turns spent in them.
      */
-    List<DataNumberPair<String>> getTurnsPerArea() {
+    List<DataNumberPair<String>> getTurnsPerArea() 
+    {
         return turnsPerArea.getCountedData();
     }
 
     /**
      * @return A list of all consumables used.
      */
-    Collection<Consumable> getConsumablesUsed() {
+    Collection<Consumable> getConsumablesUsed() 
+    {
         return consumablesUsed.getElements();
     }
 
     /**
      * @return A list of all items dropped.
      */
-    Collection<Item> getDroppedItems() {
+    Collection<Item> getDroppedItems() 
+    {
         return droppedItems.getElements();
     }
 
-    Collection<CombatItem> getCombatItemsUsed() {
+    Collection<CombatItem> getCombatItemsUsed() 
+    {
         return this.combatItemsUsed.getElements();
     }
     
     /**
      * @return A list of all skills cast.
      */
-    Collection<Skill> getSkillsCast() {
+    Collection<Skill> getSkillsCast() 
+    {
         return skillsCast.getElements();
     }
 
     /**
      * @return A list of all levels.
      */
-    List<LevelData> getLevelData() {
+    List<LevelData> getLevelData() 
+    {
         return levels;
     }
 
     /**
      * @return A list of all used familiars and how often they were used.
      */
-    List<DataNumberPair<String>> getFamiliarUsage() {
+    List<DataNumberPair<String>> getFamiliarUsage() 
+    {
         return familiarUsage.getCountedData();
     }
 
     /**
      * @return a list of combat items that we want to track their usage, turn number and encounter name
      */
-    List<DataNumberPair<String>> getTrackedCombatItemUses() {
+    List<DataNumberPair<String>> getTrackedCombatItemUses() 
+    {
         return trackedCombatItemUsage;
     }
     
@@ -623,49 +648,56 @@ final class SummaryDataCalculator {
      * //Bombar: All Banished Combats Functionality
      * @return A list of all banished combats.
      */
-    List<DataNumberPair<String>> getBanishedCombats() {
+    List<DataNumberPair<String>> getBanishedCombats() 
+    {
         return banishedCombats;
     }
     
     /**
      * @return A list of all disintegrated combats.
      */
-    List<DataNumberPair<String>> getDisintegratedCombats() {
+    List<DataNumberPair<String>> getDisintegratedCombats() 
+    {
         return disintegratedCombats;
     }
 
     /**
      * @return A list of all semirares.
      */
-    List<DataNumberPair<String>> getSemirares() {
+    List<DataNumberPair<String>> getSemirares() 
+    {
         return semirares;
     }
 
     /**
      * @return A list of all Bad Moon adventures.
      */
-    List<DataNumberPair<String>> getBadmoonAdventures() {
+    List<DataNumberPair<String>> getBadmoonAdventures() 
+    {
         return badmoonAdventures;
     }
 
     /**
      * @return A list of all romantic arrow usages.
      */
-    List<DataNumberPair<String>> getRomanticArrowUsages() {
+    List<DataNumberPair<String>> getRomanticArrowUsages() 
+    {
         return romanticArrowUsages;
     }
 
     /**
      * @return A list of all wandering adventures.
      */
-    List<DataNumberPair<String>> getWanderingAdventures() {
+    List<DataNumberPair<String>> getWanderingAdventures() 
+    {
         return wanderingAdventures;
     }
 
     /**
      * @return A list of all Hipster combats.
      */
-    List<DataNumberPair<String>> getHipsterCombats() {
+    List<DataNumberPair<String>> getHipsterCombats() 
+    {
         return hipsterCombats;
     }
 
@@ -673,70 +705,80 @@ final class SummaryDataCalculator {
      * @return A list of all combats on which free runaways were successfully
      *         used.
      */
-    List<Encounter> getFreeRunawaysCombats() {
+    List<Encounter> getFreeRunawaysCombats() 
+    {
         return freeRunawayCombats;
     }
 
     /**
      * @return A summary on consumables used during the ascension.
      */
-    ConsumptionSummary getConsumptionSummary() {
+    ConsumptionSummary getConsumptionSummary() 
+    {
         return consumptionSummary;
     }
 
     /**
      * @return The free runaways over the whole ascension.
      */
-    public FreeRunaways getFreeRunaways() {
+    public FreeRunaways getFreeRunaways()
+    {
         return freeRunaways;
     }
 
     /**
      * @return The RNG data of the Goatlet.
      */
-    Goatlet getGoatlet() {
+    Goatlet getGoatlet()
+    {
         return goatlet;
     }
 
     /**
      * @return The RNG data of the 8-Bit Realm.
      */
-    InexplicableDoor get8BitRealm() {
+    InexplicableDoor get8BitRealm()
+    {
         return nesRealm;
     }
 
     /**
      * @return The quest turncounts.
      */
-    QuestTurncounts getQuestTurncounts() {
+    QuestTurncounts getQuestTurncounts() 
+    {
         return questTurncounts;
     }
 
     /**
      * @return The total mp gains collected during this ascension.
      */
-    MPGain getTotalMPGains() {
+    MPGain getTotalMPGains()
+    {
         return totalMPGains;
     }
 
     /**
      * @return The mp gains per level summary.
      */
-    MPGainSummary getMPGainSummary() {
+    MPGainSummary getMPGainSummary()
+    {
         return mpGainSummary;
     }
 
     /**
      * @return The meat per level summary.
      */
-    MeatSummary getMeatSummary() {
+    MeatSummary getMeatSummary()
+{
         return meatSummary;
     }
 
     /**
      * @return The total amount of substats collected during this ascension.
      */
-    Statgain getTotalStatgains() {
+    Statgain getTotalStatgains() 
+    {
         return totalStatgains;
     }
 
@@ -744,7 +786,8 @@ final class SummaryDataCalculator {
      * @return The total amount of substats from combats collected during this
      *         ascension.
      */
-    Statgain getCombatsStatgains() {
+    Statgain getCombatsStatgains() 
+    {
         return combatsStatgains;
     }
 
@@ -752,7 +795,8 @@ final class SummaryDataCalculator {
      * @return The total amount of substats from noncombats collected during
      *         this ascension.
      */
-    Statgain getNoncombatsStatgains() {
+    Statgain getNoncombatsStatgains()
+    {
         return noncombatsStatgains;
     }
 
@@ -760,56 +804,64 @@ final class SummaryDataCalculator {
      * @return The total amount of substats from other encounters collected
      *         during this ascension.
      */
-    Statgain getOthersStatgains() {
+    Statgain getOthersStatgains()
+    {
         return othersStatgains;
     }
 
     /**
      * @return The total amount of skill casts.
      */
-    int getTotalAmountSkillCasts() {
+    int getTotalAmountSkillCasts()
+    {
         return totalAmountSkillCasts;
     }
 
     /**
      * @return The total amount of MP spent on skills.
      */
-    int getTotalMPUsed() {
+    int getTotalMPUsed() 
+    {
         return totalMPUsed;
     }
 
     /**
      * @return The total amount of meat gathered.
      */
-    int getTotalMeatGain() {
+    int getTotalMeatGain()
+    {
         return totalMeatGain;
     }
 
     /**
      * @return The total amount of meat spent.
      */
-    int getTotalMeatSpent() {
+    int getTotalMeatSpent() 
+    {
         return totalMeatSpent;
     }
 
     /**
      * @return The total amount of turns gained from rollover.
      */
-    int getTotalTurnsFromRollover() {
+    int getTotalTurnsFromRollover() 
+    {
         return totalTurnsFromRollover;
     }
 
     /**
      * @return The total amount of combat turns.
      */
-    int getTotalTurnsCombat() {
+    int getTotalTurnsCombat()
+    {
         return totalTurnsCombat;
     }
 
     /**
      * @return The total amount of noncombat turns.
      */
-    int getTotalTurnsNoncombat() {
+    int getTotalTurnsNoncombat() 
+    {
         return totalTurnsNoncombat;
     }
 
@@ -817,7 +869,8 @@ final class SummaryDataCalculator {
      * @return The total amount of other (smithing, mixing, cooking, etc.)
      *         turns.
      */
-    int getTotalTurnsOther() {
+    int getTotalTurnsOther() 
+    {
         return totalTurnsOther;
     }
 }

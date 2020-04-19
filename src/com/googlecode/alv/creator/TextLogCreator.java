@@ -54,7 +54,6 @@ import com.googlecode.alv.logData.MeatGain;
 import com.googlecode.alv.logData.Skill;
 import com.googlecode.alv.logData.Statgain;
 import com.googlecode.alv.logData.LogDataHolder.AscensionPath;
-import com.googlecode.alv.logData.LogDataHolder.StatClass;
 import com.googlecode.alv.logData.consumables.Consumable;
 import com.googlecode.alv.logData.consumables.Consumable.ConsumableVersion;
 import com.googlecode.alv.logData.logSummary.AreaStatgains;
@@ -1658,17 +1657,31 @@ public class TextLogCreator {
         printTableEnd();
         writelnWithBreak();
         writelnWithBreak();
-        final List<AreaStatgains> areas = Lists.newArrayList(logData.getLogSummary()
-                .getAreasStatgains());
+        final List<AreaStatgains> areas 
+            = Lists.newArrayList(logData.getLogSummary().getAreasStatgains());
         Collections.sort(areas, new Comparator<AreaStatgains>() {
-            public int compare(
-                    final AreaStatgains o1, final AreaStatgains o2) {
-                if (logData.getCharacterClass().getStatClass() == StatClass.MUSCLE)
+            public int compare(final AreaStatgains o1, final AreaStatgains o2) 
+            {
+                switch (logData.getCharacterClass().getStatClass()) {
+                case MUSCLE:
                     return o2.getStatgain().mus - o1.getStatgain().mus;
-                else if (logData.getCharacterClass().getStatClass() == StatClass.MYSTICALITY)
+                case MYSTICALITY:
                     return o2.getStatgain().myst - o1.getStatgain().myst;
-                else
+                case MOXIE:
                     return o2.getStatgain().mox - o1.getStatgain().mox;
+                case MAXIMUM:
+                    return maxStat(o2.getStatgain()) - maxStat(o1.getStatgain());
+                }
+                return 0;   // should never reach here
+            }
+            private int maxStat(Statgain gain)
+            {
+                int result = gain.mus;
+                if (result < gain.myst)
+                    result = gain.myst;
+                if (result < gain.mox)
+                    result = gain.mox;
+                return result;
             }
         });
         writelnWithBreak("Top 10 mainstat gaining areas:");
@@ -1697,16 +1710,17 @@ public class TextLogCreator {
         // +Stat Breakdown summary
         final List<StatgiverItem> statGivers = Lists.newArrayList(20);
         for (final Pair<String, ExtraStats> p : DataTablesHandler.HANDLER.getStatsItems())
-            statGivers.add(new StatgiverItem(p.getVar1(), p.getVar2(), logData.getCharacterClass()
-                    .getStatClass()));
-        final StatgiverItem serpentineSword = new StatgiverItem("serpentine sword",
-                new ExtraStats(1.25),
-                logData.getCharacterClass()
-                .getStatClass());
-        final StatgiverItem snakeShield = new StatgiverItem("snake shield",
-                new ExtraStats(1.25),
-                logData.getCharacterClass()
-                .getStatClass());
+            statGivers.add(new StatgiverItem(p.getVar1(), 
+                                             p.getVar2(), 
+                                             logData.getCharacterClass().getStatClass()));
+        final StatgiverItem serpentineSword 
+            = new StatgiverItem("serpentine sword",
+                                new ExtraStats(1.25),
+                                logData.getCharacterClass().getStatClass());
+        final StatgiverItem snakeShield 
+            = new StatgiverItem("snake shield",
+                                new ExtraStats(1.25),
+                                logData.getCharacterClass().getStatClass());
 
         final Iterator<LevelData> lvlIndex = logData.getLevels().iterator();
         LevelData nextLvl = lvlIndex.hasNext() ? lvlIndex.next() : null;

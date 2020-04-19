@@ -63,14 +63,14 @@ import java.util.TreeMap;
  * All methods in this class throw a {@link NullPointerException} if a null
  * object reference is passed in any parameter.
  */
-public final class LogDataHolder {
+public final class LogDataHolder 
+{
     // Only used internally. Not useful for sorting turn intervals.
-    private static final Comparator<TurnInterval> TURN_INTERVAL_COMPARATOR = new Comparator<TurnInterval>() {
-        public int compare(
-                final TurnInterval o1, final TurnInterval o2) {
+    private static final Comparator<TurnInterval> TURN_INTERVAL_COMPARATOR = new Comparator<TurnInterval>() 
+    {
+        public int compare(final TurnInterval o1, final TurnInterval o2) {
             if (!o1.getAreaName().equals(o2.getAreaName()))
                 return -1;
-
             return o1.getEndTurn() - o2.getEndTurn();
         }
     };
@@ -87,12 +87,13 @@ public final class LogDataHolder {
 
     private final SortedMap<Integer, DayChange> dayChanges = new TreeMap<Integer, DayChange>();
 
-    private final SortedMap<DayChange, HeaderFooterComment> dayHeaderFooterComments = new TreeMap<DayChange, HeaderFooterComment>(new Comparator<DayChange>() {
-        public int compare(
-                final DayChange o1, final DayChange o2) {
-            return o1.getDayNumber() - o2.getDayNumber();
-        }
-    });
+    private final SortedMap<DayChange, HeaderFooterComment> dayHeaderFooterComments 
+        = new TreeMap<DayChange, HeaderFooterComment>(new Comparator<DayChange>() {
+            public int compare(
+                    final DayChange o1, final DayChange o2) {
+                return o1.getDayNumber() - o2.getDayNumber();
+            }
+        });
 
     private final SortedMap<Integer, LevelData> levels = new TreeMap<Integer, LevelData>();
 
@@ -130,8 +131,8 @@ public final class LogDataHolder {
 
     private LogSummaryData logSummary;
 
-    public LogDataHolder(
-            final boolean isDetailedLog) {
+    public LogDataHolder(final boolean isDetailedLog) 
+    {
         this.isDetailedLog = isDetailedLog;
 
         // The start of an ascension is always on day 1.
@@ -171,7 +172,8 @@ public final class LogDataHolder {
      * {@link #isDetailedLog()}), this method will also create the turn
      * intervals from the single turn collection.
      */
-    public void createLogSummary() {
+    public void createLogSummary() 
+    {
         if (isDetailedLog) {
             final LookAheadIterator<SingleTurn> index = new LookAheadIterator<SingleTurn>(turnsSpent.iterator());
             final LookAheadIterator<SingleTurn> worker = new LookAheadIterator<SingleTurn>(turnsSpent.iterator());
@@ -214,7 +216,8 @@ public final class LogDataHolder {
      *             if this method is called before a log summary is created by
      *             calling {@link #createLogSummary()}
      */
-    public LogSummaryData getLogSummary() {
+    public LogSummaryData getLogSummary() 
+    {
         if (logSummary == null)
             throw new IllegalStateException("Log summary has to be created first.");
 
@@ -231,7 +234,8 @@ public final class LogDataHolder {
      * @return {@code true} if this LogDataHolder is a based on a detailed log,
      *         otherwise {@code false}.
      */
-    public boolean isDetailedLog() {
+    public boolean isDetailedLog() 
+    {
         return isDetailedLog;
     }
 
@@ -239,7 +243,8 @@ public final class LogDataHolder {
      * @return True if this LogDataHolder instance is a subinterval of another
      *         LogDataHolder, otherwise false.
      */
-    public boolean isSubintervalLog() {
+    public boolean isSubintervalLog() 
+    {
         return isSubintervalLog;
     }
 
@@ -250,8 +255,8 @@ public final class LogDataHolder {
      * @param isEdited
      *            The flag to set.
      */
-    public void setEdited(
-            final boolean isEdited) {
+    public void setEdited(final boolean isEdited) 
+    {
         this.isEdited = isEdited;
     }
 
@@ -265,7 +270,8 @@ public final class LogDataHolder {
      * @return True if this LogDataHolder has been edited. (e.g. some log notes
      *         were added)
      */
-    public boolean isEdited() {
+    public boolean isEdited() 
+    {
         return isEdited;
     }
 
@@ -277,8 +283,8 @@ public final class LogDataHolder {
      * @param isMafiaTurnIteration
      *            The flag to set.
      */
-    public void setMafiaTurnIteration(
-            boolean isMafiaTurnIteration) {
+    public void setMafiaTurnIteration(boolean isMafiaTurnIteration) 
+    {
         this.isMafiaTurnIteration = isMafiaTurnIteration;
     }
 
@@ -316,7 +322,8 @@ public final class LogDataHolder {
      * @return The flag as to whether turn additions will be added as KolMafia
      *         logs them. The default is {@code true}.
      */
-    public boolean isMafiaTurnIteration() {
+    public boolean isMafiaTurnIteration() 
+    {
         return isMafiaTurnIteration;
     }
 
@@ -327,8 +334,8 @@ public final class LogDataHolder {
      * @param logName
      *            The name of this log.
      */
-    public void setLogName(
-            final String logName) {
+    public void setLogName(final String logName) 
+    {
         if (logName == null)
             throw new NullPointerException("Log name must not be null.");
 
@@ -341,7 +348,8 @@ public final class LogDataHolder {
      *
      * @return The name of this ascension log.
      */
-    public String getLogName() {
+    public String getLogName() 
+    {
         return logName;
     }
 
@@ -358,8 +366,8 @@ public final class LogDataHolder {
      *             if this LogDataHolder is a detailed log data holder, see
      *             {@link #isDetailedLog()}
      */
-    public void addTurnIntervalSpent(
-            final TurnInterval turnInterval) {
+    public void addTurnIntervalSpent(final TurnInterval turnInterval) 
+    {
         if (turnInterval == null)
             throw new NullPointerException("Turn interval must not be null.");
 
@@ -371,7 +379,8 @@ public final class LogDataHolder {
         turnIntervalsSpent.add(turnInterval);
     }
 
-    public void handleParseFinished() {
+    public void handleParseFinished() 
+    {
         if (lastTurn.getTurnNumber() == penultimateTurn.getTurnNumber()) {
             if (lastTurn.getAreaName().equals(  penultimateTurn.getAreaName() )) {
                 final SingleTurn tmp = (SingleTurn) lastTurn;
@@ -399,8 +408,8 @@ public final class LogDataHolder {
      *             if this LogDataHolder is not a detailed log data holder, see
      *             {@link #isDetailedLog()}
      */
-    public void addTurnSpent(
-            final SingleTurn turn) {
+    public void addTurnSpent(final SingleTurn turn) 
+    {
         if (turn == null)
             throw new NullPointerException("Turn must not be null.");
 
@@ -415,13 +424,15 @@ public final class LogDataHolder {
 
 
 
-    private void addTurnMafia(
-            final SingleTurn turn) {
+    private void addTurnMafia(final SingleTurn turn) 
+    {
         if (lastTurn.getTurnNumber() == turn.getTurnNumber()) {
-            ((SingleTurn) lastTurn).setFreeTurn( true );//Flag the last turn as a free turn since it didn't increment the turn count
+            //Flag the last turn as a free turn since it didn't increment the turn count
+            ((SingleTurn) lastTurn).setFreeTurn( true );
 
             //Bombar Change: Needed for Florist, if we detect a free action, log zone you were in
-            if (((SingleTurn) lastTurn).getDayNumber() == ((SingleTurn) penultimateTurn).getDayNumber() && lastTurn.getAreaName().equals( penultimateTurn.getAreaName() )) {
+            if (((SingleTurn) lastTurn).getDayNumber() == ((SingleTurn) penultimateTurn).getDayNumber() 
+                    && lastTurn.getAreaName().equals( penultimateTurn.getAreaName() )) {
                 // If the last turn has the same turn number as the to be added turn,
                 // add the data of the last turn to the penultimate turn. Also, in that
                 // case, check if that turn was a navel ring free runaway.
@@ -444,16 +455,19 @@ public final class LogDataHolder {
         turnsSpent.add(turn);
     }
 
-    private void addTurnNotMafia(
-            final SingleTurn turn) {
+    private void addTurnNotMafia(final SingleTurn turn) 
+    {
 
         if (lastTurn.getTurnNumber() == turn.getTurnNumber())
-            ((SingleTurn) lastTurn).setFreeTurn( true );//Flag the last turn as a free turn since it didn't increment the turn count
+            //Flag the last turn as a free turn since it didn't increment the turn count
+            ((SingleTurn) lastTurn).setFreeTurn( true );
 
         // If the last turn has the same turn number as the to be added turn,
         // add the data of the to be added turn to the last turn. Also, in that
         // case, check if that turn was a navel ring free runaway.
-        if (lastTurn.getAreaName().equals( turn.getAreaName()) && ((SingleTurn) lastTurn).getDayNumber() == turn.getDayNumber() && lastTurn.getTurnNumber() == turn.getTurnNumber()) {
+        if (lastTurn.getAreaName().equals( turn.getAreaName()) 
+                && ((SingleTurn) lastTurn).getDayNumber() == turn.getDayNumber() 
+                && lastTurn.getTurnNumber() == turn.getTurnNumber()) {
             if (turn.getFreeRunaways() == 0 && turn.isRanAwayOnThisTurn()
                     && turn.isRunawaysEquipmentEquipped())
                 turn.addFreeRunaways(1);
@@ -470,7 +484,8 @@ public final class LogDataHolder {
     /**
      * @return The last turn spent.
      */
-    public Turn getLastTurnSpent() {
+    public Turn getLastTurnSpent() 
+    {
         return lastTurn;
     }
 
@@ -489,7 +504,8 @@ public final class LogDataHolder {
      *             if this LogDataHolder is not a detailed log data holder, see
      *             {@link #isDetailedLog()}
      */
-    public List<SingleTurn> getTurnsSpent() {
+    public List<SingleTurn> getTurnsSpent() 
+    {
         if (!isDetailedLog)
             throw new IllegalStateException("Only detailed LogDataHolders contain single turns!");
 
@@ -512,7 +528,8 @@ public final class LogDataHolder {
      *             needs to create the turn interval collection through a call
      *             of {@link #createLogSummary()} before it can be accessed
      */
-    public List<TurnInterval> getTurnIntervalsSpent() {
+    public List<TurnInterval> getTurnIntervalsSpent() 
+    {
         if (turnIntervalsSpent.isEmpty())
             throw new IllegalStateException("The turn interval collection has to be created before you can access it.");
 
@@ -540,8 +557,9 @@ public final class LogDataHolder {
      *             if {@code endTurn} is not greater than {@code startTurn}; if
      *             {@code endTurn} is not greater than 0
      */
-    public LogDataHolder getSubIntervalLogData(
-            final int startTurn, final int endTurn) {
+    public LogDataHolder getSubIntervalLogData(final int startTurn, 
+                                               final int endTurn) 
+    {
         if (endTurn <= startTurn)
             throw new IllegalArgumentException("The end turn must be greater than the start turn.");
         if (endTurn <= 0)
@@ -747,8 +765,8 @@ public final class LogDataHolder {
      * needed to remove redundant familiar change entries.
      * @param familiarChanges Familiar change collection
      */
-    public void setFamiliarChanges(
-            final Collection<FamiliarChange> familiarChanges) {
+    public void setFamiliarChanges(final Collection<FamiliarChange> familiarChanges) 
+    {
         final List<FamiliarChange> sortedList = Lists.sort(Lists.newArrayList(familiarChanges));
 
         // Clear the old familiar change collection and add the new items.
@@ -768,8 +786,8 @@ public final class LogDataHolder {
      * @param familiarChange
      *            The familiar change to add.
      */
-    public void addFamiliarChange(
-            final FamiliarChange familiarChange) {
+    public void addFamiliarChange(final FamiliarChange familiarChange) 
+    {
         if (familiarChange == null)
             throw new NullPointerException("Familiar change must not be null.");
 
@@ -798,7 +816,8 @@ public final class LogDataHolder {
      *
      * @return The familiar changes.
      */
-    public Collection<FamiliarChange> getFamiliarChanges() {
+    public Collection<FamiliarChange> getFamiliarChanges() 
+    {
         return Collections.unmodifiableCollection(familiarChanges.values());
     }
 
@@ -806,7 +825,8 @@ public final class LogDataHolder {
      * @return The last familiar change of this ascension. Returns {@code null}
      *         if there are no familiar changes.
      */
-    public FamiliarChange getLastFamiliarChange() {
+    public FamiliarChange getLastFamiliarChange() 
+    {
         return familiarChanges.isEmpty() ? null : familiarChanges.get(familiarChanges.lastKey());
     }
 
@@ -819,8 +839,8 @@ public final class LogDataHolder {
      * @throws IllegalArgumentException
      *             if turn is negative.
      */
-    public FamiliarChange getLastFamiliarChangeBeforeTurn(
-            final int turn) {
+    public FamiliarChange getLastFamiliarChangeBeforeTurn(final int turn) 
+    {
         if (turn < 0)
             throw new IllegalArgumentException("Turn number cannot be negative.");
 
@@ -837,8 +857,8 @@ public final class LogDataHolder {
      * @throws IllegalArgumentException
      *             if turn is negative.
      */
-    public FamiliarChange getFirstFamiliarChangeAfterTurn(
-            final int turn) {
+    public FamiliarChange getFirstFamiliarChangeAfterTurn(final int turn) 
+    {
         if (turn < 0)
             throw new IllegalArgumentException("Turn number cannot be negative.");
 
@@ -849,8 +869,8 @@ public final class LogDataHolder {
      * @param dayChange
      *            The day change to add.
      */
-    public void addDayChange(
-            final DayChange dayChange) {
+    public void addDayChange(final DayChange dayChange) 
+    {
         if (dayChange == null)
             throw new NullPointerException("Day change must not be null.");
 
@@ -869,7 +889,8 @@ public final class LogDataHolder {
      *
      * @return The day changes.
      */
-    public Collection<DayChange> getDayChanges() {
+    public Collection<DayChange> getDayChanges() 
+    {
         return Collections.unmodifiableCollection(dayChanges.values());
     }
 
@@ -877,7 +898,8 @@ public final class LogDataHolder {
      * @return The last day change of this ascension. Returns {@code null} if
      *         there are no day changes.
      */
-    public DayChange getLastDayChange() {
+    public DayChange getLastDayChange() 
+    {
         return dayChanges.isEmpty() ? null : dayChanges.get(dayChanges.lastKey());
     }
 
@@ -891,7 +913,8 @@ public final class LogDataHolder {
      *
      * @return The header/footer comment and the day it is mapped to.
      */
-    public Collection<Pair<DayChange, HeaderFooterComment>> getHeaderFooterComments() {
+    public Collection<Pair<DayChange, HeaderFooterComment>> getHeaderFooterComments() 
+    {
         final List<Pair<DayChange, HeaderFooterComment>> result = Lists.newArrayList();
         for (final Entry<DayChange, HeaderFooterComment> e : dayHeaderFooterComments.entrySet())
             result.add(Pair.of(e.getKey(), e.getValue()));
@@ -903,15 +926,16 @@ public final class LogDataHolder {
      * @param dc Day in run
      * @return The header/footer comment of the given day.
      */
-    public HeaderFooterComment getHeaderFooterComment(
-            final DayChange dc) {
+    public HeaderFooterComment getHeaderFooterComment(final DayChange dc) 
+    {
         return dayHeaderFooterComments.get(dc);
     }
 
     /**
      * @return The last header/footer comment.
      */
-    public HeaderFooterComment getLastHeaderFooterComment() {
+    public HeaderFooterComment getLastHeaderFooterComment() 
+    {
         return dayHeaderFooterComments.get(getLastDayChange());
     }
 
@@ -923,8 +947,8 @@ public final class LogDataHolder {
      * @throws IllegalArgumentException
      *             if turn is negative.
      */
-    public DayChange getCurrentDay(
-            final int turnNumber) {
+    public DayChange getCurrentDay(final int turnNumber) 
+    {
         if (turnNumber < 0)
             throw new IllegalArgumentException("Turn number cannot be negative.");
 
@@ -948,8 +972,8 @@ public final class LogDataHolder {
      * @param level
      *            The level data to add.
      */
-    public void addLevel(
-            final LevelData level) {
+    public void addLevel(final LevelData level) 
+    {
         if (level == null)
             throw new NullPointerException("Level must not be null.");
 
@@ -967,7 +991,8 @@ public final class LogDataHolder {
      *
      * @return The level data.
      */
-    public Collection<LevelData> getLevels() {
+    public Collection<LevelData> getLevels() 
+    {
         return Collections.unmodifiableCollection(levels.values());
     }
 
@@ -975,7 +1000,8 @@ public final class LogDataHolder {
      * @return The last level reached of this ascension. Returns {@code null} if
      *         there are no levels reached.
      */
-    public LevelData getLastLevel() {
+    public LevelData getLastLevel() 
+    {
         return levels.isEmpty() ? null : levels.get(levels.lastKey());
     }
 
@@ -987,8 +1013,8 @@ public final class LogDataHolder {
      * @throws IllegalArgumentException
      *             if turn is negative.
      */
-    public LevelData getCurrentLevel(
-            final int turnNumber) {
+    public LevelData getCurrentLevel(final int turnNumber) 
+    {
         if (turnNumber < 0)
             throw new IllegalArgumentException("Turn number cannot be negative.");
 
@@ -1012,8 +1038,8 @@ public final class LogDataHolder {
      * @param playerSnapshot
      *            The player snapshot to add.
      */
-    public void addPlayerSnapshot(
-            final PlayerSnapshot playerSnapshot) {
+    public void addPlayerSnapshot(final PlayerSnapshot playerSnapshot)
+    {
         if (playerSnapshot == null)
             throw new NullPointerException("Player snapshot must not be null.");
 
@@ -1033,7 +1059,8 @@ public final class LogDataHolder {
      *
      * @return The player snapshots.
      */
-    public Collection<PlayerSnapshot> getPlayerSnapshots() {
+    public Collection<PlayerSnapshot> getPlayerSnapshots() 
+    {
         return Collections.unmodifiableCollection(playerSnapshots.values());
     }
 
@@ -1041,7 +1068,8 @@ public final class LogDataHolder {
      * @return The last player snapshot of this ascension. Returns {@code null}
      *         if there are no player snapshots.
      */
-    public PlayerSnapshot getLastPlayerSnapshot() {
+    public PlayerSnapshot getLastPlayerSnapshot() 
+    {
         return playerSnapshots.isEmpty() ? null : playerSnapshots.get(playerSnapshots.lastKey());
     }
 
@@ -1054,8 +1082,8 @@ public final class LogDataHolder {
      * @throws IllegalArgumentException
      *             if turn is negative.
      */
-    public PlayerSnapshot getLastPlayerSnapshotBeforeTurn(
-            final int turn) {
+    public PlayerSnapshot getLastPlayerSnapshotBeforeTurn(final int turn) 
+    {
         if (turn < 0)
             throw new IllegalArgumentException("Turn number cannot be negative.");
 
@@ -1072,8 +1100,8 @@ public final class LogDataHolder {
      * @throws IllegalArgumentException
      *             if turn is negative.
      */
-    public PlayerSnapshot getFirstPlayerSnapshotAfterTurn(
-            final int turn) {
+    public PlayerSnapshot getFirstPlayerSnapshotAfterTurn(final int turn) 
+    {
         if (turn < 0)
             throw new IllegalArgumentException("Turn number cannot be negative.");
 
@@ -1088,8 +1116,8 @@ public final class LogDataHolder {
      * 
      * @param equipmentChanges Collection of equipment changes
      */
-    public void setEquipmentChanges(
-            final Collection<EquipmentChange> equipmentChanges) {
+    public void setEquipmentChanges(final Collection<EquipmentChange> equipmentChanges) 
+    {
         final List<EquipmentChange> sortedList = Lists.sort(Lists.newArrayList(equipmentChanges));
 
         // Clear the old familiar change collection and add the new items.
@@ -1109,8 +1137,8 @@ public final class LogDataHolder {
      * @param equipmentChange
      *            The equipment change to add.
      */
-    public void addEquipmentChange(
-            final EquipmentChange equipmentChange) {
+    public void addEquipmentChange(final EquipmentChange equipmentChange) 
+    {
         if (equipmentChange == null)
             throw new NullPointerException("Equipment change must not be null.");
 
@@ -1139,7 +1167,8 @@ public final class LogDataHolder {
      *
      * @return The equipment changes.
      */
-    public Collection<EquipmentChange> getEquipmentChanges() {
+    public Collection<EquipmentChange> getEquipmentChanges() 
+    {
         return Collections.unmodifiableCollection(equipmentChanges.values());
     }
 
@@ -1147,7 +1176,8 @@ public final class LogDataHolder {
      * @return The last equipment change of this ascension. Returns {@code null}
      *         if there are no equipment changes.
      */
-    public EquipmentChange getLastEquipmentChange() {
+    public EquipmentChange getLastEquipmentChange() 
+    {
         return equipmentChanges.isEmpty() ? null : equipmentChanges.get(equipmentChanges.lastKey());
     }
 
@@ -1161,8 +1191,8 @@ public final class LogDataHolder {
      * @throws IllegalArgumentException
      *             if turn is negative.
      */
-    public EquipmentChange getLastEquipmentChangeBeforeTurn(
-            final int turn) {
+    public EquipmentChange getLastEquipmentChangeBeforeTurn(final int turn) 
+    {
         if (turn < 0)
             throw new IllegalArgumentException("Turn number cannot be negative.");
 
@@ -1179,8 +1209,8 @@ public final class LogDataHolder {
      * @throws IllegalArgumentException
      *             if turn is negative.
      */
-    public EquipmentChange getFirstEquipmentChangeAfterTurn(
-            final int turn) {
+    public EquipmentChange getFirstEquipmentChangeAfterTurn(final int turn) 
+    {
         if (turn < 0)
             throw new IllegalArgumentException("Turn number cannot be negative.");
 
@@ -1196,9 +1226,9 @@ public final class LogDataHolder {
      * @return The last element before the given number. Returns {@code null} if
      *         there is no such element.
      */
-    private static <V> V getLastElementBeforeInteger(
-            final SortedMap<Integer, V> map,
-            final Integer number) {
+    private static <V> V getLastElementBeforeInteger(final SortedMap<Integer, V> map,
+                                                     final Integer number) 
+    {
         final SortedMap<Integer, V> headMap = map.headMap(number);
 
         return headMap.isEmpty() ? null : headMap.get(headMap.lastKey());
@@ -1213,9 +1243,9 @@ public final class LogDataHolder {
      * @return The last element before the given number. Returns {@code null} if
      *         there is no such element.
      */
-    private static <V> V getFirstElementAfterInteger(
-            final SortedMap<Integer, V> map,
-            final Integer number) {
+    private static <V> V getFirstElementAfterInteger(final SortedMap<Integer, V> map,
+                                                     final Integer number) 
+    {
         final SortedMap<Integer, V> tailMap = map.tailMap(number);
 
         return tailMap.isEmpty() ? null : tailMap.get(tailMap.firstKey());
@@ -1225,8 +1255,8 @@ public final class LogDataHolder {
      * @param pull
      *            The pull to add.
      */
-    public void addPull(
-            final Pull pull) {
+    public void addPull(final Pull pull) 
+    {
         if (pull == null)
             throw new NullPointerException("Pull must not be null.");
 
@@ -1248,7 +1278,8 @@ public final class LogDataHolder {
      *
      * @return The pulls.
      */
-    public List<Pull> getPulls() {
+    public List<Pull> getPulls() 
+    {
         return Collections.unmodifiableList(pulls);
     }
 
@@ -1257,7 +1288,8 @@ public final class LogDataHolder {
      * will combine up to three of them in one line separated by commas
      * @param learnedSkillData the skill being learned on a given turn
      */
-    public void addLearnedSkill(final DataNumberPair<String> learnedSkillData) {
+    public void addLearnedSkill(final DataNumberPair<String> learnedSkillData) 
+    {
         if (learnedSkillData == null || learnedSkillData.getData() == null || learnedSkillData.getNumber() == null)
             throw new IllegalArgumentException("Learned Skill data must not be null, and contain a turn number and description");
         boolean skillAdded = false;
@@ -1290,7 +1322,8 @@ public final class LogDataHolder {
         }
     }
 
-    public List<DataNumberPair<String>> getLearnedSkills() {
+    public List<DataNumberPair<String>> getLearnedSkills() 
+    {
         return Collections.unmodifiableList( this.learnedSkills );
     }
 
@@ -1300,7 +1333,8 @@ public final class LogDataHolder {
      * hybridizing - Gives intrinsic 1/day
      * @param hybridData should be in the form {turnNumber}, {stringDescription}
      */
-    public void addHybridContent( final DataNumberPair<String> hybridData) {
+    public void addHybridContent( final DataNumberPair<String> hybridData) 
+    {
         if (hybridData == null || hybridData.getData() == null || hybridData.getNumber() == null)
             throw new IllegalArgumentException("Hybrid data must not be null and have a turn number and description");
         boolean dataAdded = false;
@@ -1346,7 +1380,8 @@ public final class LogDataHolder {
 
     }
 
-    public List<DataNumberPair<String>> getHybridContent() {
+    public List<DataNumberPair<String>> getHybridContent() 
+    {
         return Collections.unmodifiableList( this.hybridization );
     }
 
@@ -1355,8 +1390,8 @@ public final class LogDataHolder {
      * @param huntedCombat
      *            The hunted combat to add.
      */
-    public void addHuntedCombat(
-            final DataNumberPair<String> huntedCombat) {
+    public void addHuntedCombat(final DataNumberPair<String> huntedCombat) 
+    {
         if (huntedCombat == null)
             throw new IllegalArgumentException("Hunted combat must not be null.");
 
@@ -1374,7 +1409,8 @@ public final class LogDataHolder {
      *
      * @return The hunted combats.
      */
-    public List<DataNumberPair<String>> getHuntedCombats() {
+    public List<DataNumberPair<String>> getHuntedCombats() 
+    {
         return Collections.unmodifiableList(huntedCombats);
     }
 
@@ -1382,8 +1418,8 @@ public final class LogDataHolder {
      * @param lostCombat
      *            The lost combat to add.
      */
-    public void addLostCombat(
-            final DataNumberPair<String> lostCombat) {
+    public void addLostCombat(final DataNumberPair<String> lostCombat) 
+    {
         if (lostCombat == null)
             throw new NullPointerException("Lost combat must not be null.");
 
@@ -1401,14 +1437,16 @@ public final class LogDataHolder {
      *
      * @return The lost combats.
      */
-    public List<DataNumberPair<String>> getLostCombats() {
+    public List<DataNumberPair<String>> getLostCombats() 
+    {
         return Collections.unmodifiableList(lostCombats);
     }
 
     /**
      * @return A list of all turn intervals containing somehow copied monsters.
      */
-    public List<TurnInterval> getCopiedTurns() {
+    public List<TurnInterval> getCopiedTurns() 
+    {
         if (turnIntervalsSpent.isEmpty())
             throw new IllegalStateException("There are no turn intervals present.");
 
@@ -1438,11 +1476,13 @@ public final class LogDataHolder {
      *
      * @return A list of all dropped items during this ascension.
      */
-    public List<Item> getDroppedItems() {
+    public List<Item> getDroppedItems() 
+    {
         return logSummary.getDroppedItems();
     }
 
-    public List<CombatItem> getAllCombatItemsUsed() {
+    public List<CombatItem> getAllCombatItemsUsed() 
+    {
         return logSummary.getCombatItemsUsed();
     }
 
@@ -1454,7 +1494,8 @@ public final class LogDataHolder {
      *
      * @return A list of all skills cast during this ascension.
      */
-    public List<Skill> getAllSkillsCast() {
+    public List<Skill> getAllSkillsCast() 
+    {
         return logSummary.getSkillsCast();
     }
 
@@ -1466,7 +1507,8 @@ public final class LogDataHolder {
      *
      * @return A list of all consumables used during this ascension.
      */
-    public List<Consumable> getAllConsumablesUsed() {
+    public List<Consumable> getAllConsumablesUsed() 
+    {
         return logSummary.getAllConsumablesUsed();
     }
 
@@ -1479,8 +1521,8 @@ public final class LogDataHolder {
      * @param characterClassName
      *            The name of the character class to set.
      */
-    public void setCharacterClass(
-            final String characterClassName) {
+    public void setCharacterClass(final String characterClassName) 
+    {
         setCharacterClass(CharacterClass.fromString(characterClassName));
     }
 
@@ -1490,8 +1532,8 @@ public final class LogDataHolder {
      * @param characterClass
      *            The character class to set.
      */
-    public void setCharacterClass(
-            final CharacterClass characterClass) {
+    public void setCharacterClass(final CharacterClass characterClass) 
+    {
         this.characterClass = characterClass;
     }
 
@@ -1500,7 +1542,8 @@ public final class LogDataHolder {
      *         has been specified this method will return
      *         {@link CharacterClass#NOT_DEFINED} .
      */
-    public CharacterClass getCharacterClass() {
+    public CharacterClass getCharacterClass() 
+    {
         return characterClass;
     }
 
@@ -1510,8 +1553,8 @@ public final class LogDataHolder {
      * @param gameMode
      *            The game mode to set.
      */
-    public void setGameMode(
-            GameMode gameMode) {
+    public void setGameMode(GameMode gameMode) 
+    {
         this.gameMode = gameMode;
     }
 
@@ -1519,7 +1562,8 @@ public final class LogDataHolder {
      * @return The game mode of this ascension log. If no game mode has been
      *         specified this method will return {@link GameMode#NOT_DEFINED}.
      */
-    public GameMode getGameMode() {
+    public GameMode getGameMode() 
+    {
         return gameMode;
     }
 
@@ -1529,8 +1573,8 @@ public final class LogDataHolder {
      * @param ascensionPath
      *            The ascension path to set.
      */
-    public void setAscensionPath(
-            AscensionPath ascensionPath) {
+    public void setAscensionPath(AscensionPath ascensionPath) 
+    {
         this.ascensionPath = ascensionPath;
     }
 
@@ -1539,7 +1583,8 @@ public final class LogDataHolder {
      *         has been specified this method will return
      *         {@link AscensionPath#NOT_DEFINED}.
      */
-    public AscensionPath getAscensionPath() {
+    public AscensionPath getAscensionPath() 
+    {
         return ascensionPath;
     }
 
@@ -1548,8 +1593,8 @@ public final class LogDataHolder {
      *            The program which created the parsed ascension log behind this
      *            LogDataHolder to set.
      */
-    public void setParsedLogCreator(
-            final ParsedLogClass parsedLogCreator) {
+    public void setParsedLogCreator(final ParsedLogClass parsedLogCreator) 
+    {
         if (parsedLogCreator == null)
             throw new NullPointerException("The parsed log creator must not be null.");
 
@@ -1564,12 +1609,13 @@ public final class LogDataHolder {
      * @return The program which created the parsed ascension log behind this
      *         LogDataHolder.
      */
-    public ParsedLogClass getParsedLogCreator() {
+    public ParsedLogClass getParsedLogCreator() 
+    {
         return parsedLogCreator;
     }
 
     /**
-     * This enumeration represents all six character classes.
+     * This enumeration represents all known character classes.
      */
     public static enum CharacterClass {
         SEAL_CLUBBER("Seal Clubber", StatClass.MUSCLE),
@@ -1583,7 +1629,7 @@ public final class LogDataHolder {
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
         ED("Ed", StatClass.MYSTICALITY),
         VAMPYRE("Vampyre", StatClass.MYSTICALITY),
-        PLUMBER("Plumber", StatClass.MOXIE),    // TODO: His level is whatever his highest stat is
+        PLUMBER("Plumber", StatClass.MAXIMUM),    
         NOT_DEFINED("not defined", StatClass.MUSCLE);
 
         private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
@@ -1597,8 +1643,8 @@ public final class LogDataHolder {
 
         private final StatClass statClass;
 
-        CharacterClass(
-                final String className, final StatClass statClass) {
+        CharacterClass(final String className, final StatClass statClass) 
+        {
             this.className = className;
             this.statClass = statClass;
         }
@@ -1606,12 +1652,14 @@ public final class LogDataHolder {
         /**
          * @return The mainstat of this character class.
          */
-        public StatClass getStatClass() {
+        public StatClass getStatClass() 
+        {
             return statClass;
         }
 
         @Override
-        public String toString() {
+        public String toString() 
+        {
             return className;
         }
 
@@ -1621,8 +1669,8 @@ public final class LogDataHolder {
          *         equal to the given string. If no match is found this method
          *         will return {@code NOT_DEFINED}.
          */
-        public static CharacterClass fromString(
-                final String className) {
+        public static CharacterClass fromString(final String className) 
+        {
             if (className == null)
                 throw new NullPointerException("Class name must not be null.");
 
@@ -1633,10 +1681,12 @@ public final class LogDataHolder {
     }
 
     /**
-     * This enumeration represents the three stat classes.
+     * This enumeration represents the three stat classes, plus Maximum.
+     * Maximum is for the Plumber, because his leveling is based on whichever
+     * stat is highest.
      */
     public static enum StatClass {
-        MUSCLE, MYSTICALITY, MOXIE;
+        MUSCLE, MYSTICALITY, MOXIE, MAXIMUM;
     }
 
     /**
@@ -1670,8 +1720,8 @@ public final class LogDataHolder {
          *         equal to the given string. If no match is found this method
          *         will return {@code NOT_DEFINED}.
          */
-        public static GameMode fromString(
-                final String className) {
+        public static GameMode fromString(final String className) 
+        {
             if (className == null)
                 throw new NullPointerException("Class name must not be null.");
 
@@ -1742,13 +1792,14 @@ public final class LogDataHolder {
 
         private final String pathName;
 
-        AscensionPath(
-                final String pathName) {
+        AscensionPath(final String pathName) 
+        {
             this.pathName = pathName;
         }
 
         @Override
-        public String toString() {
+        public String toString() 
+        {
             return pathName;
         }
 
@@ -1758,8 +1809,8 @@ public final class LogDataHolder {
          *         equal to the given string. If no match is found this method
          *         will return {@code NOT_DEFINED}.
          */
-        public static AscensionPath fromString(
-                final String className) {
+        public static AscensionPath fromString(final String className) 
+        {
             if (className == null)
                 throw new NullPointerException("Class name must not be null.");
 
