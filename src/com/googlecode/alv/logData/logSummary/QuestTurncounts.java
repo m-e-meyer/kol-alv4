@@ -107,9 +107,9 @@ public final class QuestTurncounts {
             throw new NullPointerException("Dropped items list must not be null.");
 
         mosquitoQuestTurns = getTurnsUntilItemFound("The Spooky Forest",
-                "mosquito larva",
-                turns,
-                droppedItems);
+                                                    "mosquito larva",
+                                                    turns,
+                                                    droppedItems);
 
         templeOpeningTurns = getTurnsInLocation("The Spooky Forest", turns);
 
@@ -153,17 +153,17 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("Throne Room", turns);
 
         friarsQuestTurns = getTurnsUntilItemFound("The Dark Neck of the Woods",
-                "dodecagram",
-                turns,
-                droppedItems)
-                + getTurnsUntilItemFound("The Dark Heart of the Woods",
-                        "box of birthday candles",
-                        turns,
-                        droppedItems)
+                                                  "dodecagram",
+                                                  turns,
+                                                  droppedItems)
+                        + getTurnsUntilItemFound("The Dark Heart of the Woods",
+                                                 "box of birthday candles",
+                                                 turns,
+                                                 droppedItems)
                         + getTurnsUntilItemFound("The Dark Elbow of the Woods",
-                                "eldritch butterknife",
-                                turns,
-                                droppedItems);
+                                                 "eldritch butterknife",
+                                                 turns,
+                                                 droppedItems);
 
         pandamoniumQuestTurns = getTurnsInLocation("Hey Deze Arena", turns)
                 + getTurnsInLocation("Belilafs Comedy Club", turns);
@@ -188,9 +188,9 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("Twin Peak", turns);
 
         airshipQuestTurns = getTurnsUntilItemFound("The Penultimate Fantasy Airship",
-                "S.O.C.K.",
-                turns,
-                droppedItems);
+                                                   "S.O.C.K.",
+                                                   turns,
+                                                   droppedItems);
 
         castleQuestTurns = getTurnsInLocation("The Castle in the Clouds in the Sky (Basement)", turns)
                 + getTurnsInLocation("The Castle in the Clouds in the Sky (Ground Floor)", turns)
@@ -213,10 +213,16 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("The Poop Deck", turns)
                 + getTurnsInLocation("Belowdecks", turns);
 
-        copperheadClubTurns = getTurnsInLocation("The Copperhead Club", turns);
+        copperheadClubTurns = getTurnsUntilItemFound("The Copperhead Club", 
+                                                     "Copperhead Charm",
+                                                     turns,
+                                                     droppedItems);
         
         redZeppelinTurns = getTurnsInLocation("A Mob of Zeppelin Protesters", turns)
-                + getTurnsInLocation("The Red Zeppelin", turns);
+                           + getTurnsUntilItemFound("The Red Zeppelin", 
+                                                    "Copperhead Charm (rampant)",
+                                                    turns,
+                                                    droppedItems);
         
         blackForrestQuestTurns = getTurnsInLocation("The Black Forest", turns)
                 + getTurnsInLocation("Wu Tang the Betrayer", turns);
@@ -284,7 +290,7 @@ public final class QuestTurncounts {
                 + getTurnsInLocation("The Man", turns);
 
         dodQuestTurns = getTurnsInLocation("The Enormous Greater-Than Sign", turns)
-                + getTurnsUntilItemFound("The Dungeons of Doom", "dead mimic", turns, droppedItems);
+                        + getTurnsUntilItemFound("The Dungeons of Doom", "dead mimic", turns, droppedItems);
 
         dailyDungeonTurns = getTurnsInLocation("The Daily Dungeon", turns);
 
