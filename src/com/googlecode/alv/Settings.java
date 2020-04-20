@@ -85,6 +85,8 @@ public final class Settings
     private static final Properties DEFAULT_SETTINGS = new Properties();
 
     private static final File SETTINGS_FILE;
+    
+    public static final String DEBUG = "Debug";
 
     static {
         SETTINGS_FILE = new File(UtilityConstants.ROOT_DIRECTORY + File.separator
@@ -118,6 +120,7 @@ public final class Settings
         DEFAULT_SETTINGS.setProperty("Show non-ASCII characters in parsed logs", TRUE_STRING);
 
         DEFAULT_SETTINGS.setProperty("First program startup", TRUE_STRING);
+        DEFAULT_SETTINGS.setProperty("Debug", FALSE_STRING);
 
         // If settings file hasn't been created yet, create it with default
         // values. Otherwise only make sure that the version number is correct.
@@ -145,9 +148,16 @@ public final class Settings
                 SETTINGS_FILE.createNewFile();
 
                 final FileOutputStream fos = new FileOutputStream(SETTINGS_FILE);
+                // We don't want to save the Debug property if it's false
+                String debugProperty = p.getProperty(DEBUG);
+                if (! debugProperty.equalsIgnoreCase(TRUE_STRING)) {
+                    p.remove(DEBUG);
+                }
                 p.store(fos, "This file stores the settings of the Ascension Log Visualizer."
                         + System.getProperty("line.separator")
                         + "#It is not advisable to edit this file by hand.");
+                // Restore debug property if deleted
+                p.setProperty(DEBUG, debugProperty);
                 fos.close();
             } catch (final IOException e) {
                 e.printStackTrace();
