@@ -40,8 +40,8 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.consumables.Consumable;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.consumables.Consumable;
 
 public final class TotalConsumptionPie extends PieChartBuilder {
     private final static Paint[] DEFAULT_COLORS = ChartColor.createDefaultPaintArray();

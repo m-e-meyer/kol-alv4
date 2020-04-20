@@ -27,7 +27,7 @@ package com.googlecode.alv.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 /**
  * An interface for a parser that can parse multiple lines (= a block).

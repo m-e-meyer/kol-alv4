@@ -45,7 +45,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 
-import net.java.dev.spellcast.utilities.UtilityConstants;
 import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
 
 import org.jfree.ui.RefineryUtilities;
@@ -54,11 +53,12 @@ import com.googlecode.alv.Settings;
 import com.googlecode.alv.creator.LogsCreator;
 import com.googlecode.alv.creator.XMLLogCreator;
 import com.googlecode.alv.creator.util.XMLLogReader;
-import com.googlecode.alv.logData.turn.Encounter;
+import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LogsCache;
 import com.googlecode.alv.util.Pair;
+import com.googlecode.alv.util.Constants;
 
 /**
  * A dialog to select mafia logs for direct visualisation without having to
@@ -332,7 +332,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
         // delete all of its contents.
         // Don't delete if in debug mode.
         if (! Settings.getBoolean(Settings.DEBUG)) {
-            for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
+            for (final File f : Constants.TEMP_LOCATION.listFiles())
                 if (!f.isDirectory())
                     f.delete();
         }
@@ -452,7 +452,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
 
         // Delete any leftover temporary data, unless in Debug mode.
         if (! Settings.getBoolean(Settings.DEBUG)) {
-            for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
+            for (final File f : Constants.TEMP_LOCATION.listFiles())
                 if (!f.isDirectory())
                     f.delete();
         }

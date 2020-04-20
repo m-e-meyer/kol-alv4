@@ -46,44 +46,43 @@ import java.util.Map.Entry;
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.creator.util.SpookyravenPowerleveling;
 import com.googlecode.alv.creator.util.StatgiverItem;
-import com.googlecode.alv.logData.CombatItem;
-import com.googlecode.alv.logData.Item;
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.MPGain;
-import com.googlecode.alv.logData.MeatGain;
-import com.googlecode.alv.logData.Skill;
-import com.googlecode.alv.logData.Statgain;
-import com.googlecode.alv.logData.LogDataHolder.AscensionPath;
-import com.googlecode.alv.logData.consumables.Consumable;
-import com.googlecode.alv.logData.consumables.Consumable.ConsumableVersion;
-import com.googlecode.alv.logData.logSummary.AreaStatgains;
-import com.googlecode.alv.logData.logSummary.LevelData;
-import com.googlecode.alv.logData.logSummary.QuestTurncounts;
-import com.googlecode.alv.logData.turn.DetailedTurnInterval;
-import com.googlecode.alv.logData.turn.Encounter;
-import com.googlecode.alv.logData.turn.FreeRunaways;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.TurnInterval;
-import com.googlecode.alv.logData.turn.TurnVersion;
-import com.googlecode.alv.logData.turn.turnAction.DayChange;
-import com.googlecode.alv.logData.turn.turnAction.FamiliarChange;
-import com.googlecode.alv.logData.turn.turnAction.PlayerSnapshot;
-import com.googlecode.alv.logData.turn.turnAction.Pull;
+import com.googlecode.alv.logdata.CombatItem;
+import com.googlecode.alv.logdata.Item;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.MPGain;
+import com.googlecode.alv.logdata.MeatGain;
+import com.googlecode.alv.logdata.Skill;
+import com.googlecode.alv.logdata.Statgain;
+import com.googlecode.alv.logdata.LogDataHolder.AscensionPath;
+import com.googlecode.alv.logdata.consumables.Consumable;
+import com.googlecode.alv.logdata.consumables.Consumable.ConsumableVersion;
+import com.googlecode.alv.logdata.summary.AreaStatgains;
+import com.googlecode.alv.logdata.summary.LevelData;
+import com.googlecode.alv.logdata.summary.QuestTurncounts;
+import com.googlecode.alv.logdata.turn.DetailedTurnInterval;
+import com.googlecode.alv.logdata.turn.Encounter;
+import com.googlecode.alv.logdata.turn.FreeRunaways;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.TurnInterval;
+import com.googlecode.alv.logdata.turn.TurnVersion;
+import com.googlecode.alv.logdata.turn.action.DayChange;
+import com.googlecode.alv.logdata.turn.action.FamiliarChange;
+import com.googlecode.alv.logdata.turn.action.PlayerSnapshot;
+import com.googlecode.alv.logdata.turn.action.Pull;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.DataCounter;
 import com.googlecode.alv.util.DataNumberPair;
+import com.googlecode.alv.util.DataUtilities;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LogOutputFormat;
 import com.googlecode.alv.util.Maps;
 import com.googlecode.alv.util.Pair;
 import com.googlecode.alv.util.Sets;
-import com.googlecode.alv.util.dataTables.DataTablesHandler;
-import com.googlecode.alv.util.dataTables.ExtraStats;
+import com.googlecode.alv.util.Constants;
+import com.googlecode.alv.util.data.DataTablesHandler;
+import com.googlecode.alv.util.data.ExtraStats;
 
 import java.util.Set;
-
-import net.java.dev.spellcast.utilities.DataUtilities;
-import net.java.dev.spellcast.utilities.UtilityConstants;
 
 /**
  * This utility class creates a parsed plaintext ascension log from a
@@ -271,7 +270,7 @@ public class TextLogCreator {
         final Map<String, String> map = Maps.newHashMap();
         String tmpLine;
 
-        try ( BufferedReader br = DataUtilities.getReader(UtilityConstants.KOL_DATA_DIRECTORY,
+        try ( BufferedReader br = DataUtilities.getReader(Constants.KOL_DATA_DIRECTORY,
                                                           augmentationsFile)) {
             while ((tmpLine = br.readLine()) != null)
                 // Ignore empty lines and comments

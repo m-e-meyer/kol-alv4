@@ -37,9 +37,9 @@ import org.jfree.chart.entity.PieSectionEntity;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.TurnVersion;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.TurnVersion;
 
 public final class TotalTurnsSpentPie extends PieChartBuilder {
     public TotalTurnsSpentPie(

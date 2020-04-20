@@ -35,10 +35,10 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.logSummary.LogSummaryData;
-import com.googlecode.alv.parser.blockParsers.*;
-import com.googlecode.alv.parser.lineParsers.*;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.summary.LogSummaryData;
+import com.googlecode.alv.parser.block.*;
+import com.googlecode.alv.parser.line.*;
 import com.googlecode.alv.util.DataNumberPair;
 import com.googlecode.alv.util.Lists;
 

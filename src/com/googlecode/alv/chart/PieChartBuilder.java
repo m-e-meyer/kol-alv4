@@ -30,7 +30,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.PieDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 public abstract class PieChartBuilder extends AbstractChart {
     protected PieChartBuilder(

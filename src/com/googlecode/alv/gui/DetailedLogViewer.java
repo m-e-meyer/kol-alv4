@@ -34,8 +34,8 @@ import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.alv.creator.HTMLLogCreator;
 import com.googlecode.alv.creator.TextLogCreator;
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.turn.*;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.*;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.LogOutputFormat;
 

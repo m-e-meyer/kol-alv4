@@ -24,7 +24,7 @@
 
 package com.googlecode.alv.gui.notetaker;
 
-import com.googlecode.alv.logData.LogComment;
+import com.googlecode.alv.logdata.LogComment;
 
 /**
  * This container class contains the pre- and post-interval {@link LogComment}s

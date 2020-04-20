@@ -27,8 +27,8 @@ package com.googlecode.alv.chart;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.Statgain;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.Statgain;
 
 public final class StatGiverBarChart extends HorizontalStackedBarChartBuilder {
     public StatGiverBarChart(

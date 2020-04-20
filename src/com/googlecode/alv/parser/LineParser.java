@@ -24,7 +24,7 @@
 
 package com.googlecode.alv.parser;
 
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 /**
  * An interface for a parser that can only parse one single line.

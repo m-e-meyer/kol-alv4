@@ -27,7 +27,7 @@ package com.googlecode.alv.parser;
 import java.io.IOException;
 
 import com.googlecode.alv.creator.TextLogCreator;
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 /**
  * An interface for an ascension log parser.

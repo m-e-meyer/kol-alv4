@@ -44,7 +44,7 @@ import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.creator.LogsCreator;
-import com.googlecode.alv.logData.turn.Encounter;
+import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.util.LogOutputFormat;
 import com.googlecode.alv.util.Pair;
 

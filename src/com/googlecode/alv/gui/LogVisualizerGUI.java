@@ -35,17 +35,16 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
-import net.java.dev.spellcast.utilities.UtilityConstants;
-
 import com.googlecode.alv.LogVisualizer;
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.gui.MafiaLogsVisualizerDialog.AscensionLogLoaderListener;
-import com.googlecode.alv.gui.dataTablesEditor.DataTablesEditor;
+import com.googlecode.alv.gui.datatable.DataTablesEditor;
 import com.googlecode.alv.gui.notetaker.Notetaker;
-import com.googlecode.alv.gui.projectUpdatesViewer.ProjectUpdateViewer;
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.gui.project.ProjectUpdateViewer;
+import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.util.LogOutputFormat;
-import com.googlecode.alv.util.dataTables.DataTablesHandler;
+import com.googlecode.alv.util.Constants;
+import com.googlecode.alv.util.data.DataTablesHandler;
 import com.sun.java.forums.CloseableTabbedPane;
 import com.sun.java.forums.CloseableTabbedPaneListener;
 
@@ -248,7 +247,7 @@ public final class LogVisualizerGUI extends JFrame {
                                                                 JOptionPane.OK_CANCEL_OPTION,
                                                                 JOptionPane.INFORMATION_MESSAGE);
                 if (state == JOptionPane.OK_OPTION) {
-                    for (final File file : UtilityConstants.KOL_DATA_LOCATION.listFiles())
+                    for (final File file : Constants.KOL_DATA_LOCATION.listFiles())
                         if (!file.isDirectory())
                             file.delete();
 

@@ -34,13 +34,13 @@ import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.entity.XYItemEntity;
 
-import com.googlecode.alv.logData.Item;
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.consumables.Consumable;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.Turn;
-import com.googlecode.alv.logData.turn.TurnInterval;
-import com.googlecode.alv.logData.turn.turnAction.EquipmentChange;
+import com.googlecode.alv.logdata.Item;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.consumables.Consumable;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.Turn;
+import com.googlecode.alv.logdata.turn.TurnInterval;
+import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 
 final class StatDevelopmentChartMouseEventListener implements ChartMouseListener {
     private final LogDataHolder logData;

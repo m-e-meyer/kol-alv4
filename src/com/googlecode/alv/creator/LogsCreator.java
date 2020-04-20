@@ -33,16 +33,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.Settings;
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.turn.Encounter;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.parser.MafiaLogParser;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LogOutputFormat;
 import com.googlecode.alv.util.LogsCache;
 import com.googlecode.alv.util.Pair;
-
-import net.java.dev.spellcast.utilities.UtilityConstants;
+import com.googlecode.alv.util.Constants;
 
 /**
  * This class gives access to methods to create condensed mafia ascension logs
@@ -80,7 +79,7 @@ public final class LogsCreator {
      * <p>
      * Please note that the condensed mafia logs created by this method are
      * stored in the directory for temporal data as denoted by
-     * {@link UtilityConstants#TEMP_LOCATION}. It is the <b>responsibility of
+     * {@link Constants#TEMP_LOCATION}. It is the <b>responsibility of
      * the programmer using this method to delete these files as soon as they
      * are not needed anymore</b> to ensure that no bugs appear because of
      * leftover files and no size bloat of the Ascension Log Visualizer
@@ -255,7 +254,7 @@ public final class LogsCreator {
         // are ignored here.
         // Don't delete if we're in debug mode.
         if (! Settings.getBoolean(Settings.DEBUG)) {
-            for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
+            for (final File f : Constants.TEMP_LOCATION.listFiles())
                 if (!f.isDirectory())
                     f.delete();
         }
@@ -382,7 +381,7 @@ public final class LogsCreator {
          * <p>
          * Please note that the condensed mafia logs created by this method are
          * stored in the directory for temporal data as denoted by
-         * {@link UtilityConstants#TEMP_LOCATION}. These files should be deleted
+         * {@link Constants#TEMP_LOCATION}. These files should be deleted
          * after use.
          * 
          * @return The condensed mafia logs.
@@ -494,7 +493,7 @@ public final class LogsCreator {
 
             scanner.close();
 
-            File currentCondensedFile = new File(UtilityConstants.TEMP_LOCATION, fileName);
+            File currentCondensedFile = new File(Constants.TEMP_LOCATION, fileName);
             currentCondensedLogWriter = new PrintWriter(currentCondensedFile.getAbsolutePath());
             return currentCondensedFile;
         }

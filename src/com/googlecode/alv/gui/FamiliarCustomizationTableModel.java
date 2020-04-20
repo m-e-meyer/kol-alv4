@@ -29,8 +29,8 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.googlecode.alv.chart.turnrundownGantt.FamiliarColor;
-import com.googlecode.alv.chart.turnrundownGantt.FamiliarColor.Colors;
+import com.googlecode.alv.chart.turnrundown.FamiliarColor;
+import com.googlecode.alv.chart.turnrundown.FamiliarColor.Colors;
 import com.googlecode.alv.util.Lists;
 
 /**

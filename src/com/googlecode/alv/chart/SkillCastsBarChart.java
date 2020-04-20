@@ -28,8 +28,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.Skill;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.Skill;
 
 public final class SkillCastsBarChart extends HorizontalBarChartBuilder {
 

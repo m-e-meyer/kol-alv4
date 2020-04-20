@@ -32,9 +32,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import com.googlecode.alv.chart.turnrundownGantt.TurnrundownGantt;
+import com.googlecode.alv.chart.turnrundown.TurnrundownGantt;
 import com.googlecode.alv.gui.LogGUI.GanttPaneButtonListener;
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 final class GanttPanelGUI extends JSplitPane {
     private GanttPaneButtonListener buttonListener;

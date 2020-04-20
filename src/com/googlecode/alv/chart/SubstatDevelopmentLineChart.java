@@ -36,13 +36,13 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.TextAnchor;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.Statgain;
-import com.googlecode.alv.logData.consumables.Consumable;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.Turn;
-import com.googlecode.alv.logData.turn.TurnInterval;
-import com.googlecode.alv.logData.turn.turnAction.DayChange;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.Statgain;
+import com.googlecode.alv.logdata.consumables.Consumable;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.Turn;
+import com.googlecode.alv.logdata.turn.TurnInterval;
+import com.googlecode.alv.logdata.turn.action.DayChange;
 
 public final class SubstatDevelopmentLineChart extends LineChartBuilder {
     public SubstatDevelopmentLineChart(

@@ -33,7 +33,7 @@ import java.util.Properties;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import net.java.dev.spellcast.utilities.UtilityConstants;
+import com.googlecode.alv.util.Constants;
 
 /**
  * This class handles access to general settings and preferences of the
@@ -74,7 +74,7 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
 public final class Settings 
 {
     public static final String VERSION_PROPERTY_NAME = "Version";
-    public static final String ALV_VERSION = "4.0.0.0";
+    public static final String ALV_VERSION = "4.0.0.0a";
     
     public static final String XML_VERSION_PROPERTY_NAME = "XML format version";
     public static final String XML_VERSION = "1.4";
@@ -89,8 +89,8 @@ public final class Settings
     public static final String DEBUG = "Debug";
 
     static {
-        SETTINGS_FILE = new File(UtilityConstants.ROOT_DIRECTORY + File.separator
-                + UtilityConstants.DATA_DIRECTORY + "ALV settings.txt");
+        SETTINGS_FILE = new File(Constants.ROOT_DIRECTORY + File.separator
+                + Constants.DATA_DIRECTORY + "ALV settings.txt");
 
         boolean isNimbusLafPresent = false;
         for (final LookAndFeelInfo lafi : UIManager.getInstalledLookAndFeels())
