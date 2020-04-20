@@ -34,61 +34,86 @@ import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Lists;
 
+/**
+ * This class is for recognizing starfish attacks during combat.
+ */
 public final class StarfishMPGainLineParser extends AbstractLineParser {
-    private static final Pattern STARFISH_ATK = Pattern.compile("Round \\d+: .+ floats behind your opponent, and begins to glow brightly.\\s*Starlight"
-                                                                + " shines through your opponent, doing \\d+ damage, and pours into your body.");
+    private static final String ROUND = "Round \\d+: .+ ";  // "Round" + number + familiar name
+    
+    private static final Pattern STARFISH_ATK 
+        = Pattern.compile(ROUND + "floats behind your opponent, and begins to glow brightly.\\s*Starlight"
+                          + " shines through your opponent, doing \\d+ damage, and pours into your body.");
 
-    private static final Pattern SPIRIT_HOBO_ATK = Pattern.compile("Round \\d+: .+ holds up an empty bottle of booze and gazes at it sadly."
-                                                                   + "\\s*Starlight filters through the bottle, through the spirit hobo, and"
-                                                                   + " through the booze inside the spirit hobo, then pierces your opponent"
-                                                                   + " for \\d+ damage, and then shines into you.\\s*What the hell\\?");
+    private static final Pattern SPIRIT_HOBO_ATK 
+        = Pattern.compile(ROUND + "holds up an empty bottle of booze and gazes at it sadly."
+                          + "\\s*Starlight filters through the bottle, through the spirit hobo, and"
+                          + " through the booze inside the spirit hobo, then pierces your opponent"
+                          + " for \\d+ damage, and then shines into you.\\s*What the hell\\?");
 
-    private static final Pattern GGG_ATK1 = Pattern.compile("Round \\d+: .+ slimes your opponent thoroughly, dealing \\d+ damage."
-                                                            + "\\s*The resulting ectoplasmic shock wave gives you a mystical jolt.");
+    private static final Pattern GGG_ATK1 
+        = Pattern.compile(ROUND + "slimes your opponent thoroughly, dealing \\d+ damage."
+                          + "\\s*The resulting ectoplasmic shock wave gives you a mystical jolt.");
 
-    private static final Pattern GGG_ATK2 = Pattern.compile("Round \\d+: .+ swoops through your opponent, somehow transferring \\d+ points"
-                                                            + " of \\w+ lifeforce into \\w+ Points for you.\\s*You feel slightly skeeved out.");
+    private static final Pattern GGG_ATK2 
+        = Pattern.compile(ROUND + "swoops through your opponent, somehow transferring \\d+ points"
+                          + " of \\w+ lifeforce into \\w+ Points for you.\\s*You feel slightly skeeved out.");
 
-    private static final Pattern GGG_ATK3 = Pattern.compile("Round \\d+: .+ swoops back and forth through your opponent, scaring the bejeezus"
-                                                            + " out of \\w+ to the tune of \\d+ damage.\\s*Then he converts the bejeezus into \\w+ Points!");
+    private static final Pattern GGG_ATK3 
+        = Pattern.compile(ROUND + "swoops back and forth through your opponent, scaring the bejeezus"
+                          + " out of \\w+ to the tune of \\d+ damage.\\s*Then he converts the bejeezus into \\w+ Points!");
 
-    private static final Pattern SLIMELING_ATK = Pattern.compile("Round \\d+: .+ leaps on your opponent, sliming \\w+ for \\d+ damage.\\s*It's inspiring!");
+    private static final Pattern SLIMELING_ATK 
+        = Pattern.compile(ROUND + "leaps on your opponent, sliming \\w+ for \\d+ damage.\\s*It's inspiring!");
 
-    private static final Pattern ROUGE_ATK1 = Pattern.compile("Round \\d+: .+ de-rezzes \\w+ for \\d+ damage, then offers you a drink out"
-                                                              + " of his identity disc.\\s*It's a little too intimate for your comfort,"
-                                                              + " but it's still refreshing.");
+    private static final Pattern ROGUE_ATK1 
+        = Pattern.compile(ROUND + "de-rezzes \\w+ for \\d+ damage, then offers you a drink out"
+                          + " of his identity disc.\\s*It's a little too intimate for your comfort,"
+                          + " but it's still refreshing.");
 
-    private static final Pattern ROUGE_ATK2 = Pattern.compile("Round \\d+: .+ tosses his identity disc at \\w+ for \\d+ damage, then invites"
-                                                              + " you to drink some glowing blue liquid out of the disc.\\s*The whole thing's a"
-                                                              + " little more intimate than you're comfortable with, but it's still refreshing.");
+    private static final Pattern ROGUE_ATK2 
+        = Pattern.compile(ROUND + "tosses his identity disc at \\w+ for \\d+ damage, then invites"
+                          + " you to drink some glowing blue liquid out of the disc.\\s*The whole thing's a"
+                          + " little more intimate than you're comfortable with, but it's still refreshing.");
 
-    private static final Pattern ROUGE_ATK3 = Pattern.compile("Round \\d+: .+ bounces his disc off of \\w+ for \\d+ damage, and it ricochets into you, giving you quite a shock.");
+    private static final Pattern ROGUE_ATK3 
+        = Pattern.compile(ROUND + "bounces his disc off of \\w+ for \\d+ damage, "
+                          + "and it ricochets into you, giving you quite a shock.");
 
-    private static final Pattern CLOWNFISH_ATK = Pattern.compile("Round \\d+: .+ flops toward \\w+, gasping for water, and manages to tailsmack \\w+ for \\d+ slimy, clammy damage.");
+    private static final Pattern CLOWNFISH_ATK 
+        = Pattern.compile(ROUND + "flops toward \\w+, gasping for water, and manages to tailsmack \\w+ "
+                          + "for \\d+ slimy, clammy damage.");
 
-    private static final Pattern DUCK_ATK = Pattern.compile("Round \\d+: .+ quacks loudly, and a bolt of enriched wheat energy tears through your opponent for \\d+ damage, then arcs toward you, energizing your nervous system.");
+    private static final Pattern DUCK_ATK 
+        = Pattern.compile(ROUND + "quacks loudly, and a bolt of enriched wheat energy tears through your opponent "
+                          + "for \\d+ damage, then arcs toward you, energizing your nervous system.");
 
-    private static final Pattern ANGEL_ATK = Pattern.compile("Round \\d+: .+ rises into the air and spreads her wings, bathing your opponent in cold light and dealing \\d+ damage.\\s*It's inspiring.");
+    private static final Pattern ANGEL_ATK 
+        = Pattern.compile(ROUND + "rises into the air and spreads her wings, bathing your opponent in cold light "
+                          + "and dealing \\d+ damage.\\s*It's inspiring.");
 
-    private static final Pattern BONSAI_ATK = Pattern.compile("Round \\d+: .+ fixes an evil glare on your opponent, causing \\w+ to suffer \\d+ damage worth of heebie-jeebies.\\s*A plume of oily black smoke emerges from his bark, and you accidentally inhale some of it.\\s*You realize, to your horror, that it smells... good.");
-
-    private static final List<Pattern> STARFISH_ATTACKS = Lists.immutableListOf(STARFISH_ATK,
-                                                                                SLIMELING_ATK,
-                                                                                ROUGE_ATK1,
-                                                                                ROUGE_ATK2,
-                                                                                ROUGE_ATK3,
-                                                                                CLOWNFISH_ATK,
-                                                                                DUCK_ATK,
-                                                                                ANGEL_ATK,
-                                                                                BONSAI_ATK,
-                                                                                SPIRIT_HOBO_ATK,
-                                                                                GGG_ATK1,
-                                                                                GGG_ATK2,
-                                                                                GGG_ATK3);
+    private static final Pattern BONSAI_ATK 
+        = Pattern.compile(ROUND + "fixes an evil glare on your opponent, causing \\w+ to suffer \\d+ damage worth "
+                          + "of heebie-jeebies.\\s*A plume of oily black smoke emerges from his bark, "
+                          + "and you accidentally inhale some of it.\\s*You realize, to your horror, that it smells... good.");
+    
+    private static final List<Pattern> STARFISH_ATTACKS 
+        = Lists.immutableListOf(STARFISH_ATK,
+                                SLIMELING_ATK,
+                                ROGUE_ATK1,
+                                ROGUE_ATK2,
+                                ROGUE_ATK3,
+                                CLOWNFISH_ATK,
+                                DUCK_ATK,
+                                ANGEL_ATK,
+                                BONSAI_ATK,
+                                SPIRIT_HOBO_ATK,
+                                GGG_ATK1,
+                                GGG_ATK2,
+                                GGG_ATK3);
 
     private static final String OPPONENT_STRING = "opponent";
 
-    private static final String ROUGE_SPECIFIC_STRING = "disc";
+    private static final String ROGUE_SPECIFIC_STRING = "disc";
 
     private static final String CLOWNFISH_SPECIFIC_STRING = "tailsmack";
 
@@ -96,10 +121,10 @@ public final class StarfishMPGainLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(
-                             final String line, final LogDataHolder logData) {
+    protected void doParsing(final String line, final LogDataHolder logData)
+    {
         // Most starfish familiars have the word "opponent" inside their attack
-        // messages before the damage is given. The Rouge Program and Clownfish
+        // messages before the damage is given. The ROGUE Program and Clownfish
         // do not however.
         final String tmp;
         if (line.contains(OPPONENT_STRING))
@@ -110,17 +135,19 @@ public final class StarfishMPGainLineParser extends AbstractLineParser {
             tmp = line.substring(line.lastIndexOf("de-rezzes"));
         else {
             final String subStr = line.substring(0, line.lastIndexOf("damage"));
-            tmp = subStr.substring(subStr.lastIndexOf(ROUGE_SPECIFIC_STRING));
+            tmp = subStr.substring(subStr.lastIndexOf(ROGUE_SPECIFIC_STRING));
         }
-        final Scanner scanner = new Scanner(tmp);
-        scanner.useDelimiter(UsefulPatterns.NOT_A_NUMBER);
-        final int dmg = scanner.nextInt();
+        int dmg;
+        try (final Scanner scanner = new Scanner(tmp)) {
+            scanner.useDelimiter(UsefulPatterns.NOT_A_NUMBER);
+            dmg = scanner.nextInt();
+        }
 
         final Turn lastTurn = logData.getLastTurnSpent();
         lastTurn.addMPGain(new MPGain(0, dmg, 0, 0, 0));
         // Subtract from encounter mp gains the amount of starfish mp, because
         // mafia throws the mp gain of the starfish also out in a way that will
-        // be catched by the MPGainLineParser.
+        // be caught by the MPGainLineParser.
         lastTurn.addMPGain(new MPGain(dmg * -1, 0, 0, 0, 0));
     }
 
@@ -128,10 +155,11 @@ public final class StarfishMPGainLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(
-                                       final String line) {
+    protected boolean isCompatibleLine(final String line) 
+    {
         if (line.startsWith(UsefulPatterns.COMBAT_ROUND_LINE_BEGINNING_STRING)
-            && (line.contains(OPPONENT_STRING) || line.contains(ROUGE_SPECIFIC_STRING) || line.contains(CLOWNFISH_SPECIFIC_STRING)))
+            && (line.contains(OPPONENT_STRING) || line.contains(ROGUE_SPECIFIC_STRING) 
+                    || line.contains(CLOWNFISH_SPECIFIC_STRING)))
             for (final Pattern p : STARFISH_ATTACKS)
                 if (p.matcher(line).matches())
                     return true;
