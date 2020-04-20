@@ -43,9 +43,9 @@ import org.jfree.chart.renderer.category.StackedBarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.consumables.Consumable;
-import com.googlecode.alv.logData.turn.SingleTurn;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.consumables.Consumable;
+import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.util.Lists;
 
 public final class ConsumptionBarChart extends HorizontalStackedBarChartBuilder {

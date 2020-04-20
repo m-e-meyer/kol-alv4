@@ -36,12 +36,10 @@ import com.googlecode.alv.creator.LogsCreator;
 import com.googlecode.alv.creator.XMLLogCreator;
 import com.googlecode.alv.creator.util.FileAccessException;
 import com.googlecode.alv.creator.util.XMLAccessException;
-import com.googlecode.alv.logData.turn.Encounter;
+import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.parser.LogParser;
 import com.googlecode.alv.parser.MafiaLogParser;
 import com.googlecode.alv.util.Lists;
-
-import net.java.dev.spellcast.utilities.UtilityConstants;
 
 /**
  * This class should be used to handle ascension log caching to limit the amount
@@ -131,7 +129,7 @@ public enum LogsCache {
                     try {
                         logParser.parse();
                         XMLLogCreator.createXMLLog(logParser.getLogData(),
-                                                   UtilityConstants.CACHE_LOCATION);
+                                                   Constants.CACHE_LOCATION);
                     } catch (final IOException e) {
                         // Add the erroneous log to the error file list.
                         errorFileList.add(Pair.of(log.getName(),
@@ -168,7 +166,7 @@ public enum LogsCache {
     {
         logsByCharacterMap = Maps.newHashMap();
 
-        final File[] cachedFiles = UtilityConstants.CACHE_LOCATION.listFiles();
+        final File[] cachedFiles = Constants.CACHE_LOCATION.listFiles();
         Arrays.sort(cachedFiles, FILE_COMPARATOR);
 
         for (final File f : cachedFiles)
@@ -193,7 +191,7 @@ public enum LogsCache {
      */
     public synchronized void deleteCache() 
     {
-        for (final File f : UtilityConstants.CACHE_LOCATION.listFiles())
+        for (final File f : Constants.CACHE_LOCATION.listFiles())
             if (!f.isDirectory())
                 f.delete();
 

@@ -31,9 +31,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.TurnInterval;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.TurnInterval;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.DataNumberPair;
 

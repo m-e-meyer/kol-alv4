@@ -39,9 +39,9 @@ import javax.swing.filechooser.FileFilter;
 
 import org.jfree.ui.RefineryUtilities;
 
-import com.googlecode.alv.chart.turnrundownGantt.TurnAreaCategory;
-import com.googlecode.alv.chart.turnrundownGantt.TurnrundownGantt;
-import com.googlecode.alv.logData.turn.TurnInterval;
+import com.googlecode.alv.chart.turnrundown.TurnAreaCategory;
+import com.googlecode.alv.chart.turnrundown.TurnrundownGantt;
+import com.googlecode.alv.logdata.turn.TurnInterval;
 import com.googlecode.alv.util.CategoryViewFileHandler;
 import com.googlecode.alv.util.Lists;
 

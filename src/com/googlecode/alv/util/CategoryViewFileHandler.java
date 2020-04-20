@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.googlecode.alv.chart.turnrundownGantt.TurnAreaCategory;
+import com.googlecode.alv.chart.turnrundown.TurnAreaCategory;
 
 /**
  * An utility class to handle saving and loading of category views.

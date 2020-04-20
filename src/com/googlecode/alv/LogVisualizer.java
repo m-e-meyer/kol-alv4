@@ -24,7 +24,7 @@
 
 package com.googlecode.alv;
 
-import static net.java.dev.spellcast.utilities.UtilityConstants.*;
+import static com.googlecode.alv.util.Constants.*;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -41,26 +41,25 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import net.java.dev.spellcast.utilities.DataUtilities;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.ui.RefineryUtilities;
 
-import com.googlecode.alv.chart.turnrundownGantt.TurnrundownGantt;
+import com.googlecode.alv.chart.turnrundown.TurnrundownGantt;
 import com.googlecode.alv.creator.util.FileAccessException;
 import com.googlecode.alv.creator.util.XMLAccessException;
 import com.googlecode.alv.creator.util.XMLLogReader;
 import com.googlecode.alv.gui.*;
 import com.googlecode.alv.gui.LogGUI.GanttPaneButtonListener;
 import com.googlecode.alv.gui.LogVisualizerGUI.LogLoaderListener;
-import com.googlecode.alv.gui.projectUpdatesViewer.ProjectUpdateViewer;
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.gui.project.ProjectUpdateViewer;
+import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.parser.LogParser;
 import com.googlecode.alv.parser.MafiaLogParser;
 import com.googlecode.alv.parser.PreparsedLogParser;
+import com.googlecode.alv.util.DataUtilities;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LogOutputFormat;
 

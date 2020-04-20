@@ -26,9 +26,9 @@ package com.googlecode.alv.creator.util;
 
 import java.util.Locale;
 
-import com.googlecode.alv.logData.LogDataHolder.StatClass;
+import com.googlecode.alv.logdata.LogDataHolder.StatClass;
 import com.googlecode.alv.parser.UsefulPatterns;
-import com.googlecode.alv.util.dataTables.ExtraStats;
+import com.googlecode.alv.util.data.ExtraStats;
 
 /**
  * Helper class used to help handle the +STAT BREAKDOWN summary, namely counting

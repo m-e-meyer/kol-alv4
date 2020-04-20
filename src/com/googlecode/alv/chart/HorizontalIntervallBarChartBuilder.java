@@ -43,7 +43,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.ui.TextAnchor;
 import org.jfree.util.SortOrder;
 
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 //TODO Class not used. Should it be deleted?
 public abstract class HorizontalIntervallBarChartBuilder extends AbstractChart {

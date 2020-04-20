@@ -42,7 +42,7 @@ import com.googlecode.alv.creator.TextLogCreator;
 import com.googlecode.alv.creator.XMLLogCreator;
 import com.googlecode.alv.creator.util.FileAccessException;
 import com.googlecode.alv.creator.util.XMLAccessException;
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.util.LogOutputFormat;
 
 /**

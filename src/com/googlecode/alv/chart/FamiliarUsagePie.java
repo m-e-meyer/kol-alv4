@@ -38,8 +38,8 @@ import org.jfree.chart.entity.PieSectionEntity;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.turn.turnAction.FamiliarChange;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.util.DataNumberPair;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LookAheadIterator;

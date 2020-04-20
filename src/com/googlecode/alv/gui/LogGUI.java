@@ -34,13 +34,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.googlecode.alv.chart.*;
-import com.googlecode.alv.chart.perDayConsumption.PerDayConsumptionBarCharts;
-import com.googlecode.alv.chart.turnrundownGantt.TurnrundownGantt;
+import com.googlecode.alv.chart.consumption.PerDayConsumptionBarCharts;
+import com.googlecode.alv.chart.turnrundown.TurnrundownGantt;
 import com.googlecode.alv.creator.TextLogCreator;
 import com.googlecode.alv.gui.notetaker.Notetaker;
-import com.googlecode.alv.gui.searchDialogs.SearchDialogs;
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.turn.TurnInterval;
+import com.googlecode.alv.gui.search.SearchDialogs;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.TurnInterval;
 import com.googlecode.alv.util.LogOutputFormat;
 
 public final class LogGUI extends JSplitPane {

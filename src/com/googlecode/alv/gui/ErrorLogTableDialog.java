@@ -33,7 +33,7 @@ import java.util.Locale;
 
 import javax.swing.*;
 
-import com.googlecode.alv.logData.turn.Encounter;
+import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Pair;
 

@@ -28,8 +28,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.turn.turnAction.Pull;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.action.Pull;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.LookAheadIterator;
 

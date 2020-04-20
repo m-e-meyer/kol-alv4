@@ -35,7 +35,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.IntervalXYDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 public abstract class VerticalXYBarChartBuilder extends AbstractChart {
     private final String xLable;

@@ -30,8 +30,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.logSummary.LevelData;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.summary.LevelData;
 
 public final class TurnsSpentPerLevelBarChart extends HorizontalStackedBarChartBuilder {
     private static final Pattern LEVEL_EXTRACTOR = Pattern.compile("Level (\\d+) \\(.+\\)");

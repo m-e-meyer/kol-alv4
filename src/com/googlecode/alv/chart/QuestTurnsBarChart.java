@@ -33,7 +33,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 public final class QuestTurnsBarChart extends HorizontalBarChartBuilder {
     private static final String QUEST_TURNS_STRING = "Quest turns";

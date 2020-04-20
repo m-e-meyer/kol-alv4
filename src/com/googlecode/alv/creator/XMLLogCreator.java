@@ -36,15 +36,15 @@ import com.bea.xml.stream.XMLOutputFactoryBase;
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.creator.util.FileAccessException;
 import com.googlecode.alv.creator.util.XMLAccessException;
-import com.googlecode.alv.logData.*;
-import com.googlecode.alv.logData.consumables.Consumable;
-import com.googlecode.alv.logData.logSummary.LevelData;
-import com.googlecode.alv.logData.turn.Encounter;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.TurnInterval;
-import com.googlecode.alv.logData.turn.turnAction.*;
+import com.googlecode.alv.logdata.*;
+import com.googlecode.alv.logdata.consumables.Consumable;
+import com.googlecode.alv.logdata.summary.LevelData;
+import com.googlecode.alv.logdata.turn.Encounter;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.TurnInterval;
+import com.googlecode.alv.logdata.turn.action.*;
 import com.googlecode.alv.util.DataNumberPair;
-import com.googlecode.alv.util.dataTables.DataTablesHandler;
+import com.googlecode.alv.util.data.DataTablesHandler;
 
 import javanet.staxutils.IndentingXMLStreamWriter;
 

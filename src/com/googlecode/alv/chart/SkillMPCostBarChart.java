@@ -32,8 +32,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.Skill;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.Skill;
 import com.googlecode.alv.util.Lists;
 
 public final class SkillMPCostBarChart extends HorizontalBarChartBuilder {

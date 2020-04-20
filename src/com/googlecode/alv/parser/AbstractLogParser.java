@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.googlecode.alv.creator.TextLogCreator;
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.util.Lists;
 
 /**

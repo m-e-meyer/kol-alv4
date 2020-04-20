@@ -34,11 +34,11 @@ import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.entity.CategoryItemEntity;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.Skill;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.Turn;
-import com.googlecode.alv.logData.turn.TurnInterval;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.Skill;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.Turn;
+import com.googlecode.alv.logdata.turn.TurnInterval;
 
 final class SkillCastOnTurnsChartMouseEventListener implements ChartMouseListener {
     private final LogDataHolder logData;

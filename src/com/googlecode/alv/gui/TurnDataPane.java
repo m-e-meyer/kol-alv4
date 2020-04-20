@@ -31,15 +31,15 @@ import javax.swing.JEditorPane;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
 
-import com.googlecode.alv.logData.Item;
-import com.googlecode.alv.logData.MPGain;
-import com.googlecode.alv.logData.Skill;
-import com.googlecode.alv.logData.consumables.Consumable;
-import com.googlecode.alv.logData.turn.Encounter;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.TurnEntity;
-import com.googlecode.alv.logData.turn.TurnInterval;
-import com.googlecode.alv.logData.turn.turnAction.EquipmentChange;
+import com.googlecode.alv.logdata.Item;
+import com.googlecode.alv.logdata.MPGain;
+import com.googlecode.alv.logdata.Skill;
+import com.googlecode.alv.logdata.consumables.Consumable;
+import com.googlecode.alv.logdata.turn.Encounter;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.TurnEntity;
+import com.googlecode.alv.logdata.turn.TurnInterval;
+import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Sets;
 

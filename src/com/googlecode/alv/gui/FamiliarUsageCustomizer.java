@@ -32,8 +32,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jfree.ui.RefineryUtilities;
 
-import com.googlecode.alv.chart.turnrundownGantt.TurnrundownGantt;
-import com.googlecode.alv.chart.turnrundownGantt.FamiliarColor.Colors;
+import com.googlecode.alv.chart.turnrundown.TurnrundownGantt;
+import com.googlecode.alv.chart.turnrundown.FamiliarColor.Colors;
 
 public final class FamiliarUsageCustomizer extends JDialog {
     private final TurnrundownGantt turnrundownChart;

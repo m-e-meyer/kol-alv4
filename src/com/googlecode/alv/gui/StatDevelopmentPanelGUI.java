@@ -36,7 +36,7 @@ import javax.swing.event.ChangeListener;
 
 import com.googlecode.alv.chart.StatDevelopmentLineChart;
 import com.googlecode.alv.chart.SubstatDevelopmentLineChart;
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 final class StatDevelopmentPanelGUI extends JSplitPane {
     private static final String EFFECTIVE_STATS = "effective stats";

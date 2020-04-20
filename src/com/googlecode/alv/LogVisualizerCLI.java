@@ -30,7 +30,7 @@ import java.util.List;
 
 import com.googlecode.alv.creator.LogsCreator;
 import com.googlecode.alv.gui.InternalMafiaLogParserDialog;
-import com.googlecode.alv.logData.turn.Encounter;
+import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.parser.MafiaLogIndex;
 import com.googlecode.alv.util.LogOutputFormat;
 import com.googlecode.alv.util.Pair;

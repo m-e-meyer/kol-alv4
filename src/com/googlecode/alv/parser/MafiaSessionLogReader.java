@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.googlecode.alv.parser.mafiaLogBlockParsers.HybridDataBlockParser;
+import com.googlecode.alv.parser.mafiablock.HybridDataBlockParser;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.Sets;
 

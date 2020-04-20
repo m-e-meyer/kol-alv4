@@ -24,7 +24,7 @@
 
 package com.googlecode.alv.gui;
 
-import static net.java.dev.spellcast.utilities.UtilityConstants.LICENSE_DIRECTORY;
+import static com.googlecode.alv.util.Constants.LICENSE_DIRECTORY;
 
 import java.awt.CardLayout;
 import java.awt.GridLayout;
@@ -36,10 +36,9 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import net.java.dev.spellcast.utilities.DataUtilities;
-
 import org.jfree.ui.RefineryUtilities;
 
+import com.googlecode.alv.util.DataUtilities;
 import com.googlecode.alv.util.Lists;
 
 public final class LicenseViewer extends JDialog {

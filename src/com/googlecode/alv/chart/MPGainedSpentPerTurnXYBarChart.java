@@ -45,9 +45,9 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.Skill;
-import com.googlecode.alv.logData.turn.SingleTurn;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.Skill;
+import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.util.Lists;
 
 public final class MPGainedSpentPerTurnXYBarChart extends VerticalXYBarChartBuilder {

@@ -31,7 +31,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.googlecode.alv.logData.LogDataHolder.CharacterClass;
+import com.googlecode.alv.logdata.LogDataHolder.CharacterClass;
 import com.googlecode.alv.util.Maps;
 import com.googlecode.alv.util.Pair;
 import com.googlecode.alv.util.Sets;

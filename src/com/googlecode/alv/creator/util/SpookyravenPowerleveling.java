@@ -24,10 +24,10 @@
 
 package com.googlecode.alv.creator.util;
 
-import com.googlecode.alv.logData.Item;
-import com.googlecode.alv.logData.turn.SingleTurn;
-import com.googlecode.alv.logData.turn.TurnInterval;
-import com.googlecode.alv.logData.turn.TurnVersion;
+import com.googlecode.alv.logdata.Item;
+import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.logdata.turn.TurnInterval;
+import com.googlecode.alv.logdata.turn.TurnVersion;
 
 /**
  * A helper class for Spookyraven powerleveling statistics.

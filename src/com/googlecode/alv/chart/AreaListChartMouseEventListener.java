@@ -34,8 +34,8 @@ import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.entity.CategoryItemEntity;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.turn.TurnInterval;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.TurnInterval;
 
 final class AreaListChartMouseEventListener implements ChartMouseListener {
     private final LogDataHolder logData;

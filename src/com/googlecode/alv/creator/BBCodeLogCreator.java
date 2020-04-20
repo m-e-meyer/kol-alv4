@@ -26,7 +26,7 @@ package com.googlecode.alv.creator;
 
 import java.util.Collections;
 
-import com.googlecode.alv.logData.LogDataHolder;
+import com.googlecode.alv.logdata.LogDataHolder;
 
 /**
  * This class extends TextLogCreator so as to create BBCode log output.  It's

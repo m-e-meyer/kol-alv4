@@ -26,9 +26,9 @@ package com.googlecode.alv.creator;
 
 import java.util.Collections;
 
-import com.googlecode.alv.logData.LogDataHolder;
-import com.googlecode.alv.logData.Skill;
-import com.googlecode.alv.logData.turn.turnAction.DayChange;
+import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.Skill;
+import com.googlecode.alv.logdata.turn.action.DayChange;
 
 /**
  * This class extends TextLogCreator so as to create HTML log output.  It 
