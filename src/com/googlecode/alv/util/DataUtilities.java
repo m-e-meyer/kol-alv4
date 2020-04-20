@@ -46,6 +46,8 @@ import java.util.Arrays;
  * which are used by multiple instances of a JComponent and have a
  * non-class-specific purpose should be placed into this class in order to
  * simplify the overall design of the system and to facilitate documentation.
+ * 
+ * Formerly net.java.dev.spellcast.utilities.DataUtilities
  */
 public final class DataUtilities {
     private static final String[] EMPTY_STRING_ARRAY = new String[0];

@@ -42,6 +42,8 @@ import java.io.File;
  * are used by multiple instances of a JComponent and have a non-class-specific
  * purpose should be placed into this class in order to simplify the overall
  * design of the system and to facilitate documentation.
+ * 
+ * Formerly net.java.dev.spellcast.utilities.UtilityConstants
  */
 public final class Constants {
     public static final ClassLoader SYSTEM_CLASSLOADER = ClassLoader.getSystemClassLoader();
