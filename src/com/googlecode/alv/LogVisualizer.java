@@ -80,9 +80,12 @@ public final class LogVisualizer
             KOL_DATA_LOCATION.mkdir();
 
         // Delete all files in the temporary directory. Ignore subdirectories.
-        for (final File f : TEMP_LOCATION.listFiles())
-            if (!f.isDirectory())
-                f.delete();
+        // Don't delete if in debug mode.
+        if (! Settings.getBoolean(Settings.DEBUG)) {
+            for (final File f : TEMP_LOCATION.listFiles())
+                if (!f.isDirectory())
+                    f.delete();
+        }
 
         writeDataFilesToFileSystem();
 
@@ -253,11 +256,11 @@ public final class LogVisualizer
     public static void writeDataFilesToFileSystem() 
     {
         final List<File> kolDataFiles = Lists.newArrayList();
-        kolDataFiles.add(new File(ROOT_DIRECTORY + File.separator + KOL_DATA_DIRECTORY
+        kolDataFiles.add(new File(ROOT_DIRECTORY + File.separator + DATA_DIRECTORY
                                   + "bbcodeAugmentations.txt"));
-        kolDataFiles.add(new File(ROOT_DIRECTORY + File.separator + KOL_DATA_DIRECTORY
+        kolDataFiles.add(new File(ROOT_DIRECTORY + File.separator + DATA_DIRECTORY
                                   + "htmlAugmentations.txt"));
-        kolDataFiles.add(new File(ROOT_DIRECTORY + File.separator + KOL_DATA_DIRECTORY
+        kolDataFiles.add(new File(ROOT_DIRECTORY + File.separator + DATA_DIRECTORY
                                   + "textAugmentations.txt"));
 
         for (final File f : kolDataFiles)

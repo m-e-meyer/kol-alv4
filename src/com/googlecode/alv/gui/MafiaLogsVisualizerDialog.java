@@ -330,10 +330,13 @@ final class MafiaLogsVisualizerDialog extends JDialog {
 
         // In case there are still some logs in the temporary data directory
         // delete all of its contents.
-        for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
-            if (!f.isDirectory())
-                f.delete();
-
+        // Don't delete if in debug mode.
+        if (! Settings.getBoolean(Settings.DEBUG)) {
+            for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
+                if (!f.isDirectory())
+                    f.delete();
+        }
+        
         // Start the actual computation.
         taskQueue.runBackgroundTask(new Runnable() {
             public void run() {
@@ -447,10 +450,12 @@ final class MafiaLogsVisualizerDialog extends JDialog {
         // Wait for any leftover background tasks to finish.
         taskQueue.waitForComputationEnd();
 
-        // Delete any leftover temporary data.
-        for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
-            if (!f.isDirectory())
-                f.delete();
+        // Delete any leftover temporary data, unless in Debug mode.
+        if (! Settings.getBoolean(Settings.DEBUG)) {
+            for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
+                if (!f.isDirectory())
+                    f.delete();
+        }
 
         super.dispose();
     }

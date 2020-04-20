@@ -253,9 +253,12 @@ public final class LogsCreator {
 
         // Temporary files should be deleted after use. Possible subdirectories
         // are ignored here.
-        for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
-            if (!f.isDirectory())
-                f.delete();
+        // Don't delete if we're in debug mode.
+        if (! Settings.getBoolean(Settings.DEBUG)) {
+            for (final File f : UtilityConstants.TEMP_LOCATION.listFiles())
+                if (!f.isDirectory())
+                    f.delete();
+        }
 
         return errorFileList;
     }
@@ -326,8 +329,7 @@ public final class LogsCreator {
         private static final FilenameFilter CONDENSED_MAFIA_LOG_FILTER = new FilenameFilter() {
             private final Matcher mafiaLogMatcher = Pattern.compile(".*\\-\\d+\\.txt$").matcher("");
 
-            public boolean accept(
-                                  final File dir, final String name) {
+            public boolean accept(final File dir, final String name) {
                 return mafiaLogMatcher.reset(name).matches();
             }
         };
@@ -336,7 +338,7 @@ public final class LogsCreator {
 
         private final File[] mafiaLogs;
 
-        private PrintWriter currentWritingFile;
+        private PrintWriter currentCondensedLogWriter;
 
         /**
          * @param mafiaLogs
@@ -391,6 +393,10 @@ public final class LogsCreator {
         File[] condense()
         throws IOException 
         {
+            // Since we can no longer assume the temp directory will be empty because of
+            // debugging, we need to keep track of what files we generate
+            TreeSet<File> condensedFiles = new TreeSet<File>(LogsCache.FILE_COMPARATOR);
+
             String userName = mafiaLogs[0].getName()
                                           .substring(0, mafiaLogs[0].getName().lastIndexOf("_"))
                                           .toLowerCase();
@@ -398,14 +404,14 @@ public final class LogsCreator {
             int dayNumber = 1;
 
             Calendar lastLogDate = UsefulPatterns.getMafiaLogCalendarDate(mafiaLogs[0]);
-            openNextWritingFile(mafiaLogs[0].getName());
+            condensedFiles.add(openNextWritingFile(mafiaLogs[0].getName()));
 
             for (final File f : mafiaLogs) {
                 final String currentLogUserName = f.getName()
                                                    .substring(0, f.getName().lastIndexOf("_"))
                                                    .toLowerCase();
                 if (!userName.equals(currentLogUserName)) {
-                    openNextWritingFile(f.getName());
+                    condensedFiles.add(openNextWritingFile(f.getName()));
                     dayNumber = 1;
                     lastLogDate = UsefulPatterns.getMafiaLogCalendarDate(f);
                     userName = currentLogUserName;
@@ -418,9 +424,9 @@ public final class LogsCreator {
                     dayDiff--;
                     dayNumber++;
                     lastKolDate = null;
-                    currentWritingFile.println();
-                    currentWritingFile.println("===Day " + dayNumber + "===");
-                    currentWritingFile.println();
+                    currentCondensedLogWriter.println();
+                    currentCondensedLogWriter.println("===Day " + dayNumber + "===");
+                    currentCondensedLogWriter.println();
                 }
                 lastLogDate = currentLogDate;
 
@@ -428,7 +434,7 @@ public final class LogsCreator {
                 String tmpLine;
 
                 while ((tmpLine = br.readLine()) != null) {
-                    currentWritingFile.println(tmpLine);
+                    currentCondensedLogWriter.println(tmpLine);
 
                     for (final String s : months)
                         if (tmpLine.startsWith(s) && !tmpLine.startsWith("April Fool's Day")) {
@@ -436,7 +442,7 @@ public final class LogsCreator {
                             if (lastKolDate == null)
                                 lastKolDate = currentKolDate;
                             else if (!currentKolDate.equals(lastKolDate)) {
-                                currentWritingFile.println("Day change occurred");
+                                currentCondensedLogWriter.println("Day change occurred");
                                 dayNumber++;
                                 lastLogDate.add(Calendar.DAY_OF_MONTH, 1);
                                 lastKolDate = currentKolDate;
@@ -444,7 +450,7 @@ public final class LogsCreator {
                         }
 
                     if (ascendedMatcher.reset(tmpLine).matches()) {
-                        openNextWritingFile(f.getName());
+                        condensedFiles.add(openNextWritingFile(f.getName()));
                         dayNumber = 1;
                     }
                 }
@@ -453,14 +459,12 @@ public final class LogsCreator {
             }
 
             // Close print-stream after the last log was read.
-            if (currentWritingFile != null)
-                currentWritingFile.close();
+            if (currentCondensedLogWriter != null)
+                currentCondensedLogWriter.close();
 
-            final File[] condensedMafiaLogs = UtilityConstants.TEMP_LOCATION.listFiles(CONDENSED_MAFIA_LOG_FILTER);
-            // Sort array in case it isn't already in the proper order, which is
-            // oldest mafia log first.
-            Arrays.sort(condensedMafiaLogs, LogsCache.FILE_COMPARATOR);
-            return condensedMafiaLogs;
+            File[] result = new File[condensedFiles.size()];
+            result = condensedFiles.toArray(result);
+            return result;
         }
 
         /**
@@ -474,12 +478,13 @@ public final class LogsCreator {
          * 
          * @param currentMafiaLogFileName
          *         The file name of the current mafia log.
+         * @return The File object representing the new condensed log file.
          */
-        private void openNextWritingFile(final String currentMafiaLogFileName)
+        private File openNextWritingFile(final String currentMafiaLogFileName)
         throws IOException 
         {
-            if (currentWritingFile != null)
-                currentWritingFile.close();
+            if (currentCondensedLogWriter != null)
+                currentCondensedLogWriter.close();
 
             final Scanner scanner = new Scanner(currentMafiaLogFileName);
             scanner.useDelimiter(NOT_USER_NAME_PATTERN);
@@ -489,7 +494,9 @@ public final class LogsCreator {
 
             scanner.close();
 
-            currentWritingFile = new PrintWriter(new File(UtilityConstants.TEMP_LOCATION, fileName).getAbsolutePath());
+            File currentCondensedFile = new File(UtilityConstants.TEMP_LOCATION, fileName);
+            currentCondensedLogWriter = new PrintWriter(currentCondensedFile.getAbsolutePath());
+            return currentCondensedFile;
         }
     }
 }

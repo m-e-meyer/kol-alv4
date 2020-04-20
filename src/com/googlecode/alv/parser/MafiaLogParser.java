@@ -24,7 +24,9 @@
 
 package com.googlecode.alv.parser;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -153,9 +155,77 @@ public final class MafiaLogParser implements LogParser
      * {@inheritDoc}
      */
     public void parse()
-            throws IOException 
+    throws IOException 
     {
-        final MafiaSessionLogReader reader = new MafiaSessionLogReader(log);
+        try (final MafiaSessionLogReader reader = new MafiaSessionLogReader(log)) {
+            if (Settings.getBoolean(Settings.DEBUG)) {
+                String path = log.getAbsolutePath();
+                Matcher m = Pattern.compile("(.*)-([0-9]*)\\.txt").matcher(path);
+                m.find();
+                String blockDumpPath = m.group(1) + "-BlockDump" + m.group(2) + ".txt";
+                try (final BufferedWriter blockDumpWriter 
+                         = new BufferedWriter(new FileWriter(blockDumpPath))) {
+                    parseLogFile(reader, blockDumpWriter);
+                }
+            } else {
+                parseLogFile(reader, null);
+            }
+        }
+        
+        logData.handleParseFinished();
+
+        // Before creating the summary data, we first need to add MP
+        // regeneration from equipment where applicable.
+        for (final SingleTurn st : getLogData().getTurnsSpent())
+            st.addMPRegen();
+
+        // Recreate day changes from the data in the single turns, since there
+        // are situations where the turn numbers from preliminary day change
+        // parsing may not be entirely correct. (this most often occurs when
+        // there were free runaways or non-turns present at the end of a day)
+        int currentDay = 1;
+        final Map<Integer, HeaderFooterComment> dayComments = Maps.newHashMap();
+        for (final Pair<DayChange, HeaderFooterComment> dayComment : getLogData().getHeaderFooterComments())
+            dayComments.put(dayComment.getVar1().getDayNumber(), dayComment.getVar2());
+        for (final SingleTurn st : getLogData().getTurnsSpent())
+            while (currentDay < st.getDayNumber()) {
+                currentDay++;
+
+                final DayChange newDay = new DayChange(currentDay, st.getTurnNumber() - 1);
+                getLogData().addDayChange(newDay);
+
+                final HeaderFooterComment newDayComment = getLogData().getHeaderFooterComment(newDay);
+                final HeaderFooterComment oldDayComment = dayComments.get(newDay.getDayNumber());
+                newDayComment.setHeaderComments(oldDayComment.getHeaderComments());
+                newDayComment.setFooterComments(oldDayComment.getFooterComments());
+            }
+
+        // Do the same thing for familiar and equipment changes, as there can
+        // also be problems in the face of free runaways and non-turns.
+        final List<FamiliarChange> famChanges = Lists.newArrayList(getLogData().getLastTurnSpent()
+                .getTurnNumber());
+        final List<EquipmentChange> equipChanges = Lists.newArrayList(getLogData().getLastTurnSpent()
+                .getTurnNumber());
+        for (final SingleTurn st : getLogData().getTurnsSpent()) {
+            famChanges.add(st.getUsedFamiliar());
+            equipChanges.add(st.getUsedEquipment());
+        }
+        getLogData().setFamiliarChanges(famChanges);
+        getLogData().setEquipmentChanges(equipChanges);
+
+        getLogData().createLogSummary();
+    }
+
+    /**
+     * @param reader MafiaSessionLogReader from which to read Mafia log data
+     * @param blockDumpWriter FileWriter to which to dump the block data, or null
+     *      if no block dumps are to be written
+     * @throws IOException If an exception occurs while reading or writing
+     */
+    private void parseLogFile(final MafiaSessionLogReader reader,
+                              final BufferedWriter blockDumpWriter)
+    throws IOException
+    {
         final boolean isOldAscensionCounting = Settings.getBoolean("Using old ascension counting");
         boolean nsFightWon = false;
 
@@ -207,9 +277,17 @@ public final class MafiaLogParser implements LogParser
                         nsFightWon = true;
                     }
                 }
-
             }
 
+            // Write the block to the debug block file writer, if any
+            if (blockDumpWriter != null) {
+                blockDumpWriter.write("-------- BLOCK: " + block.getBlockType() + " --------\n");
+                for (String line : block.getBlockLines()) {
+                    blockDumpWriter.write(line);
+                    blockDumpWriter.write("\n");
+                }
+            }
+            
             // Now, we do the actual parsing.
             switch (block.getBlockType()) {
             case ENCOUNTER_BLOCK:
@@ -242,53 +320,8 @@ public final class MafiaLogParser implements LogParser
                             break;
             }
         }
-
-        reader.close();
-
-        logData.handleParseFinished();
-
-        // Before creating the summary data, we first need to add MP
-        // regeneration from equipment where applicable.
-        for (final SingleTurn st : getLogData().getTurnsSpent())
-            st.addMPRegen();
-
-        // Recreate day changes from the data in the single turns, since there
-        // are situations where the turn numbers from preliminary day change
-        // parsing may not be entirely correct. (this most often occurs when
-        // there were free runaways or non-turns present at the end of a day)
-        int currentDay = 1;
-        final Map<Integer, HeaderFooterComment> dayComments = Maps.newHashMap();
-        for (final Pair<DayChange, HeaderFooterComment> dayComment : getLogData().getHeaderFooterComments())
-            dayComments.put(dayComment.getVar1().getDayNumber(), dayComment.getVar2());
-        for (final SingleTurn st : getLogData().getTurnsSpent())
-            while (currentDay < st.getDayNumber()) {
-                currentDay++;
-
-                final DayChange newDay = new DayChange(currentDay, st.getTurnNumber() - 1);
-                getLogData().addDayChange(newDay);
-
-                final HeaderFooterComment newDayComment = getLogData().getHeaderFooterComment(newDay);
-                final HeaderFooterComment oldDayComment = dayComments.get(newDay.getDayNumber());
-                newDayComment.setHeaderComments(oldDayComment.getHeaderComments());
-                newDayComment.setFooterComments(oldDayComment.getFooterComments());
-            }
-
-        // Do the same thing for familiar and equipment changes, as there can
-        // also be problems in the face of free runaways and non-turns.
-        final List<FamiliarChange> famChanges = Lists.newArrayList(getLogData().getLastTurnSpent()
-                .getTurnNumber());
-        final List<EquipmentChange> equipChanges = Lists.newArrayList(getLogData().getLastTurnSpent()
-                .getTurnNumber());
-        for (final SingleTurn st : getLogData().getTurnsSpent()) {
-            famChanges.add(st.getUsedFamiliar());
-            equipChanges.add(st.getUsedEquipment());
-        }
-        getLogData().setFamiliarChanges(famChanges);
-        getLogData().setEquipmentChanges(equipChanges);
-
-        getLogData().createLogSummary();
     }
-
+    
     /**
      * Return true if and only if the given lines, which must represent an encounter block,
      * represents the final Dark Gyffte battle.  This is recognized by the final boss

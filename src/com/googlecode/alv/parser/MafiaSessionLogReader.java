@@ -41,7 +41,7 @@ import com.googlecode.alv.util.Sets;
  * This class can read mafia session logs and return them to the caller in nice
  * and easier to handle chunks.
  */
-public final class MafiaSessionLogReader 
+public final class MafiaSessionLogReader implements AutoCloseable
 {
     /**
      * An enumeration of all the possible types that a {@link LogBlock} can
@@ -462,7 +462,7 @@ public final class MafiaSessionLogReader
     /**
      * Closes the {@link Reader} used to read the session log.
      */
-    void close() 
+    public void close() 
     {
         // Calling close() on a reader should not actually throw an exception,
         // so we'll just catch it in here.

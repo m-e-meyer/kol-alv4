@@ -59,7 +59,7 @@ public final class UtilityConstants {
 
     public static final String CACHE_DIRECTORY = "cache/";
 
-    public static final String DATA_DIRECTORY = "alvdata/";
+    public static final String DATA_DIRECTORY = "logVisualizerData/";
 
     public static final String LICENSE_DIRECTORY = "alvdata/license/";
 

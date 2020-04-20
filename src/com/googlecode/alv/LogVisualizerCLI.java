@@ -47,9 +47,6 @@ public final class LogVisualizerCLI
         final File parsedLogsSavingDirectory 
             = (params.destDir == null) ? new File(Settings.getString("Parsed logs saving location"))
                                        : params.destDir ;
-        //final Pair<File, File> logFolders = getLogsSrcDestFolders(args);
-        //final File mafiaLogsDirectory = logFolders.getVar1();
-        //final File parsedLogsSavingDirectory = logFolders.getVar2();
 
         if (!mafiaLogsDirectory.isDirectory() || !parsedLogsSavingDirectory.isDirectory()) {
             System.out.println("Please specify only existing directories.");
