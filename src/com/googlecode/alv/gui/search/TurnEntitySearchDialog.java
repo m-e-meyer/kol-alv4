@@ -117,7 +117,9 @@ abstract class TurnEntitySearchDialog extends JDialog {
     private JPanel createSearchFieldPanel(
                                           final SearchStringMatcher defaultMatcher) {
         final JPanel searchFieldPanel = new JPanel(new GridBagLayout());
-        final JComboBox searchModeChooser = new JComboBox(SearchStringMatchers.MATCHERS.toArray());
+        final JComboBox<SearchStringMatchers.SearchStringMatcher> searchModeChooser 
+            = new JComboBox<SearchStringMatchers.SearchStringMatcher>(
+                    (SearchStringMatcher[]) SearchStringMatchers.MATCHERS.toArray());
         final JTextField searchField = new JTextField();
         final JLabel modelabel = new JLabel("Search mode:");
         final JLabel searchLabel = new JLabel("Search string:");

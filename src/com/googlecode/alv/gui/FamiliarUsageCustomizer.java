@@ -51,7 +51,7 @@ public final class FamiliarUsageCustomizer extends JDialog {
         this.turnrundownChart = turnrundownChart;
         final FamiliarCustomizationTableModel familiarTableData = new FamiliarCustomizationTableModel(turnrundownChart.getFamiliarColors());
         final JTable familiarTable = new JTable(familiarTableData);
-        final JComboBox box = new JComboBox();
+        final JComboBox<Colors> box = new JComboBox<Colors>();
         final DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 
         // Special combobox renderer to be able to choose a familiar colour.

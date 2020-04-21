@@ -42,7 +42,7 @@ import com.googlecode.alv.Settings;
  * Visualizer.
  */
 final class LafChangerDialog extends JDialog {
-    private final JComboBox lafLister;
+    private final JComboBox<String> lafLister;
 
     LafChangerDialog(
                      final JFrame owner) {
@@ -51,7 +51,7 @@ final class LafChangerDialog extends JDialog {
         setTitle("Look&Feel changer");
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        lafLister = new JComboBox();
+        lafLister = new JComboBox<String>();
         lafLister.setEditable(false);
         addLafs();
 

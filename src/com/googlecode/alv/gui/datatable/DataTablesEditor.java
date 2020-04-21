@@ -97,11 +97,10 @@ public final class DataTablesEditor extends JFrame {
 
     private final Map<String, DataTableContainer> dataTables;
 
-    private final JComboBox chooser;
+    private final JComboBox<String> chooser;
 
-    private final JList dataList;
+    private final JList<DataPoint> dataList;
 
-    @SuppressWarnings("unchecked")
     private DataTablesEditor(
                              final Set<String> badmoonAdventuresSet,
                              final Set<String> semirareAdventuresSet,
@@ -165,8 +164,8 @@ public final class DataTablesEditor extends JFrame {
                                          Pair.of(DATA_TABLE_LABELS[7], statsEquipments),
                                          Pair.of(DATA_TABLE_LABELS[8], outfits));
 
-        chooser = new JComboBox(DATA_TABLE_LABELS);
-        dataList = new JList(new DefaultListModel());
+        chooser = new JComboBox<String>(DATA_TABLE_LABELS);
+        dataList = new JList<DataPoint>(new DefaultListModel<DataPoint>());
         createGeneralButtons();
         chooser.setSelectedIndex(0);
 
@@ -197,7 +196,8 @@ public final class DataTablesEditor extends JFrame {
                                         final ActionEvent e) {
                 final DataTableContainer currentTable = dataTables.get(chooser.getSelectedItem());
                 final DataPoint newDataPoint = currentTable.getDataPointTemplate();
-                final DefaultListModel listModel = (DefaultListModel) dataList.getModel();
+                final DefaultListModel<DataPoint> listModel 
+                    = (DefaultListModel<DataPoint>) dataList.getModel();
 
                 final int state = JOptionPane.showConfirmDialog(DataTablesEditor.this,
                                                                 createDataPointEditorPanel(newDataPoint),
@@ -217,7 +217,7 @@ public final class DataTablesEditor extends JFrame {
             public void actionPerformed(
                                         final ActionEvent e) {
                 if (!dataList.isSelectionEmpty()) {
-                    final DataPoint dp = (DataPoint) ((DefaultListModel) dataList.getModel()).get(dataList.getSelectedIndex());
+                    final DataPoint dp = (DataPoint) ((DefaultListModel<DataPoint>) dataList.getModel()).get(dataList.getSelectedIndex());
                     final DataPoint clone = new DataPoint(dp);
 
                     final int state = JOptionPane.showConfirmDialog(DataTablesEditor.this,
@@ -245,7 +245,8 @@ public final class DataTablesEditor extends JFrame {
                                         final ActionEvent e) {
                 if (!dataList.isSelectionEmpty()) {
                     final int index = dataList.getSelectedIndex();
-                    final DefaultListModel listModel = (DefaultListModel) dataList.getModel();
+                    final DefaultListModel<DataPoint> listModel 
+                        = (DefaultListModel<DataPoint>) dataList.getModel();
                     final DataPoint dp = (DataPoint) listModel.get(index);
                     final DataTableContainer currentTable = dataTables.get(chooser.getSelectedItem());
 
@@ -423,9 +424,9 @@ public final class DataTablesEditor extends JFrame {
     /**
      * Loads the given data table into the display list.
      */
-    private void loadTable(
-                           final DataTableContainer table) {
-        final DefaultListModel listModel = (DefaultListModel) dataList.getModel();
+    private void loadTable(final DataTableContainer table) 
+    {
+        final DefaultListModel<DataPoint> listModel = (DefaultListModel<DataPoint>) dataList.getModel();
 
         listModel.clear();
         for (final DataPoint dp : table.getDataTable())

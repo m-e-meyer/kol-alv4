@@ -43,7 +43,8 @@ import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.TurnInterval;
 import com.googlecode.alv.util.LogOutputFormat;
 
-public final class LogGUI extends JSplitPane {
+public final class LogGUI extends JSplitPane 
+{
     private static final String[] LIST_MENU_ITEM_NAMES = { "Turn rundown gantt",
                                                           "Total turns spent",
                                                           "Turns spent per area",
@@ -88,7 +89,7 @@ public final class LogGUI extends JSplitPane {
         ganttPanel = new GanttPanelGUI(logData);
         this.logData = logData;
         final JPanel chartArea = new JPanel(new CardLayout());
-        final JList navigation = new JList();
+        final JList<String> navigation = new JList<String>();
 
         int i = 0;
         chartArea.add(ganttPanel, LIST_MENU_ITEM_NAMES[i++]);
@@ -117,12 +118,12 @@ public final class LogGUI extends JSplitPane {
         else
             chartArea.add(new LogViewer(logData), LIST_MENU_ITEM_NAMES[i++]);
 
-        navigation.setModel(new AbstractListModel() {
+        navigation.setModel(new AbstractListModel<String>() {
             public int getSize() {
                 return LIST_MENU_ITEM_NAMES.length;
             }
 
-            public Object getElementAt(
+            public String getElementAt(
                                        final int i) {
                 return LIST_MENU_ITEM_NAMES[i];
             }

@@ -155,17 +155,22 @@ public final class XMLLogReader {
         equipmentStack.push(EquipmentChange.NO_EQUIPMENT);
     }
 
+    // TODO What does this even do????
     private LogDataHolder parseLog()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
+        /*
+        // These values don't seem to be used for anything, so don't try to set them
         String ascensionLogXMLVersion = "";
         String fileCreatorName = "";
         String fileCreatorVersion = "";
-
+        */
+        
         while (parser.hasNext()) {
             switch (parser.getEventType()) {
             case XMLStreamConstants.START_ELEMENT:
                 final String nodeName = parser.getLocalName();
-
+                /*
                 if (nodeName.equals("ascensionlogxml")) {
                     for (int i = 0; i < parser.getAttributeCount(); i++)
                         if (parser.getAttributeLocalName(i).equals("version"))
@@ -176,7 +181,8 @@ public final class XMLLogReader {
                             fileCreatorName = parser.getAttributeValue(i);
                         else if (parser.getAttributeLocalName(i).equals("programversion"))
                             fileCreatorVersion = parser.getAttributeValue(i);
-                } else if (nodeName.equals("ascension"))
+                } else */ 
+                if (nodeName.equals("ascension"))
                     parseAscension();
 
                 break;
@@ -190,7 +196,8 @@ public final class XMLLogReader {
     }
 
     private void parseAscension()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         Map<Integer, TurnInterval> intervals = null;
         String characterName = "";
         String startData = "";
@@ -266,7 +273,8 @@ public final class XMLLogReader {
     }
 
     private Map<Integer, TurnInterval> parseTurnRundown()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         final Map<Integer, TurnInterval> intervals = Maps.newHashMap();
 
         turnRundownParsing: {
@@ -293,7 +301,8 @@ public final class XMLLogReader {
     }
 
     private TurnInterval parseTurnInterval()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         final List<SingleTurn> turns = Lists.newArrayList();
         String areaName = "";
         Pair<LogComment, LogComment> comments = null;
@@ -339,9 +348,9 @@ public final class XMLLogReader {
         return interval;
     }
 
-    private SingleTurn parseTurn(
-            final String area)
-                    throws XMLStreamException {
+    private SingleTurn parseTurn(final String area)
+    throws XMLStreamException 
+    {
         final List<Item> itemDrops = Lists.newArrayList();
         final List<Skill> skills = Lists.newArrayList();
         final List<Consumable> consumables = Lists.newArrayList();
@@ -462,9 +471,9 @@ public final class XMLLogReader {
         return turn;
     }
 
-    private EquipmentChange parseEquipment(
-            final int turnNumber)
-                    throws XMLStreamException {
+    private EquipmentChange parseEquipment(final int turnNumber)
+    throws XMLStreamException
+    {
         String hat = EquipmentChange.NO_EQUIPMENT_STRING;
         String weapon = EquipmentChange.NO_EQUIPMENT_STRING;
         String offhand = EquipmentChange.NO_EQUIPMENT_STRING;
@@ -534,7 +543,8 @@ public final class XMLLogReader {
     }
 
     private MeatGain parseMeatgain()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         int insideEncounter = 0;
         int other = 0;
         int meatSpent = 0;
@@ -571,7 +581,8 @@ public final class XMLLogReader {
     }
 
     private MPGain parseMPGain()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         int insideEncounter = 0;
         int starfish = 0;
         int resting = 0;
@@ -617,9 +628,9 @@ public final class XMLLogReader {
         : MPGain.NO_MP;
     }
 
-    private Item parseItemdrop(
-            final int turnNumber)
-                    throws XMLStreamException {
+    private Item parseItemdrop(final int turnNumber)
+    throws XMLStreamException 
+    {
         String name = "";
         int amount = 1;
         for (int i = 0; i < parser.getAttributeCount(); i++)
@@ -649,9 +660,9 @@ public final class XMLLogReader {
         return new Item(name, amount, turnNumber);
     }
 
-    private Skill parseSkillCast(
-            final int turnNumber)
-                    throws XMLStreamException {
+    private Skill parseSkillCast(final int turnNumber)
+    throws XMLStreamException 
+    {
         String name = "";
         int amount = 1;
         int mpCost = 1;
@@ -688,9 +699,9 @@ public final class XMLLogReader {
         return skill;
     }
 
-    private Consumable parseConsumable(
-            final int turnNumber)
-                    throws XMLStreamException {
+    private Consumable parseConsumable(final int turnNumber)
+    throws XMLStreamException 
+    {
         String name = "";
         int amount = 1;
         int adventureGain = 0;
@@ -752,7 +763,8 @@ public final class XMLLogReader {
     }
 
     private Pair<LogComment, LogComment> parseIntervalNotes()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         final LogComment preComment = new LogComment();
         final LogComment postComment = new LogComment();
 
@@ -789,7 +801,8 @@ public final class XMLLogReader {
     }
 
     private void parseDayChanges()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
@@ -814,7 +827,8 @@ public final class XMLLogReader {
     }
 
     private Pair<DayChange, HeaderFooterComment> parseDayChange()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         int dayNumber = 1;
         int turnNumber = 0;
         final HeaderFooterComment comment = new HeaderFooterComment();
@@ -861,7 +875,8 @@ public final class XMLLogReader {
     }
 
     private void parseLevels()
-            throws XMLStreamException {
+    throws XMLStreamException
+    {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
@@ -880,7 +895,8 @@ public final class XMLLogReader {
     }
 
     private LevelData parseLevel()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         int levelNumber = 1;
         int turnNumber = 0;
         for (int i = 0; i < parser.getAttributeCount(); i++)
@@ -927,7 +943,8 @@ public final class XMLLogReader {
     }
 
     private void parsePlayerSnapshots()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
@@ -946,7 +963,8 @@ public final class XMLLogReader {
     }
 
     private PlayerSnapshot parsePlayerSnapshot()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         int turnNumber = 0;
         int adventuresLeft = 0;
         int currentMeat = 0;
@@ -985,7 +1003,8 @@ public final class XMLLogReader {
     }
 
     private void parsePulls()
-            throws XMLStreamException {
+    throws XMLStreamException
+    {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
@@ -1004,7 +1023,8 @@ public final class XMLLogReader {
     }
 
     private Pull parsePull()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         int dayNumber = 0;
         int turnNumber = 0;
         int amount = 1;
@@ -1044,7 +1064,8 @@ public final class XMLLogReader {
     }
 
     private void parseHuntedCombats()
-            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
@@ -1063,7 +1084,8 @@ public final class XMLLogReader {
     }
 
     private void parseLostCombats()
-            throws XMLStreamException {
+    throws XMLStreamException
+    {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
@@ -1081,7 +1103,8 @@ public final class XMLLogReader {
         }
     }
 
-    private Statgain parseStatgain() {
+    private Statgain parseStatgain() 
+    {
         int muscle = 0;
         int myst = 0;
         int moxie = 0;
@@ -1098,7 +1121,8 @@ public final class XMLLogReader {
         return isNonZero ? new Statgain(muscle, myst, moxie) : Statgain.NO_STATS;
     }
 
-    private DataNumberPair<String> parseCombat() {
+    private DataNumberPair<String> parseCombat() 
+    {
         String name = "";
         int turnNumber = 0;
         for (int i = 0; i < parser.getAttributeCount(); i++)

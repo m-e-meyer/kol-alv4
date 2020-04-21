@@ -34,7 +34,9 @@ import javax.swing.ListCellRenderer;
 /**
  * ListCellRenderer able to correctly display multi-line strings.
  */
-public final class MultiLineCellRenderer extends JTextArea implements ListCellRenderer {
+public final class MultiLineCellRenderer<T> extends JTextArea 
+                                            implements ListCellRenderer<T>
+{
     private static final char NEW_LINE = '\n';
 
     public MultiLineCellRenderer() {
@@ -44,10 +46,13 @@ public final class MultiLineCellRenderer extends JTextArea implements ListCellRe
         setOpaque(true);
     }
 
-    public Component getListCellRendererComponent(
-                                                  final JList list, final Object value,
-                                                  final int index, final boolean isSelected,
-                                                  final boolean cellHasFocus) {
+    @Override
+    public Component getListCellRendererComponent(final JList<? extends T> list,  
+                                                  final T value,
+                                                  final int index, 
+                                                  final boolean isSelected,
+                                                  final boolean cellHasFocus) 
+    {
         final String text = value.toString();
         setText(text);
 

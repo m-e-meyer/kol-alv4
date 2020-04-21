@@ -41,15 +41,16 @@ import org.jfree.ui.RefineryUtilities;
 import com.googlecode.alv.util.DataUtilities;
 import com.googlecode.alv.util.Lists;
 
-public final class LicenseViewer extends JDialog {
+public final class LicenseViewer extends JDialog 
+{
     private final List<BufferedReader> licenses;
 
     /**
      * @param owner
      *            The JFrame which owns this dialog.
      */
-    public LicenseViewer(
-                         final JFrame owner) {
+    public LicenseViewer(final JFrame owner) 
+    {
         super(owner, true);
         licenses = Lists.newArrayList();
         licenses.add(DataUtilities.getReader(LICENSE_DIRECTORY,
@@ -70,23 +71,25 @@ public final class LicenseViewer extends JDialog {
         setVisible(true);
     }
 
-    private void addGUIElements() {
+    private void addGUIElements()
+    {
         final JSplitPane splitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        final JList licenseMenu = new JList();
+        final JList<String> licenseMenu = new JList<String>();
         final JPanel licenseArea = new JPanel(new CardLayout());
 
         licenseMenu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        licenseMenu.setModel(new javax.swing.AbstractListModel() {
+        licenseMenu.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Ascension Log Visualizer", "License JCommon",
                                 "License JFreeChart", "License Spellcast", "License SwingFX",
                                 "License StAX" };
 
-            public int getSize() {
+            public int getSize() 
+            {
                 return strings.length;
             }
 
-            public Object getElementAt(
-                                       final int i) {
+            public String getElementAt(final int i) 
+            {
                 return strings[i];
             }
         });

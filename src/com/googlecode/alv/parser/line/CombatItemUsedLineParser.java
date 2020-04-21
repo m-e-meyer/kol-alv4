@@ -56,7 +56,6 @@ public final class CombatItemUsedLineParser extends AbstractLineParser
     protected void doParsing(final String line, final LogDataHolder logData) 
     {
         final String combatItemName;
-        int amount = 1;
 
         final Matcher result = COMBAT_ITEM_USED_CAPTURE_PATTERN.matcher( line );
         result.find();

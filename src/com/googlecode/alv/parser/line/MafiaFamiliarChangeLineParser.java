@@ -43,7 +43,8 @@ import com.googlecode.alv.util.Stack;
  * <p>
  * {@code familiar _familiarClassName_ (_weight_ lbs)}
  */
-public final class MafiaFamiliarChangeLineParser extends AbstractLineParser {
+public final class MafiaFamiliarChangeLineParser extends AbstractLineParser 
+{
     private static final Pattern FAMILIAR_CHANGE_CAPTURE_PATTERN = Pattern.compile("familiar ([\\w\\p{Punct}\\s]+) \\((\\d+) lbs\\)");
 
     private static final Pattern  ED_CHANGE_SERVANT_PATTERN = Pattern.compile("choice\\.php\\?whichchoice=1053&option=[0-9].*&sid=([0-9])");
@@ -71,8 +72,8 @@ public final class MafiaFamiliarChangeLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(
-            final String line, final LogDataHolder logData) {
+    protected void doParsing(final String line, final LogDataHolder logData)
+    {
         if (!line.endsWith(LOCK_STRING)) {
 
             boolean edChanged = edChangedServant.reset(line).find();
@@ -114,11 +115,12 @@ public final class MafiaFamiliarChangeLineParser extends AbstractLineParser {
             else
             {
                 if (!line.endsWith(NO_FAMILIAR_STRING)) {
-                    final Scanner scanner = new Scanner(line);
-                    scanner.findInLine(FAMILIAR_CHANGE_CAPTURE_PATTERN);
-                    final MatchResult result = scanner.match();
-
-                    familiarName = result.group(1);
+                    try (final Scanner scanner = new Scanner(line)) {
+                        scanner.findInLine(FAMILIAR_CHANGE_CAPTURE_PATTERN);
+                        final MatchResult result = scanner.match();
+    
+                        familiarName = result.group(1);
+                    }
                 } else
                     familiarName = NO_FAMILIAR_STRING;
 
@@ -163,9 +165,8 @@ public final class MafiaFamiliarChangeLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(
-            final String line) {
-
+    protected boolean isCompatibleLine(final String line) 
+    {
         boolean famChanged = line.startsWith(FAMILIAR_CHANGE_START_STRING);
 
         boolean edChanged = edChangedServant.reset(line).matches();

@@ -33,7 +33,6 @@ import javax.swing.tree.TreeSelectionModel;
 import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.alv.creator.HTMLLogCreator;
-import com.googlecode.alv.creator.TextLogCreator;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.*;
 import com.googlecode.alv.parser.UsefulPatterns;

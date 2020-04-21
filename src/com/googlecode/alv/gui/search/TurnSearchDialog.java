@@ -43,13 +43,14 @@ import com.googlecode.alv.util.Lists;
  * A dialog displaying all single turns of the given log data with a text field
  * to search for specific turns by a given criteria.
  */
-final class TurnSearchDialog extends TurnEntitySearchDialog {
-    private JList turnResultsList;
+final class TurnSearchDialog extends TurnEntitySearchDialog 
+{
+    private JList<TurnContainer> turnResultsList;
 
     private TurnDataPane dataPane;
 
-    TurnSearchDialog(
-                     final JFrame owner, final LogDataHolder logData) {
+    TurnSearchDialog(final JFrame owner, final LogDataHolder logData) 
+    {
         super(owner,
               logData,
               "Search For Specific Turns",
@@ -60,7 +61,8 @@ final class TurnSearchDialog extends TurnEntitySearchDialog {
             public void mouseClicked(
                                      final MouseEvent e) {
                 if (e.getClickCount() >= 2 && !turnResultsList.isSelectionEmpty()) {
-                    final DefaultListModel model = (DefaultListModel) turnResultsList.getModel();
+                    final DefaultListModel<TurnContainer> model 
+                        = (DefaultListModel<TurnContainer>) turnResultsList.getModel();
                     setSelectedTurn(((TurnContainer) model.getElementAt(turnResultsList.getSelectedIndex())).getTurn());
                     dispose();
                 }
@@ -82,14 +84,15 @@ final class TurnSearchDialog extends TurnEntitySearchDialog {
     }
 
     @Override
-    protected JComponent createResultsPane() {
+    protected JComponent createResultsPane() 
+    {
         final JSplitPane splitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        turnResultsList = new JList(new DefaultListModel());
+        turnResultsList = new JList<TurnContainer>(new DefaultListModel<TurnContainer>());
         dataPane = new TurnDataPane();
 
         turnResultsList.setToolTipText("Double-click turn to jump to it in the proper ascension log");
         turnResultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        turnResultsList.setCellRenderer(new MultiLineCellRenderer());
+        turnResultsList.setCellRenderer(new MultiLineCellRenderer<TurnContainer>());
         for (final TurnContainer tc : getTurnsList())
             addResult(tc);
 
@@ -116,19 +119,20 @@ final class TurnSearchDialog extends TurnEntitySearchDialog {
     }
 
     @Override
-    protected void clearResults() {
-        ((DefaultListModel) turnResultsList.getModel()).clear();
+    protected void clearResults()
+    {
+        ((DefaultListModel<TurnContainer>) turnResultsList.getModel()).clear();
     }
 
     @Override
-    protected void addResult(
-                             final TurnContainer tc) {
-        ((DefaultListModel) turnResultsList.getModel()).addElement(tc);
+    protected void addResult(final TurnContainer tc) 
+    {
+        ((DefaultListModel<TurnContainer>) turnResultsList.getModel()).addElement(tc);
     }
 
     @Override
-    protected void addResults(
-                              final Collection<TurnContainer> results) {
+    protected void addResults(final Collection<TurnContainer> results)
+    {
         // Default models already in use fire a lot of events when elements get
         // added, to the point that there are very noticeable slow-downs.
         // We can side-step this issue by simply using a new model in case there
@@ -140,8 +144,10 @@ final class TurnSearchDialog extends TurnEntitySearchDialog {
             for (final TurnContainer tc : results)
                 addResult(tc);
         else {
-            final DefaultListModel newModel = new DefaultListModel();
-            final DefaultListModel currentModel = (DefaultListModel) turnResultsList.getModel();
+            final DefaultListModel<TurnContainer> newModel 
+                = new DefaultListModel<TurnContainer>();
+            final DefaultListModel<TurnContainer> currentModel 
+                = (DefaultListModel<TurnContainer>) turnResultsList.getModel();
             if (!currentModel.isEmpty())
                 for (int i = 0; i < currentModel.size(); i++)
                     newModel.addElement(currentModel.get(i));

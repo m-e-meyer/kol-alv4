@@ -24,15 +24,7 @@
 
 package com.googlecode.alv.parser.line;
 
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.googlecode.alv.logdata.CombatItem;
 import com.googlecode.alv.logdata.LogDataHolder;
-import com.googlecode.alv.logdata.turn.SingleTurn;
-import com.googlecode.alv.logdata.turn.Turn;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.DataNumberPair;
 
 /**
