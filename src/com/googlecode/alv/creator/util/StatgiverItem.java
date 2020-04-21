@@ -34,7 +34,8 @@ import com.googlecode.alv.util.data.ExtraStats;
  * Helper class used to help handle the +STAT BREAKDOWN summary, namely counting
  * the stats gained from specific items.
  */
-final public class StatgiverItem {
+final public class StatgiverItem 
+{
     private static final String TAB = "\t";
 
     private final String itemName;
@@ -83,6 +84,12 @@ final public class StatgiverItem {
                 stats += perTurnStatgain.mystGain;
                 break;
             case MOXIE:
+                stats += perTurnStatgain.moxGain;
+                break;
+            case MAXIMUM:
+                // TODO Fix for Plumber.  Need to know what the max stat actually is
+                // in order to add the right gain.
+                // For now, pick Moxie, because that's what I usually play Plumber for
                 stats += perTurnStatgain.moxGain;
                 break;
         }
@@ -141,61 +148,75 @@ final public class StatgiverItem {
             }
     }
 
-    public int getLvl1Stats() {
+    public int getLvl1Stats() 
+    {
         return (int) lvl1Stats;
     }
 
-    public int getLvl2Stats() {
+    public int getLvl2Stats() 
+    {
         return (int) lvl2Stats;
     }
 
-    public int getLvl3Stats() {
+    public int getLvl3Stats() 
+    {
         return (int) lvl3Stats;
     }
 
-    public int getLvl4Stats() {
+    public int getLvl4Stats() 
+    {
         return (int) lvl4Stats;
     }
 
-    public int getLvl5Stats() {
+    public int getLvl5Stats() 
+    {
         return (int) lvl5Stats;
     }
 
-    public int getLvl6Stats() {
+    public int getLvl6Stats() 
+    {
         return (int) lvl6Stats;
     }
 
-    public int getLvl7Stats() {
+    public int getLvl7Stats() 
+    {
         return (int) lvl7Stats;
     }
 
-    public int getLvl8Stats() {
+    public int getLvl8Stats()
+    {
         return (int) lvl8Stats;
     }
 
-    public int getLvl9Stats() {
+    public int getLvl9Stats() 
+    {
         return (int) lvl9Stats;
     }
 
-    public int getLvl10Stats() {
+    public int getLvl10Stats()
+    {
         return (int) lvl10Stats;
     }
 
-    public int getLvl11Stats() {
+    public int getLvl11Stats() 
+    {
         return (int) lvl11Stats;
     }
 
-    public int getLvl12Stats() {
+    public int getLvl12Stats() 
+    {
         return (int) lvl12Stats;
     }
 
-    public int getTotalStats() {
+    public int getTotalStats() 
+    {
         return (int) (lvl1Stats + lvl2Stats + lvl3Stats + lvl4Stats + lvl5Stats + lvl6Stats
                       + lvl7Stats + lvl8Stats + lvl9Stats + lvl10Stats + lvl11Stats + lvl12Stats);
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         final StringBuilder str = new StringBuilder(200);
         str.append(itemName);
         str.append(UsefulPatterns.COLON);

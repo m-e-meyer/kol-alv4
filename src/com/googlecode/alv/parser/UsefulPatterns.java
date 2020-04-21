@@ -97,19 +97,13 @@ public final class UsefulPatterns {
             "cocktail napkin" // Only against clingy pirate
     );
 
-    @SuppressWarnings("unchecked")
-    public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP = Maps.immutableMapOf(Pair.of("clobber",
-                                                                                                                          CharacterClass.SEAL_CLUBBER),
-                                                                                                                  Pair.of("toss",
-                                                                                                                          CharacterClass.TURTLE_TAMER),
-                                                                                                                  Pair.of("spaghetti spear",
-                                                                                                                          CharacterClass.PASTAMANCER),
-                                                                                                                  Pair.of("salsaball",
-                                                                                                                          CharacterClass.SAUCEROR),
-                                                                                                                  Pair.of("suckerpunch",
-                                                                                                                          CharacterClass.DISCO_BANDIT),
-                                                                                                                  Pair.of("sing",
-                                                                                                                          CharacterClass.ACCORDION_THIEF));
+    public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP 
+        = Maps.immutableMapOf(Pair.of("clobber", CharacterClass.SEAL_CLUBBER),
+                              Pair.of("toss", CharacterClass.TURTLE_TAMER),
+                              Pair.of("spaghetti spear", CharacterClass.PASTAMANCER),
+                              Pair.of("salsaball", CharacterClass.SAUCEROR),
+                              Pair.of("suckerpunch", CharacterClass.DISCO_BANDIT),
+                              Pair.of("sing", CharacterClass.ACCORDION_THIEF));
 
     public static final Set<String> SPECIAL_CONSUMABLES = Sets.immutableSetOf("steel margarita",
                                                                                "steel lasagna",
@@ -128,7 +122,8 @@ public final class UsefulPatterns {
 
     public static final Pattern TURNS_USED = Pattern.compile("^\\[\\d+(?:\\-\\d+)?].+");
 
-    public static final Pattern NOT_AREA_NAME = Pattern.compile("^\\[[\\d\\p{Punct}]+\\]\\s*|\\s+$|\\s*\\[[\\d\\p{Punct}]+\\]\\s*$");
+    public static final Pattern NOT_AREA_NAME
+        = Pattern.compile("^\\[[\\d\\p{Punct}]+\\]\\s*|\\s+$|\\s*\\[[\\d\\p{Punct}]+\\]\\s*$");
 
     public static final Pattern NOT_TURNCOUNT_STRING = Pattern.compile("^\\[|\\][\\w\\p{Punct}\\s]+.*");
 
@@ -154,13 +149,16 @@ public final class UsefulPatterns {
 
     public static final Pattern FREE_RUNAWAYS_USAGE = Pattern.compile("^\\s*\\&> \\d+ \\\\ \\d+ free retreats.*");
 
-    public static final Pattern CONSUMABLE_USED = Pattern.compile("(?:(?:use|eat|drink|chew)|Buy and (?:eat|drink))(?: \\d+)? .+");
+    public static final Pattern CONSUMABLE_USED 
+        = Pattern.compile("(?:(?:use|eat|drink|chew)|Buy and (?:eat|drink))(?: \\d+)? .+");
 
     public static final Pattern GAIN = Pattern.compile("^You gain \\d*,?\\d+ [\\w\\s]+");
 
-    public static final Pattern GAIN_LOSE_CAPTURE_PATTERN = Pattern.compile("^You (?:gain|lose) (\\d*,?\\d+) ([\\w\\s]+)");
+    public static final Pattern GAIN_LOSE_CAPTURE_PATTERN 
+        = Pattern.compile("^You (?:gain|lose) (\\d*,?\\d+) ([\\w\\s]+)");
 
-    public static final Pattern GAIN_LOSE = Pattern.compile("^(?:After Battle: )?You (?:gain|lose) \\d*,?\\d+ [\\w\\s]+");
+    public static final Pattern GAIN_LOSE 
+        = Pattern.compile("^(?:After Battle: )?You (?:gain|lose) \\d*,?\\d+ [\\w\\s]+");
 
     public static final Pattern USUAL_FORMAT_LOG_NAME = Pattern.compile(".+\\-\\d{8}$");
 
@@ -201,8 +199,8 @@ public final class UsefulPatterns {
      * @throws NullPointerException
      *             if mafiaLog is {@code null}
      */
-    public static final Calendar getMafiaLogCalendarDate(
-                                                         final File mafiaLog) {
+    public static final Calendar getMafiaLogCalendarDate(final File mafiaLog) 
+    {
         return getMafiaLogCalendarDate(mafiaLog.getName());
     }
 
@@ -217,8 +215,8 @@ public final class UsefulPatterns {
      * @throws NullPointerException
      *             if mafiaLogFileName is {@code null}
      */
-    public static final Calendar getMafiaLogCalendarDate(
-                                                         final String mafiaLogFileName) {
+    public static final Calendar getMafiaLogCalendarDate(final String mafiaLogFileName) 
+    {
         final Calendar logDate = Calendar.getInstance();
         final String ascensionDate = String.valueOf(getLogDate(mafiaLogFileName));
 
@@ -244,8 +242,8 @@ public final class UsefulPatterns {
      * @throws NullPointerException
      *             if mafiaLog is {@code null}
      */
-    public static final int getMafiaLogDate(
-                                            final File mafiaLog) {
+    public static final int getMafiaLogDate(final File mafiaLog) 
+    {
         return getLogDate(mafiaLog.getName());
     }
 
@@ -265,8 +263,8 @@ public final class UsefulPatterns {
      * @throws NullPointerException
      *             if mafiaLogFileName is {@code null}
      */
-    public static final int getLogDate(
-                                       final String logName) {
+    public static final int getLogDate(final String logName) 
+    {
         if (logName == null)
             throw new NullPointerException("logName must not be null.");
 

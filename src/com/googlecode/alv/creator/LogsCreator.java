@@ -325,14 +325,6 @@ public final class LogsCreator {
                                                                          "November",
                                                                          "December");
 
-        private static final FilenameFilter CONDENSED_MAFIA_LOG_FILTER = new FilenameFilter() {
-            private final Matcher mafiaLogMatcher = Pattern.compile(".*\\-\\d+\\.txt$").matcher("");
-
-            public boolean accept(final File dir, final String name) {
-                return mafiaLogMatcher.reset(name).matches();
-            }
-        };
-
         private final Matcher ascendedMatcher = ASCENDED_PATTERN.matcher("");
 
         private final File[] mafiaLogs;

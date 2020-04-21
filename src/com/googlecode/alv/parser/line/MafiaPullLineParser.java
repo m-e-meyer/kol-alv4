@@ -42,8 +42,6 @@ import com.googlecode.alv.parser.UsefulPatterns;
 public final class MafiaPullLineParser extends AbstractLineParser {
     private static final Pattern PULL_PATTERN = Pattern.compile("pull: \\d+ .+");
 
-    private static final Pattern COMMA_WHITESPACE_PATTERN = Pattern.compile(", ");
-
     private final Matcher pullMatcher = PULL_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
 
     private static final Pattern PULLED_ITEM_PATTERN = Pattern.compile("([0-9]+ ((?:[^,]+)|(?:, [^0-9]))*)(?:, )?");

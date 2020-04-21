@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.Settings;
@@ -80,7 +79,8 @@ import com.googlecode.alv.util.Constants;
  * <p>
  * {@code Encounter: _encounterName_}
  */
-public final class EncounterBlockParser implements LogBlockParser {
+public final class EncounterBlockParser implements LogBlockParser 
+{
     private static final Map<String, String> areaNameStandardizerMap;
 
     static {
@@ -112,19 +112,21 @@ public final class EncounterBlockParser implements LogBlockParser {
         }
     }
 
-    private static final Set<String> OTHER_ENCOUNTER_AREAS_SET = Sets.immutableSetOf("Unlucky Sewer",
-            "Sewer With Clovers",
-            "Lemon Party",
-            "Guild Challenge",
-            "Mining (In Disguise)",
-            "Itznotyerzitz Mine (in Disguise)");
+    private static final Set<String> OTHER_ENCOUNTER_AREAS_SET 
+        = Sets.immutableSetOf("Unlucky Sewer",
+                              "Sewer With Clovers",
+                              "Lemon Party",
+                              "Guild Challenge",
+                              "Mining (In Disguise)",
+                              "Itznotyerzitz Mine (in Disguise)");
 
-    private static final Set<String> GAME_GRID_AREAS_SET = Sets.immutableSetOf("DemonStar",
-            "Meteoid",
-            "The Fighters of Fighting",
-            "Dungeon Fist!",
-            "Space Trip",
-            "Jackass Plumber");
+    private static final Set<String> GAME_GRID_AREAS_SET 
+        = Sets.immutableSetOf("DemonStar",
+                              "Meteoid",
+                              "The Fighters of Fighting",
+                              "Dungeon Fist!",
+                              "Space Trip",
+                              "Jackass Plumber");
 
     private static final String ENCOUNTER_START_STRING = "Encounter: ";
 
@@ -150,9 +152,9 @@ public final class EncounterBlockParser implements LogBlockParser {
 
     private final List<LineParser> lineParsers = Lists.newArrayList();
 
-    public EncounterBlockParser(
-            final Stack<EquipmentChange> equipmentStack,
-            final Map<String, String> familiarEquipmentMap) {
+    public EncounterBlockParser(final Stack<EquipmentChange> equipmentStack,
+                                final Map<String, String> familiarEquipmentMap) 
+    {
         lineParsers.add(new ItemAcquisitionLineParser());
         lineParsers.add(new SkillCastLineParser());
         lineParsers.add(new MeatLineParser(MeatGainType.ENCOUNTER));
@@ -178,10 +180,11 @@ public final class EncounterBlockParser implements LogBlockParser {
     /**
      * {@inheritDoc}
      */
-    public void parseBlock(
-            final List<String> block, final LogDataHolder logData) {
-        String turnSpentLine = block.get(0).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(0)
-                : block.get(1);
+    public void parseBlock(final List<String> block, final LogDataHolder logData) 
+    {
+        String turnSpentLine 
+            = block.get(0).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(0)
+                                                                          : block.get(1);
         final SingleTurn turn;
         final int dayNumber = logData.getLastDayChange().getDayNumber();
 
@@ -301,9 +304,6 @@ public final class EncounterBlockParser implements LogBlockParser {
             else
                 turn.setTurnVersion(TurnVersion.NONCOMBAT);
         }
-
-        int turnNum = turn.getTurnNumber();
-        
         
         // Check handling for special encounters. If the encounter is indeed
         // a special encounter, the specialEncounterHandling() method will
@@ -321,8 +321,8 @@ public final class EncounterBlockParser implements LogBlockParser {
      * Parses all lines of the given block using the {@link LineParser}s from
      * the lineParsers list.
      */
-    private void parseAllLines(
-            final List<String> block, final LogDataHolder logData) {
+    private void parseAllLines(final List<String> block, final LogDataHolder logData) 
+    {
         for (final String line : block)
             for (final LineParser lp : lineParsers)
                 // If the line parser can parse the line, this method also
@@ -353,9 +353,10 @@ public final class EncounterBlockParser implements LogBlockParser {
      * @return {@code true} if this method did some computation, because the
      *         given encounter is special, otherwise {@code false}.
      */
-    private boolean specialEncounterHandling(
-            final SingleTurn turn, final List<String> block,
-            final LogDataHolder logData) {
+    private boolean specialEncounterHandling(final SingleTurn turn, 
+                                             final List<String> block,
+                                             final LogDataHolder logData) 
+    {
         if (turn.getAreaName().endsWith(SHORE_AREAS_END_STRING)) {
             final EquipmentChange lastEquipment = logData.getLastEquipmentChange();
             final FamiliarChange lastFamiliar = logData.getLastFamiliarChange();
@@ -469,9 +470,10 @@ public final class EncounterBlockParser implements LogBlockParser {
      * Checks whether the given turn was a lost combat and if true, logs it as
      * such.
      */
-    private void lostCombatHandling(
-            final List<String> block, final SingleTurn turn,
-            final LogDataHolder logData) {
+    private void lostCombatHandling(final List<String> block, 
+                                    final SingleTurn turn,
+                                    final LogDataHolder logData) 
+    {
         if (turn.getTurnVersion() != TurnVersion.COMBAT)
             return;
 

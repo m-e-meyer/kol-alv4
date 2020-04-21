@@ -42,19 +42,20 @@ import com.googlecode.alv.util.Lists;
  * A dialog displaying all turn intervals of the given log data with a text
  * field to search for specific intervals by name.
  */
-final class AreaSearchDialog extends TurnEntitySearchDialog {
-    private JList turnIntervalResultsList;
+final class AreaSearchDialog extends TurnEntitySearchDialog 
+{
+    private JList<TurnContainer> turnIntervalResultsList;
 
-    AreaSearchDialog(
-                     final JFrame owner, final LogDataHolder logData) {
+    AreaSearchDialog(final JFrame owner, final LogDataHolder logData)
+    {
         super(owner, logData, "Search For Specific Areas");
 
         turnIntervalResultsList.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(
-                                     final MouseEvent e) {
+            public void mouseClicked(final MouseEvent e) {
                 if (e.getClickCount() >= 2 && !turnIntervalResultsList.isSelectionEmpty()) {
-                    final DefaultListModel model = (DefaultListModel) turnIntervalResultsList.getModel();
+                    final DefaultListModel<TurnContainer> model 
+                        = (DefaultListModel<TurnContainer>) turnIntervalResultsList.getModel();
                     setSelectedTurn(((TurnContainer) model.getElementAt(turnIntervalResultsList.getSelectedIndex())).getTurn());
                     dispose();
                 }
@@ -65,12 +66,13 @@ final class AreaSearchDialog extends TurnEntitySearchDialog {
     }
 
     @Override
-    protected JComponent createResultsPane() {
-        turnIntervalResultsList = new JList(new DefaultListModel());
+    protected JComponent createResultsPane()
+    {
+        turnIntervalResultsList = new JList<TurnContainer>(new DefaultListModel<TurnContainer>());
 
         turnIntervalResultsList.setToolTipText("Double-click area to jump to it in the proper ascension log");
         turnIntervalResultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        turnIntervalResultsList.setCellRenderer(new MultiLineCellRenderer());
+        turnIntervalResultsList.setCellRenderer(new MultiLineCellRenderer<TurnContainer>());
         for (final TurnContainer tc : getTurnsList())
             addResult(tc);
 
@@ -80,8 +82,8 @@ final class AreaSearchDialog extends TurnEntitySearchDialog {
     }
 
     @Override
-    protected List<TurnContainer> createTurnList(
-                                                 final LogDataHolder logData) {
+    protected List<TurnContainer> createTurnList(final LogDataHolder logData) 
+    {
         final List<TurnContainer> result = Lists.newArrayList(logData.getTurnIntervalsSpent()
                                                                      .size());
 
@@ -94,19 +96,20 @@ final class AreaSearchDialog extends TurnEntitySearchDialog {
     }
 
     @Override
-    protected void clearResults() {
-        ((DefaultListModel) turnIntervalResultsList.getModel()).clear();
+    protected void clearResults()
+    {
+        ((DefaultListModel<TurnContainer>) turnIntervalResultsList.getModel()).clear();
     }
 
     @Override
-    protected void addResult(
-                             final TurnContainer tc) {
-        ((DefaultListModel) turnIntervalResultsList.getModel()).addElement(tc);
+    protected void addResult(final TurnContainer tc)
+    {
+        ((DefaultListModel<TurnContainer>) turnIntervalResultsList.getModel()).addElement(tc);
     }
 
     @Override
-    protected void addResults(
-                              final Collection<TurnContainer> results) {
+    protected void addResults(final Collection<TurnContainer> results) 
+    {
         // Default models already in use fire a lot of events when elements get
         // added, to the point that there are very noticeable slow-downs.
         // We can side-step this issue by simply using a new model in case there
@@ -118,8 +121,10 @@ final class AreaSearchDialog extends TurnEntitySearchDialog {
             for (final TurnContainer tc : results)
                 addResult(tc);
         else {
-            final DefaultListModel newModel = new DefaultListModel();
-            final DefaultListModel currentModel = (DefaultListModel) turnIntervalResultsList.getModel();
+            final DefaultListModel<TurnContainer> newModel 
+                = new DefaultListModel<TurnContainer>();
+            final DefaultListModel<TurnContainer> currentModel 
+                = (DefaultListModel<TurnContainer>) turnIntervalResultsList.getModel();
             if (!currentModel.isEmpty())
                 for (int i = 0; i < currentModel.size(); i++)
                     newModel.addElement(currentModel.get(i));

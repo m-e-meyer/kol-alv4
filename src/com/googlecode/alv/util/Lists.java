@@ -29,14 +29,16 @@ import java.util.*;
 /**
  * Utility class with static helper methods for lists.
  */
-public final class Lists {
+public final class Lists 
+{
     private Lists() {}
 
     /**
      * @param <E> Type of list element
      * @return A new {@link ArrayList}.
      */
-    public static <E> List<E> newArrayList() {
+    public static <E> List<E> newArrayList() 
+    {
         return new ArrayList<E>();
     }
 
@@ -46,8 +48,8 @@ public final class Lists {
      *            The initial capacity of the new {@link ArrayList}.
      * @return A new {@link ArrayList} with the given initial capacity.
      */
-    public static <E> List<E> newArrayList(
-                                           final int initialCapacity) {
+    public static <E> List<E> newArrayList(final int initialCapacity) 
+    {
         return new ArrayList<E>(initialCapacity);
     }
 
@@ -57,8 +59,8 @@ public final class Lists {
      *            The elements to be added to the new {@link ArrayList}.
      * @return A new {@link ArrayList} populated with the given elements.
      */
-    public static <E> List<E> newArrayList(
-                                           final Collection<? extends E> elements) {
+    public static <E> List<E> newArrayList(final Collection<? extends E> elements) 
+    {
         return new ArrayList<E>(elements);
     }
 
@@ -68,8 +70,8 @@ public final class Lists {
      *            The elements to be added to the new {@link ArrayList}.
      * @return A new {@link ArrayList} populated with the given elements.
      */
-    public static <E> List<E> newArrayList(
-                                           final Iterable<? extends E> elements) {
+    public static <E> List<E> newArrayList(final Iterable<? extends E> elements) 
+    {
         final List<E> list = newArrayList();
         for (final E element : elements)
             list.add(element);
@@ -83,8 +85,9 @@ public final class Lists {
      *            The elements to be added to the new {@link ArrayList}.
      * @return A new {@link ArrayList} populated with the given elements.
      */
-    public static <E> List<E> newArrayList(
-                                           final E... elements) {
+    @SafeVarargs
+    public static <E> List<E> newArrayList(final E... elements) 
+    {
         final List<E> list = newArrayList(elements.length);
         for (final E element : elements)
             list.add(element);
@@ -98,8 +101,8 @@ public final class Lists {
      *            The elements to be added to the new immutable list.
      * @return A new immutable list populated with the given elements.
      */
-    public static <E> List<E> immutableListOf(
-                                              final Collection<? extends E> elements) {
+    public static <E> List<E> immutableListOf(final Collection<? extends E> elements) 
+    {
         if (elements.size() == 1)
             return new SingleElementList<E>(elements.iterator().next());
 
@@ -112,8 +115,8 @@ public final class Lists {
      *            The elements to be added to the new immutable list.
      * @return A new immutable list populated with the given elements.
      */
-    public static <E> List<E> immutableListOf(
-                                              final Iterable<? extends E> elements) {
+    public static <E> List<E> immutableListOf(final Iterable<? extends E> elements) 
+    {
         return Collections.unmodifiableList(newArrayList(elements));
     }
 
@@ -123,8 +126,9 @@ public final class Lists {
      *            The elements to be added to the new immutable list.
      * @return A new immutable list populated with the given elements.
      */
-    public static <E> List<E> immutableListOf(
-                                              final E... elements) {
+    @SafeVarargs
+    public static <E> List<E> immutableListOf(final E... elements) 
+    {
         if (elements.length == 1)
             return new SingleElementList<E>(elements[0]);
 
@@ -141,8 +145,8 @@ public final class Lists {
      * @param list List to reverse
      * @return The given list after it was reversed.
      */
-    public static <E> List<E> reverse(
-                                      final List<E> list) {
+    public static <E> List<E> reverse(final List<E> list) 
+    {
         Collections.reverse(list);
         return list;
     }
@@ -158,8 +162,8 @@ public final class Lists {
      * @param list List to sort
      * @return The given list after it was sorted.
      */
-    public static <E extends Comparable<? super E>> List<E> sort(
-                                                                 final List<E> list) {
+    public static <E extends Comparable<? super E>> List<E> sort(final List<E> list) 
+    {
         Collections.sort(list);
         return list;
     }
@@ -176,8 +180,8 @@ public final class Lists {
      * @param comparator Comparison function to apply pairwise to the list elements
      * @return The given list after it was sorted.
      */
-    public static <E> List<E> sort(
-                                   final List<E> list, final Comparator<? super E> comparator) {
+    public static <E> List<E> sort(final List<E> list, final Comparator<? super E> comparator) 
+    {
         Collections.sort(list, comparator);
         return list;
     }

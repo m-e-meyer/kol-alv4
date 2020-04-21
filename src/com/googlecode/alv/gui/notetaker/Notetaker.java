@@ -46,7 +46,6 @@ import com.googlecode.alv.logdata.LogComment;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.TurnInterval;
 import com.googlecode.alv.logdata.turn.action.DayChange;
-import com.googlecode.alv.util.LogOutputFormat;
 import com.googlecode.alv.util.LookAheadIterator;
 import com.googlecode.alv.util.Pair;
 
@@ -76,7 +75,7 @@ public final class Notetaker extends JFrame
             return;
         }
 
-        final JComboBox selectionBox = new JComboBox();
+        final JComboBox<LogInterval> selectionBox = new JComboBox<LogInterval>();
         selectionBox.setPreferredSize(new Dimension(400, selectionBox.getPreferredSize().height));
 
         // Populate the selection combo box with all possible intervals.
@@ -307,7 +306,7 @@ public final class Notetaker extends JFrame
      * Just a little helper class make instantiation of the turn interval menu a
      * little nicer.
      */
-    private static final class TurnIntervalMenuList extends JList 
+    private static final class TurnIntervalMenuList extends JList<LogCommentContainer>
     {
 
         /**
@@ -318,11 +317,12 @@ public final class Notetaker extends JFrame
          */
         TurnIntervalMenuList(final LogDataHolder log) 
         {
-            super(new DefaultListModel());
+            super(new DefaultListModel<LogCommentContainer>());
             setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            setCellRenderer(new MultiLineCellRenderer());
+            setCellRenderer(new MultiLineCellRenderer<LogCommentContainer>());
 
-            final DefaultListModel model = (DefaultListModel) getModel();
+            final DefaultListModel<LogCommentContainer> model 
+                = (DefaultListModel<LogCommentContainer>) getModel();
             final Iterator<String> turnRundownListIndex 
                 = TextLogCreator.getTurnRundownList(log).iterator();
             final LookAheadIterator<Pair<DayChange, HeaderFooterComment>> headerFooterIndex 
@@ -363,7 +363,7 @@ public final class Notetaker extends JFrame
                 description = getHeaderFooterDescription(headerFooter, " footer");
             }
 
-            ((DefaultListModel) getModel()).addElement(new LogCommentContainer(comment, description));
+            ((DefaultListModel<LogCommentContainer>) getModel()).addElement(new LogCommentContainer(comment, description));
         }
 
         private static String getHeaderFooterDescription(final Pair<DayChange, HeaderFooterComment> headerFooter,
@@ -377,7 +377,7 @@ public final class Notetaker extends JFrame
             if (isSelectionEmpty())
                 throw new IllegalStateException("No turn interval is currently selected.");
 
-            return (LogCommentContainer) ((DefaultListModel) getModel()).get(getSelectedIndex());
+            return  ((DefaultListModel<LogCommentContainer>) getModel()).get(getSelectedIndex());
         }
     }
 

@@ -45,7 +45,8 @@ import com.googlecode.alv.logdata.turn.TurnInterval;
 import com.googlecode.alv.util.CategoryViewFileHandler;
 import com.googlecode.alv.util.Lists;
 
-public final class LocationCategoryCustomizer extends JDialog {
+public final class LocationCategoryCustomizer extends JDialog 
+{
     private static final FileFilter CATEGORY_VIEW_FILES = new FileFilter() {
         @Override
         public boolean accept(
@@ -81,13 +82,13 @@ public final class LocationCategoryCustomizer extends JDialog {
 
     private JTextField categoryName;
 
-    private JComboBox categoryList;
+    private JComboBox<TurnAreaCategory> categoryList;
 
-    private JList categoryInventory;
+    private JList<String> categoryInventory;
 
-    private JList areas;
+    private JList<String> areas;
 
-    private JList areasAddList;
+    private JList<String> areasAddList;
 
     /**
      * @param owner
@@ -96,8 +97,8 @@ public final class LocationCategoryCustomizer extends JDialog {
      *            The turnrundown gantt chart on which certain actions can be
      *            performed.
      */
-    public LocationCategoryCustomizer(
-                                      final JFrame owner, final TurnrundownGantt turnrundownChart) {
+    public LocationCategoryCustomizer(final JFrame owner, final TurnrundownGantt turnrundownChart) 
+    {
         super(owner, true);
         this.turnrundownChart = turnrundownChart;
         viewChooser = new JFileChooser();
@@ -119,7 +120,8 @@ public final class LocationCategoryCustomizer extends JDialog {
         setVisible(true);
     }
 
-    private void addGUIElements() {
+    private void addGUIElements() 
+    {
         splitter = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         updateChart = new JButton("Update Chart");
         loadCategoryView = new JButton("Load Category View");
@@ -169,11 +171,12 @@ public final class LocationCategoryCustomizer extends JDialog {
         add(updateChart, gbc);
     }
 
-    private JPanel createCategoryPane() {
+    private JPanel createCategoryPane() 
+    {
         final JPanel categoryPane = new JPanel(new GridBagLayout());
-        categoryInventory = new JList(new DefaultListModel());
+        categoryInventory = new JList<String>(new DefaultListModel<String>());
         deleteCategory = new JButton("Delete Category");
-        categoryList = new JComboBox();
+        categoryList = new JComboBox<TurnAreaCategory>();
         GridBagConstraints gbc;
 
         categoryInventory.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -200,9 +203,10 @@ public final class LocationCategoryCustomizer extends JDialog {
         return categoryPane;
     }
 
-    private JPanel createAreaAddingPane() {
+    private JPanel createAreaAddingPane() 
+    {
         final JPanel areaAddingPane = new JPanel(new GridBagLayout());
-        areas = new JList(new DefaultListModel());
+        areas = new JList<String>(new DefaultListModel<String>());
         addLoation = new JButton("Add Area");
         GridBagConstraints gbc;
 
@@ -226,9 +230,10 @@ public final class LocationCategoryCustomizer extends JDialog {
         return areaAddingPane;
     }
 
-    private JPanel createCategoryAddingPane() {
+    private JPanel createCategoryAddingPane() 
+    {
         final JPanel categoryAddingPane = new JPanel(new GridBagLayout());
-        areasAddList = new JList(new DefaultListModel());
+        areasAddList = new JList<String>(new DefaultListModel<String>());
         categoryName = new JTextField();
         addCategory = new JButton("Create Category");
         removeArea = new JButton("Remove Area");
@@ -280,15 +285,16 @@ public final class LocationCategoryCustomizer extends JDialog {
         return categoryAddingPane;
     }
 
-    private void addActions() {
+    private void addActions()
+    {
         categoryList.addItemListener(new ItemListener() {
 
             public void itemStateChanged(
                                          final ItemEvent e) {
                 if (categoryList.getSelectedItem() != null) {
-                    ((DefaultListModel) categoryInventory.getModel()).removeAllElements();
-                    for (final String s : ((TurnAreaCategory) categoryList.getItemAt(categoryList.getSelectedIndex())).getTurnAreaNames())
-                        ((DefaultListModel) categoryInventory.getModel()).addElement(s);
+                    ((DefaultListModel<String>) categoryInventory.getModel()).removeAllElements();
+                    for (final String s : categoryList.getItemAt(categoryList.getSelectedIndex()).getTurnAreaNames())
+                        ((DefaultListModel<String>) categoryInventory.getModel()).addElement(s);
                 }
             }
         });
@@ -297,8 +303,8 @@ public final class LocationCategoryCustomizer extends JDialog {
             public void actionPerformed(
                                         final ActionEvent e) {
                 if (!areas.isSelectionEmpty()) {
-                    ((DefaultListModel) areasAddList.getModel()).addElement(areas.getSelectedValue());
-                    ((DefaultListModel) areas.getModel()).remove(areas.getSelectedIndex());
+                    ((DefaultListModel<String>) areasAddList.getModel()).addElement(areas.getSelectedValue());
+                    ((DefaultListModel<String>) areas.getModel()).remove(areas.getSelectedIndex());
                     areas.setSelectedIndex(0);
                     areasAddList.setSelectedIndex(0);
                 }
@@ -310,8 +316,8 @@ public final class LocationCategoryCustomizer extends JDialog {
                                      final MouseEvent e) {
                 if (e.getClickCount() >= 2)
                     if (!areas.isSelectionEmpty()) {
-                        ((DefaultListModel) areasAddList.getModel()).addElement(areas.getSelectedValue());
-                        ((DefaultListModel) areas.getModel()).remove(areas.getSelectedIndex());
+                        ((DefaultListModel<String>) areasAddList.getModel()).addElement(areas.getSelectedValue());
+                        ((DefaultListModel<String>) areas.getModel()).remove(areas.getSelectedIndex());
                         areas.setSelectedIndex(0);
                         areasAddList.setSelectedIndex(0);
                     }
@@ -335,7 +341,7 @@ public final class LocationCategoryCustomizer extends JDialog {
                                         final ActionEvent e) {
                 if (!areasAddList.isSelectionEmpty()) {
                     addLocation((String) areasAddList.getSelectedValue());
-                    ((DefaultListModel) areasAddList.getModel()).remove(areasAddList.getSelectedIndex());
+                    ((DefaultListModel<String>) areasAddList.getModel()).remove(areasAddList.getSelectedIndex());
                     areas.setSelectedIndex(0);
                     areasAddList.setSelectedIndex(0);
                 }
@@ -348,7 +354,7 @@ public final class LocationCategoryCustomizer extends JDialog {
                 if (e.getClickCount() >= 2)
                     if (!areasAddList.isSelectionEmpty()) {
                         addLocation((String) areasAddList.getSelectedValue());
-                        ((DefaultListModel) areasAddList.getModel()).remove(areasAddList.getSelectedIndex());
+                        ((DefaultListModel<String>) areasAddList.getModel()).remove(areasAddList.getSelectedIndex());
                         areas.setSelectedIndex(0);
                         areasAddList.setSelectedIndex(0);
                     }
@@ -434,7 +440,8 @@ public final class LocationCategoryCustomizer extends JDialog {
         });
     }
 
-    private void addToolTips() {
+    private void addToolTips() 
+    {
         deleteCategory.setToolTipText("Delete the currently selected category");
         addLoation.setToolTipText("Add an area to the current category in construction");
         removeArea.setToolTipText("Remove an area from the current category in construction");
@@ -453,10 +460,11 @@ public final class LocationCategoryCustomizer extends JDialog {
         areasAddList.setToolTipText("List of all areas inside the category currently in construction");
     }
 
-    private void updateData() {
-        ((DefaultListModel) areas.getModel()).removeAllElements();
-        ((DefaultListModel) areasAddList.getModel()).removeAllElements();
-        ((DefaultListModel) categoryInventory.getModel()).removeAllElements();
+    private void updateData() 
+    {
+        ((DefaultListModel<String>) areas.getModel()).removeAllElements();
+        ((DefaultListModel<String>) areasAddList.getModel()).removeAllElements();
+        ((DefaultListModel<String>) categoryInventory.getModel()).removeAllElements();
         categoryName.setText("");
 
         updateCategoryList();
@@ -469,18 +477,19 @@ public final class LocationCategoryCustomizer extends JDialog {
         }
         Collections.sort(areaNames);
         for (final String s : areaNames)
-            ((DefaultListModel) areas.getModel()).addElement(s);
+            ((DefaultListModel<String>) areas.getModel()).addElement(s);
         areas.setSelectedIndex(0);
     }
 
-    private void updateCategoryList() {
+    private void updateCategoryList() 
+    {
         categoryList.removeAllItems();
         for (final TurnAreaCategory tlc : turnrundownChart.getCategories())
             categoryList.addItem(tlc);
     }
 
-    private boolean isInCategories(
-                                   final String area) {
+    private boolean isInCategories(final String area) 
+    {
         for (int i = 0; i < categoryList.getItemCount(); i++)
             for (final String s : ((TurnAreaCategory) categoryList.getItemAt(i)).getTurnAreaNames())
                 if (area.startsWith(s))
@@ -489,26 +498,27 @@ public final class LocationCategoryCustomizer extends JDialog {
         return false;
     }
 
-    private void addLocation(
-                             final String areaName) {
+    private void addLocation(final String areaName) 
+    {
         final List<String> areaNames = Lists.newArrayList(200);
 
-        for (int i = 0; i < ((DefaultListModel) areas.getModel()).getSize(); i++)
-            areaNames.add((String) ((DefaultListModel) areas.getModel()).get(i));
+        for (int i = 0; i < ((DefaultListModel<String>) areas.getModel()).getSize(); i++)
+            areaNames.add((String) ((DefaultListModel<String>) areas.getModel()).get(i));
 
         areaNames.add(areaName);
         Collections.sort(areaNames);
 
-        ((DefaultListModel) areas.getModel()).removeAllElements();
+        ((DefaultListModel<String>) areas.getModel()).removeAllElements();
         for (final String s : areaNames)
-            ((DefaultListModel) areas.getModel()).addElement(s);
+            ((DefaultListModel<String>) areas.getModel()).addElement(s);
     }
 
-    private void addCategory() {
+    private void addCategory() 
+    {
         if (!areasAddList.isSelectionEmpty() && !categoryName.getText().equals("")) {
             final TurnAreaCategory tac = new TurnAreaCategory(categoryName.getText());
-            for (int i = 0; i < ((DefaultListModel) areasAddList.getModel()).getSize(); i++)
-                tac.addTurnAreaName((String) ((DefaultListModel) areasAddList.getModel()).get(i));
+            for (int i = 0; i < ((DefaultListModel<String>) areasAddList.getModel()).getSize(); i++)
+                tac.addTurnAreaName((String) ((DefaultListModel<String>) areasAddList.getModel()).get(i));
 
             turnrundownChart.addCategory(tac);
 
@@ -517,7 +527,8 @@ public final class LocationCategoryCustomizer extends JDialog {
     }
 
     @Override
-    public void dispose() {
+    public void dispose() 
+    {
         super.dispose();
         turnrundownChart.updateChart();
     }

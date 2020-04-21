@@ -45,15 +45,15 @@ import com.googlecode.alv.util.Pair;
  * All methods in this class throw a {@link NullPointerException} if a null
  * object reference is passed in any parameter.
  */
-final class DataPoint implements Comparable<DataPoint> {
+final class DataPoint implements Comparable<DataPoint> 
+{
     private final Map<String, Object> nameValuePairs;
 
     /**
      * Creates a data point consisting of only the mandatory name value-pair.
      */
-    @SuppressWarnings("unchecked")
-    DataPoint(
-              final String name) {
+    DataPoint(final String name) 
+    {
         if (name == null)
             throw new NullPointerException("The name must not be null.");
 
@@ -64,9 +64,8 @@ final class DataPoint implements Comparable<DataPoint> {
      * Creates a data point consisting of the mandatory name and a single other
      * value-pair.
      */
-    @SuppressWarnings("unchecked")
-    DataPoint(
-              final String name, final Pair<String, ? extends Object> singleValuePair) {
+    DataPoint(final String name, final Pair<String, ? extends Object> singleValuePair)
+    {
         if (name == null)
             throw new NullPointerException("The name must not be null.");
         if (singleValuePair == null)
@@ -83,8 +82,8 @@ final class DataPoint implements Comparable<DataPoint> {
      * needs to allow write operations.
      */
     @SuppressWarnings("unchecked")
-    DataPoint(
-              final String name, final Map<String, ? extends Object> nameValuePairs) {
+    DataPoint(final String name, final Map<String, ? extends Object> nameValuePairs) 
+    {
         if (name == null)
             throw new NullPointerException("The name must not be null.");
         if (nameValuePairs == null)
@@ -98,8 +97,8 @@ final class DataPoint implements Comparable<DataPoint> {
     /**
      * Creates a copy of the given data point.
      */
-    DataPoint(
-              final DataPoint toClone) {
+    DataPoint(final DataPoint toClone) 
+    {
         if (toClone == null)
             throw new NullPointerException("The data point to clone must not be null.");
 
@@ -111,7 +110,8 @@ final class DataPoint implements Comparable<DataPoint> {
      * 
      * @return The name of this data point.
      */
-    String getName() {
+    String getName() 
+    {
         return (String) nameValuePairs.get("name");
     }
 
@@ -121,8 +121,8 @@ final class DataPoint implements Comparable<DataPoint> {
      * @return The value with the given name. Returns {@code null} in case the
      *         value name doesn't exist.
      */
-    Object getValueOf(
-                      final String name) {
+    Object getValueOf(final String name) 
+    {
         return nameValuePairs.get(name);
     }
 
@@ -136,8 +136,8 @@ final class DataPoint implements Comparable<DataPoint> {
      * @throws IllegalArgumentException
      *             if there doesn't exist a value with the given name
      */
-    void setValueOf(
-                    final String name, final Object value) {
+    void setValueOf(final String name, final Object value) 
+    {
         if (!nameValuePairs.containsKey(name))
             throw new IllegalArgumentException("The given value name doesn't exist.");
 
@@ -147,7 +147,8 @@ final class DataPoint implements Comparable<DataPoint> {
     /**
      * @return A read-only set of all value-pairs.
      */
-    Set<Entry<String, Object>> getNameValuePairs() {
+    Set<Entry<String, Object>> getNameValuePairs() 
+    {
         return Collections.unmodifiableSet(nameValuePairs.entrySet());
     }
 
@@ -157,13 +158,14 @@ final class DataPoint implements Comparable<DataPoint> {
      * 
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo(
-                         final DataPoint o) {
+    public int compareTo(final DataPoint o) 
+    {
         return getName().compareToIgnoreCase(o.getName());
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return getName();
     }
 }
