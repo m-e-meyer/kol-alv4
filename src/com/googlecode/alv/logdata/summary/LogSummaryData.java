@@ -49,7 +49,8 @@ import com.googlecode.alv.util.Lists;
  * All methods in this class throw a {@link NullPointerException} if a null
  * object reference is passed in any parameter.
  */
-public class LogSummaryData {
+public class LogSummaryData 
+{
     private final List<Consumable> consumablesUsed;
 
     private final List<Item> droppedItems;
@@ -93,6 +94,8 @@ public class LogSummaryData {
     private final InexplicableDoor nesRealm;
 
     private final QuestTurncounts questTurncounts;
+    
+    private final LimitedUseData limitedUseData;
 
     private Statgain totalStatgains;
 
@@ -131,8 +134,8 @@ public class LogSummaryData {
      * @param logData
      *            The ascension log.
      */
-    public LogSummaryData(
-                          final LogDataHolder logData) {
+    public LogSummaryData(final LogDataHolder logData) 
+    {
         if (logData == null)
             throw new NullPointerException("Log data holder must not be null.");
 
@@ -232,6 +235,7 @@ public class LogSummaryData {
         goatlet = data.getGoatlet();
         nesRealm = data.get8BitRealm();
         questTurncounts = data.getQuestTurncounts();
+        limitedUseData = data.getLimitedUseData();
         totalStatgains = data.getTotalStatgains();
         combatsStatgains = data.getCombatsStatgains();
         noncombatsStatgains = data.getNoncombatsStatgains();
@@ -253,7 +257,8 @@ public class LogSummaryData {
      * @return A sorted list of areas and the turns spent in them. This list
      *         starts with the area that has the highest amount turns.
      */
-    public List<DataNumberPair<String>> getTurnsPerArea() {
+    public List<DataNumberPair<String>> getTurnsPerArea() 
+    {
         return turnsPerArea;
     }
 
@@ -261,7 +266,8 @@ public class LogSummaryData {
      * @return A sorted list of all consumables used. This list starts with the
      *         consumable that was used the most.
      */
-    public List<Consumable> getAllConsumablesUsed() {
+    public List<Consumable> getAllConsumablesUsed() 
+    {
         return consumablesUsed;
     }
 
@@ -269,7 +275,8 @@ public class LogSummaryData {
      * @return A sorted list of all food consumables used. This list starts with
      *         the consumable that was used the most.
      */
-    public List<Consumable> getFoodConsumablesUsed() {
+    public List<Consumable> getFoodConsumablesUsed() 
+    {
         final List<Consumable> consumables = Lists.newArrayList(consumablesUsed.size());
 
         for (final Consumable c : consumablesUsed)
@@ -283,7 +290,8 @@ public class LogSummaryData {
      * @return A sorted list of all booze consumables used. This list starts
      *         with the consumable that was used the most.
      */
-    public List<Consumable> getBoozeConsumablesUsed() {
+    public List<Consumable> getBoozeConsumablesUsed() 
+    {
         final List<Consumable> consumables = Lists.newArrayList(consumablesUsed.size());
 
         for (final Consumable c : consumablesUsed)
@@ -297,7 +305,8 @@ public class LogSummaryData {
      * @return A sorted list of all spleen consumables used. This list starts
      *         with the consumable that was used the most.
      */
-    public List<Consumable> getSpleenConsumablesUsed() {
+    public List<Consumable> getSpleenConsumablesUsed() 
+    {
         final List<Consumable> consumables = Lists.newArrayList(consumablesUsed.size());
 
         for (final Consumable c : consumablesUsed)
@@ -311,7 +320,8 @@ public class LogSummaryData {
      * @return A sorted list of all other consumables used. This list starts
      *         with the consumable that was used the most.
      */
-    public List<Consumable> getOtherConsumablesUsed() {
+    public List<Consumable> getOtherConsumablesUsed() 
+    {
         final List<Consumable> consumables = Lists.newArrayList(consumablesUsed.size());
 
         for (final Consumable c : consumablesUsed)
@@ -325,7 +335,8 @@ public class LogSummaryData {
      * @return A sorted list of all items dropped during this ascension. This
      *         list starts with the item that dropped the most.
      */
-    public List<Item> getDroppedItems() {
+    public List<Item> getDroppedItems()
+    {
         return droppedItems;
     }
 
@@ -333,7 +344,8 @@ public class LogSummaryData {
      * 
      * @return A sorted list of all combat items used during this ascension, the list starts with skill that was used most.
      */
-    public List<CombatItem> getCombatItemsUsed() {
+    public List<CombatItem> getCombatItemsUsed()
+    {
         return combatItemsUsed;
     }
     
@@ -341,7 +353,8 @@ public class LogSummaryData {
      * @return A sorted list of all skills cast during this ascension. This list
      *         starts with the skill that was cast the most.
      */
-    public List<Skill> getSkillsCast() {
+    public List<Skill> getSkillsCast()
+    {
         return skillsCast;
     }
 
@@ -350,7 +363,8 @@ public class LogSummaryData {
      *         list starts with the area statgain that had the highest total
      *         statgains.
      */
-    public List<AreaStatgains> getAreasStatgains() {
+    public List<AreaStatgains> getAreasStatgains() 
+    {
         return areasStatgains;
     }
 
@@ -358,7 +372,8 @@ public class LogSummaryData {
      * @return A read-only list of all levels. No guarantees are made concerning
      *         it's order.
      */
-    public List<LevelData> getLevelData() {
+    public List<LevelData> getLevelData() 
+    {
         return Collections.unmodifiableList(levels);
     }
 
@@ -366,8 +381,8 @@ public class LogSummaryData {
      * @param familiarUsage
      *            All used familiars and how often they were used to set.
      */
-    public void setFamiliarUsage(
-                                 final List<DataNumberPair<String>> familiarUsage) {
+    public void setFamiliarUsage(final List<DataNumberPair<String>> familiarUsage) 
+    {
         if (familiarUsage == null)
             throw new NullPointerException("Familiar usage list must not be null.");
 
@@ -378,14 +393,18 @@ public class LogSummaryData {
      * @return A sorted list of all used familiars and how often they were used.
      *         This list starts with the familiar that was used the most.
      */
-    public List<DataNumberPair<String>> getFamiliarUsage() {
+    public List<DataNumberPair<String>> getFamiliarUsage() 
+    {
         return familiarUsage;
     }
 
-    public void setTrackedCombatItemUses(final List<DataNumberPair<String>> trackedCombatItemUses) {
+    public void setTrackedCombatItemUses(final List<DataNumberPair<String>> trackedCombatItemUses) 
+    {
         this.trackedCombatItemUses = trackedCombatItemUses;
     }
-    public List<DataNumberPair<String>> getTrackedCombatItemUses() {
+    
+    public List<DataNumberPair<String>> getTrackedCombatItemUses() 
+    {
         return this.trackedCombatItemUses;
     }
     
@@ -393,8 +412,8 @@ public class LogSummaryData {
      * @param banishedCombats
      *            All banished combats to set.
      */
-    public void setBanishedCombats(
-                                        final List<DataNumberPair<String>> banishedCombats) {
+    public void setBanishedCombats(final List<DataNumberPair<String>> banishedCombats) 
+    {
         if (banishedCombats == null)
             throw new NullPointerException("banishedCombats combats list must not be null.");
 
@@ -405,7 +424,8 @@ public class LogSummaryData {
      * @return A sorted list of all disintegrated combats. This list starts with
      *         the earliest disintegrated combat.
      */
-    public List<DataNumberPair<String>> getBanishedCombats() {
+    public List<DataNumberPair<String>> getBanishedCombats() 
+    {
         return banishedCombats;
     }
     
@@ -413,8 +433,8 @@ public class LogSummaryData {
      * @param disintegratedCombats
      *            All disintegrated combats to set.
      */
-    public void setDisintegratedCombats(
-                                        final List<DataNumberPair<String>> disintegratedCombats) {
+    public void setDisintegratedCombats(final List<DataNumberPair<String>> disintegratedCombats) 
+    {
         if (disintegratedCombats == null)
             throw new NullPointerException("Disintegrated combats list must not be null.");
 
@@ -425,7 +445,8 @@ public class LogSummaryData {
      * @return A sorted list of all disintegrated combats. This list starts with
      *         the earliest disintegrated combat.
      */
-    public List<DataNumberPair<String>> getDisintegratedCombats() {
+    public List<DataNumberPair<String>> getDisintegratedCombats() 
+    {
         return disintegratedCombats;
     }
 
@@ -433,8 +454,8 @@ public class LogSummaryData {
      * @param semirares
      *            All encountered semirares to set.
      */
-    public void setSemirares(
-                             final List<DataNumberPair<String>> semirares) {
+    public void setSemirares( final List<DataNumberPair<String>> semirares) 
+    {
         if (semirares == null)
             throw new NullPointerException("Semirares list must not be null.");
 
@@ -445,7 +466,8 @@ public class LogSummaryData {
      * @return A sorted list of all encountered semirares. This list starts with
      *         the semirare that was encountered the earliest.
      */
-    public List<DataNumberPair<String>> getSemirares() {
+    public List<DataNumberPair<String>> getSemirares() 
+    {
         return semirares;
     }
 
@@ -453,8 +475,8 @@ public class LogSummaryData {
      * @param badmoonAdventures
      *            All encountered Bad Moon adventures to set.
      */
-    public void setBadmoonAdventures(
-                                     final List<DataNumberPair<String>> badmoonAdventures) {
+    public void setBadmoonAdventures(final List<DataNumberPair<String>> badmoonAdventures) 
+    {
         if (badmoonAdventures == null)
             throw new NullPointerException("Bad Moon adventures list must not be null.");
 
@@ -464,28 +486,32 @@ public class LogSummaryData {
     /**
      * @return A list of all Bad Moon adventures.
      */
-    public List<DataNumberPair<String>> getBadmoonAdventures() {
+    public List<DataNumberPair<String>> getBadmoonAdventures() 
+    {
         return badmoonAdventures;
     }
 
     /**
      * @return A list of all romantic arrow usages.
      */
-    public List<DataNumberPair<String>> getRomanticArrowUsages() {
+    public List<DataNumberPair<String>> getRomanticArrowUsages() 
+    {
         return romanticArrowUsages;
     }
 
     /**
      * @return A list of all wandering adventures.
      */
-    public List<DataNumberPair<String>> getWanderingAdventures() {
+    public List<DataNumberPair<String>> getWanderingAdventures()
+    {
         return wanderingAdventures;
     }
 
     /**
      * @return A list of all Hipster combats.
      */
-    public List<DataNumberPair<String>> getHipsterCombats() {
+    public List<DataNumberPair<String>> getHipsterCombats() 
+    {
         return hipsterCombats;
     }
 
@@ -493,72 +519,89 @@ public class LogSummaryData {
      * @return A list of all combats on which free runaways were successfully
      *         used.
      */
-    public List<Encounter> getFreeRunawaysCombats() {
+    public List<Encounter> getFreeRunawaysCombats()
+{
         return freeRunawayCombats;
     }
 
     /**
      * @return A summary on consumables used during the ascension.
      */
-    public ConsumptionSummary getConsumptionSummary() {
+    public ConsumptionSummary getConsumptionSummary()
+    {
         return consumptionSummary;
     }
 
     /**
      * @return The free runaways over the whole ascension.
      */
-    public FreeRunaways getFreeRunaways() {
+    public FreeRunaways getFreeRunaways() 
+    {
         return freeRunaways;
     }
 
     /**
      * @return The RNG data of the Goatlet.
      */
-    public Goatlet getGoatlet() {
+    public Goatlet getGoatlet()
+    {
         return goatlet;
     }
 
     /**
      * @return The RNG data of the 8-Bit Realm.
      */
-    public InexplicableDoor get8BitRealm() {
+    public InexplicableDoor get8BitRealm()
+    {
         return nesRealm;
     }
 
     /**
      * @return The quest turncounts.
      */
-    public QuestTurncounts getQuestTurncounts() {
+    public QuestTurncounts getQuestTurncounts() 
+    {
         return questTurncounts;
     }
 
     /**
+     * @return The data on uses of items or skills with daily limits
+     */
+    public LimitedUseData getLimitedUseData()
+    {
+        return limitedUseData;
+    }
+    
+    /**
      * @param mpGains
      *            The total amount of mp gains to set.
      */
-    public void setTotalMPGains(
-                                final MPGain mpGains) {
+    public void setTotalMPGains(final MPGain mpGains) 
+    {
         totalMPGains = mpGains;
     }
 
     /**
      * @return The total mp gains collected during this ascension.
      */
-    public MPGain getTotalMPGains() {
+    public MPGain getTotalMPGains() 
+    {
         return totalMPGains;
     }
 
     /**
      * @return The mp gains per level summary.
      */
-    public MPGainSummary getMPGainSummary() {
+    public MPGainSummary getMPGainSummary() 
+    {
         return mpGainSummary;
     }
 
     /**
      * @return The meat per level summary.
      */
-    public MeatSummary getMeatSummary() {
+    public MeatSummary getMeatSummary() 
+    {
         return meatSummary;
     }
 
@@ -566,15 +609,16 @@ public class LogSummaryData {
      * @param stats
      *            The total amount of statgains to set.
      */
-    public void setTotalStatgains(
-                                  final Statgain stats) {
+    public void setTotalStatgains(final Statgain stats) 
+    {
         totalStatgains = stats;
     }
 
     /**
      * @return The total amount of substats collected during this ascension.
      */
-    public Statgain getTotalStatgains() {
+    public Statgain getTotalStatgains()
+    {
         return totalStatgains;
     }
 
@@ -582,8 +626,8 @@ public class LogSummaryData {
      * @param stats
      *            The amount of combat statgains to set.
      */
-    public void setCombatsStatgains(
-                                    final Statgain stats) {
+    public void setCombatsStatgains(final Statgain stats) 
+    {
         combatsStatgains = stats;
     }
 
@@ -591,7 +635,8 @@ public class LogSummaryData {
      * @return The total amount of substats from combats collected during this
      *         ascension.
      */
-    public Statgain getCombatsStatgains() {
+    public Statgain getCombatsStatgains() 
+    {
         return combatsStatgains;
     }
 
@@ -599,8 +644,8 @@ public class LogSummaryData {
      * @param stats
      *            The amount of noncombat statgains to set.
      */
-    public void setNoncombatsStatgains(
-                                       final Statgain stats) {
+    public void setNoncombatsStatgains(final Statgain stats) 
+    {
         noncombatsStatgains = stats;
     }
 
@@ -608,7 +653,8 @@ public class LogSummaryData {
      * @return The total amount of substats from noncombats collected during
      *         this ascension.
      */
-    public Statgain getNoncombatsStatgains() {
+    public Statgain getNoncombatsStatgains()
+    {
         return noncombatsStatgains;
     }
 
@@ -616,8 +662,8 @@ public class LogSummaryData {
      * @param stats
      *            The amount of other statgains to set.
      */
-    public void setOthersStatgains(
-                                   final Statgain stats) {
+    public void setOthersStatgains(final Statgain stats) 
+    {
         othersStatgains = stats;
     }
 
@@ -625,7 +671,8 @@ public class LogSummaryData {
      * @return The total amount of substats from other encounters collected
      *         during this ascension.
      */
-    public Statgain getOthersStatgains() {
+    public Statgain getOthersStatgains() 
+    {
         return othersStatgains;
     }
 
@@ -633,7 +680,8 @@ public class LogSummaryData {
      * @return The total amount of substats from food collected during this
      *         ascension.
      */
-    public Statgain getFoodConsumablesStatgains() {
+    public Statgain getFoodConsumablesStatgains() 
+    {
         return consumptionSummary.getFoodConsumablesStatgains();
     }
 
@@ -641,7 +689,8 @@ public class LogSummaryData {
      * @return The total amount of substats from booze collected during this
      *         ascension.
      */
-    public Statgain getBoozeConsumablesStatgains() {
+    public Statgain getBoozeConsumablesStatgains() 
+    {
         return consumptionSummary.getBoozeConsumablesStatgains();
     }
 
@@ -649,7 +698,8 @@ public class LogSummaryData {
      * @return The total amount of substats from used consumables collected
      *         during this ascension.
      */
-    public Statgain getUsedConsumablesStatgains() {
+    public Statgain getUsedConsumablesStatgains() 
+    {
         return consumptionSummary.getUsedConsumablesStatgains();
     }
 
@@ -659,8 +709,8 @@ public class LogSummaryData {
      * @throws IllegalArgumentException
      *             if totalAmountSkillCasts is below 0
      */
-    public void setTotalAmountSkillCasts(
-                                         final int totalAmountSkillCasts) {
+    public void setTotalAmountSkillCasts(final int totalAmountSkillCasts) 
+    {
         if (totalAmountSkillCasts < 0)
             throw new IllegalArgumentException("Amount must not be below 0.");
 
@@ -670,7 +720,8 @@ public class LogSummaryData {
     /**
      * @return The total amount of skill casts.
      */
-    public int getTotalAmountSkillCasts() {
+    public int getTotalAmountSkillCasts() 
+    {
         return totalAmountSkillCasts;
     }
 
@@ -680,8 +731,8 @@ public class LogSummaryData {
      * @throws IllegalArgumentException
      *             if totalMPUsed is below 0
      */
-    public void setTotalMPUsed(
-                               final int totalMPUsed) {
+    public void setTotalMPUsed(final int totalMPUsed) 
+    {
         if (totalMPUsed < 0)
             throw new IllegalArgumentException("MP used must not be below 0.");
 
@@ -691,7 +742,8 @@ public class LogSummaryData {
     /**
      * @return The total amount of MP spent on skills.
      */
-    public int getTotalMPUsed() {
+    public int getTotalMPUsed()
+    {
         return totalMPUsed;
     }
 
@@ -701,8 +753,8 @@ public class LogSummaryData {
      * @throws IllegalArgumentException
      *             if totalMeatGain is below 0
      */
-    public void setTotalMeatGain(
-                                 final int totalMeatGain) {
+    public void setTotalMeatGain(final int totalMeatGain) 
+    {
         if (totalMeatGain < 0)
             throw new IllegalArgumentException("Meat gain must not be below 0.");
 
@@ -712,7 +764,8 @@ public class LogSummaryData {
     /**
      * @return The total amount of meat gathered.
      */
-    public int getTotalMeatGain() {
+    public int getTotalMeatGain() 
+    {
         return totalMeatGain;
     }
 
@@ -722,8 +775,8 @@ public class LogSummaryData {
      * @throws IllegalArgumentException
      *             if totalMeatGain is below 0
      */
-    public void setTotalMeatSpent(
-                                  final int totalMeatSpent) {
+    public void setTotalMeatSpent(final int totalMeatSpent) 
+    {
         if (totalMeatSpent < 0)
             throw new IllegalArgumentException("Meat spent must not be below 0.");
 
@@ -733,28 +786,32 @@ public class LogSummaryData {
     /**
      * @return The total amount of meat spent.
      */
-    public int getTotalMeatSpent() {
+    public int getTotalMeatSpent() 
+    {
         return totalMeatSpent;
     }
 
     /**
      * @return The total amount of turns gained from food.
      */
-    public int getTotalTurnsFromFood() {
+    public int getTotalTurnsFromFood()
+    {
         return consumptionSummary.getTotalTurnsFromFood();
     }
 
     /**
      * @return The total amount of turns gained from booze.
      */
-    public int getTotalTurnsFromBooze() {
+    public int getTotalTurnsFromBooze() 
+    {
         return consumptionSummary.getTotalTurnsFromBooze();
     }
 
     /**
      * @return The total amount of turns gained from spleen and other sources.
      */
-    public int getTotalTurnsFromOther() {
+    public int getTotalTurnsFromOther()
+    {
         return consumptionSummary.getTotalTurnsFromOther();
     }
 
@@ -764,8 +821,8 @@ public class LogSummaryData {
      * @throws IllegalArgumentException
      *             if totalTurnsFromRollover is below 0
      */
-    public void setTotalTurnsFromRollover(
-                                          final int totalTurnsFromRollover) {
+    public void setTotalTurnsFromRollover(final int totalTurnsFromRollover) 
+    {
         if (totalTurnsFromRollover < 0)
             throw new IllegalArgumentException("Turn gain must not be below 0.");
 
@@ -775,7 +832,8 @@ public class LogSummaryData {
     /**
      * @return The total amount of turns gained from rollover.
      */
-    public int getTotalTurnsFromRollover() {
+    public int getTotalTurnsFromRollover() 
+    {
         return totalTurnsFromRollover;
     }
 
@@ -785,8 +843,8 @@ public class LogSummaryData {
      * @throws IllegalArgumentException
      *             if totalTurnsCombat is below 0
      */
-    public void setTotalTurnsCombat(
-                                    final int totalTurnsCombat) {
+    public void setTotalTurnsCombat(final int totalTurnsCombat) 
+    {
         if (totalTurnsCombat < 0)
             throw new IllegalArgumentException("Turn spent must not be below 0.");
 
@@ -796,7 +854,8 @@ public class LogSummaryData {
     /**
      * @return The total amount of combat turns.
      */
-    public int getTotalTurnsCombat() {
+    public int getTotalTurnsCombat()
+    {
         return totalTurnsCombat;
     }
 
@@ -806,8 +865,8 @@ public class LogSummaryData {
      * @throws IllegalArgumentException
      *             if totalTurnsNoncombat is below 0
      */
-    public void setTotalTurnsNoncombat(
-                                       final int totalTurnsNoncombat) {
+    public void setTotalTurnsNoncombat(final int totalTurnsNoncombat) 
+    {
         if (totalTurnsNoncombat < 0)
             throw new IllegalArgumentException("Turn spent must not be below 0.");
 
@@ -817,7 +876,8 @@ public class LogSummaryData {
     /**
      * @return The total amount of noncombat turns.
      */
-    public int getTotalTurnsNoncombat() {
+    public int getTotalTurnsNoncombat() 
+    {
         return totalTurnsNoncombat;
     }
 
@@ -828,8 +888,8 @@ public class LogSummaryData {
      * @throws IllegalArgumentException
      *             if totalTurnsOther is below 0
      */
-    public void setTotalTurnsOther(
-                                   final int totalTurnsOther) {
+    public void setTotalTurnsOther(final int totalTurnsOther) 
+    {
         if (totalTurnsOther < 0)
             throw new IllegalArgumentException("Turn spent must not be below 0.");
 
@@ -840,7 +900,8 @@ public class LogSummaryData {
      * @return The total amount of other (smithing, mixing, cooking, etc.)
      *         turns.
      */
-    public int getTotalTurnsOther() {
+    public int getTotalTurnsOther() 
+    {
         return totalTurnsOther;
     }
 }

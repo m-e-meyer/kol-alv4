@@ -26,16 +26,14 @@ package com.googlecode.alv.logdata.summary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.TreeMap;
+
+import com.googlecode.alv.util.DataNumberPair;
 
 /**
  * This class accumulates data on uses of items that have a limited number of uses
  * per day, such as the Cosplay Saber's Force and the Powerful Glove cheat codes.
- * <p>
- * Internally, the uses are collected as follows:
- * ArrayList of DailyUses
- *   DailyUses: List of CounterUses
- *     CounterUses: List of Uses of each counter
  *
  */
 public class LimitedUseData {
@@ -44,12 +42,15 @@ public class LimitedUseData {
      * 
      *
      */
-    public enum Counter
+    public static enum Counter
     {
         // Note: Enum's natural ordering is the order listed here
-        SABER_UPGRADE("Saber: Upgrade", 1),
-        SABER_USE_FORCE("Saber: Use the Force", 5),
+        CHEAT_CODE("CHEAT CODE", 100),
+        SABER_USE_FORCE("Saber/Use the Force", 5),
+        SABER_UPGRADE("Saber/Upgrade", 1),
         ;
+        
+        public static final String REPLACE_ENEMY = "Replace Enemy";
         
         private String name;
         private int limit;
@@ -62,20 +63,29 @@ public class LimitedUseData {
             this.name = name;
             this.limit = limit;
         }
+        
+        public static Counter from(String s)
+        {
+            for (Counter c : Counter.values()) {
+                if (c.getName().equalsIgnoreCase(s))
+                    return c;
+            }
+            return valueOf(s);
+        }
     }
     
     /**
      * 
      *
      */
-    public class Use implements Comparable<Use>
+    public static class Use implements Comparable<Use>
     {
         private int day;
         private Counter counter;
         private int turn;
         private String use;
         
-        Use(int day, int turn, Counter counter, String use)
+        public Use(int day, int turn, Counter counter, String use)
         {
             this.day = day;
             this.counter = counter;
@@ -106,7 +116,7 @@ public class LimitedUseData {
      * 
      *
      */
-    public class CounterUses implements Comparable<CounterUses>
+    public static class CounterUses implements Comparable<CounterUses>
     {
         private Counter counter;
         private ArrayList<Use> uses = new ArrayList<Use>();
@@ -120,6 +130,11 @@ public class LimitedUseData {
         {
             Use newuse = new Use(day, turn, counter, use);
             uses.add(newuse);
+        }
+        
+        private void add(Use use)
+        {
+            uses.add(use);
         }
         
         public Counter getCounter() { return counter; }
@@ -142,7 +157,7 @@ public class LimitedUseData {
      * 
      *
      */
-    public class DailyUses 
+    public static class DailyUses 
     {
         private int day;
         private TreeMap<Counter, CounterUses> counterUses 
@@ -166,24 +181,50 @@ public class LimitedUseData {
                 counterUses.put(counter, new CounterUses(counter));
             counterUses.get(counter).add(day, turn, use);
         }
+        
+        private void add(Use use)
+        {
+            Counter counter = use.getCounter();
+            if (! counterUses.containsKey(counter))
+                counterUses.put(counter, new CounterUses(counter));
+            counterUses.get(counter).add(use);                
+        }
     }
     
     
     public final ArrayList<DailyUses> dailyUses 
         = new ArrayList<DailyUses>();
 
-    public LimitedUseData() {
-        // Nothing to do here
+    /**
+     * 
+     * @param uses List of item/skill use events
+     * @param daycount Number of days in the run
+     */
+    public LimitedUseData(List<DataNumberPair<Use>> uses, int daycount) {
+        ensureDaycount(daycount);
+        for (DataNumberPair<Use> use : uses) {
+            add(use.getData());
+        }
     }
 
     public ArrayList<DailyUses> getDailyUses() { return dailyUses; }
     
+    private void add(Use use)
+    {
+        DailyUses dayUses = dailyUses.get(use.getDay() - 1);
+        dayUses.add(use);
+    }
+    
     public void add(int day, int turn, Counter counter, String use)
     {
-        // Get uses for that day, creating it if needed
-        while (day > dailyUses.size())
-            dailyUses.add(new DailyUses(dailyUses.size()+1));
+        ensureDaycount(day);
         DailyUses dayUses = dailyUses.get(day-1);
         dayUses.add(day, turn, counter, use);
+    }
+    
+    public void ensureDaycount(int daycount)
+    {
+        while (daycount > dailyUses.size())
+            dailyUses.add(new DailyUses(dailyUses.size()+1));
     }
 }

@@ -56,7 +56,6 @@ import com.googlecode.alv.gui.LogGUI.GanttPaneButtonListener;
 import com.googlecode.alv.gui.LogVisualizerGUI.LogLoaderListener;
 import com.googlecode.alv.gui.project.ProjectUpdateViewer;
 import com.googlecode.alv.logdata.LogDataHolder;
-import com.googlecode.alv.logdata.summary.LimitedUseData;
 import com.googlecode.alv.parser.LogParser;
 import com.googlecode.alv.parser.MafiaLogParser;
 import com.googlecode.alv.parser.PreparsedLogParser;
@@ -394,26 +393,6 @@ public final class LogVisualizer
     {
         System.out.println("Ascension Log Visualizer build " + Settings.ALV_VERSION);
         ALVParameters params = new ALVParameters(args);
-        // TEST AREA
-        LimitedUseData lim = new LimitedUseData();
-        lim.add(1, 10, LimitedUseData.Counter.SABER_UPGRADE, "Elemental resistance");
-        lim.add(3,  204, LimitedUseData.Counter.SABER_USE_FORCE, "Drop things");
-        lim.add(3,  198, LimitedUseData.Counter.SABER_USE_FORCE, "Drop things");
-        lim.add(3,  202, LimitedUseData.Counter.SABER_UPGRADE, "Monster level");
-        lim.add(3,  200, LimitedUseData.Counter.SABER_USE_FORCE, "Not the adventurer");
-        for (LimitedUseData.DailyUses day : lim.getDailyUses()) {
-            System.out.println("Day " + day.getDay());
-            for (LimitedUseData.Counter ctr : day.getCounterUses().keySet()) {
-                LimitedUseData.CounterUses uses = day.getCounterUses(ctr);
-                for (LimitedUseData.Use use : uses.getUses()) {
-                    System.out.println("   [" + use.getTurn() + "] " + ctr.getName() + ": " + use.getUse());
-                }
-                System.out.println(ctr.getName() + ": " + uses.getUses().length + "/" + ctr.getLimit());
-            }
-        }
-        if (! params.hasError)
-            return;
-        // END TEST AREA
         if (params.hasError)
             return;
         if (params.isParsing) {

@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.logdata.HeaderFooterComment;
 import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.action.DayChange;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
@@ -213,6 +214,17 @@ public final class MafiaLogParser implements LogParser
         getLogData().setFamiliarChanges(famChanges);
         getLogData().setEquipmentChanges(equipChanges);
 
+        // TODO Remove this section when done with fake limited use data
+        getLogData().addLimitedUse(1, 5, Counter.SABER_USE_FORCE, "Drop things");
+        getLogData().addLimitedUse(1, 7, Counter.SABER_UPGRADE, "Elemental res");
+        getLogData().addLimitedUse(1, 14, Counter.SABER_USE_FORCE, "Bring friends");
+        getLogData().addLimitedUse(1, 28, Counter.CHEAT_CODE, "Invisible Avatar");
+        getLogData().addLimitedUse(1, 30, Counter.CHEAT_CODE, "Replace Enemy");
+        getLogData().addLimitedUse(1, 33, Counter.CHEAT_CODE, "Triple Size");
+        getLogData().addLimitedUse(1, 40, Counter.CHEAT_CODE, "Invisible Avatar");
+        getLogData().addLimitedUse(2, 56, Counter.SABER_USE_FORCE, "Not the adventurer");
+        getLogData().addLimitedUse(2, 78, Counter.SABER_USE_FORCE, "Bring friends");
+        
         getLogData().createLogSummary();
     }
 

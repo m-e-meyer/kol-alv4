@@ -138,6 +138,8 @@ final class SummaryDataCalculator {
     private final InexplicableDoor nesRealm = new InexplicableDoor();
 
     private final QuestTurncounts questTurncounts;
+    
+    private final LimitedUseData limitedUseData;
 
     private Statgain totalStatgains = Statgain.NO_STATS;
 
@@ -383,6 +385,9 @@ final class SummaryDataCalculator {
         // Quest turncount summary
         questTurncounts = new QuestTurncounts(logData.getTurnIntervalsSpent(),
                                               droppedItems.getElements());
+        
+        limitedUseData = new LimitedUseData(logData.getLimitedUses(), 
+                                            logData.getLastDayChange().getDayNumber());
     }
 
     /**
@@ -750,6 +755,14 @@ final class SummaryDataCalculator {
         return questTurncounts;
     }
 
+    /**
+     * @return The data for uses of items with daily limits
+     */
+    LimitedUseData getLimitedUseData()
+    {
+        return limitedUseData;
+    }
+    
     /**
      * @return The total mp gains collected during this ascension.
      */

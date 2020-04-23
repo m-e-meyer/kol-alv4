@@ -34,6 +34,8 @@ import java.util.Map.Entry;
 
 import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.summary.LevelData;
+import com.googlecode.alv.logdata.summary.LimitedUseData;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Use;
 import com.googlecode.alv.logdata.summary.LogSummaryData;
 import com.googlecode.alv.logdata.turn.DetailedTurnInterval;
 import com.googlecode.alv.logdata.turn.SimpleTurnInterval;
@@ -104,6 +106,8 @@ public final class LogDataHolder
     private final List<Pull> pulls = Lists.newArrayList(100);
 
     private final List<DataNumberPair<String>> learnedSkills = Lists.newArrayList();
+    
+    private final List<DataNumberPair<LimitedUseData.Use>> limitedUses = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> hybridization = Lists.newArrayList();
 
@@ -1327,6 +1331,28 @@ public final class LogDataHolder
         return Collections.unmodifiableList( this.learnedSkills );
     }
 
+    /**
+     * Adds a use of a daily-limited item to the list of uses.
+     *
+     * @param day Day number of th euse event
+     * @param turn Turn number of the use event
+     * @param counter Use counter applicable to the event
+     * @param subUse String denoting the use decrementing the counter
+     */
+    public void addLimitedUse(final int day, 
+                              final int turn, 
+                              final LimitedUseData.Counter counter,
+                              final String subUse)
+    {
+        Use use = new Use(day, turn, counter, subUse);
+        this.limitedUses.add(DataNumberPair.of(use, turn));
+    }
+    
+    public List<DataNumberPair<LimitedUseData.Use>> getLimitedUses()
+    {
+        return Collections.unmodifiableList(this.limitedUses);
+    }
+    
     /**
      * Adds a hybridation element to the current log, it should either be a
      * make - Makes a Gene tonic
