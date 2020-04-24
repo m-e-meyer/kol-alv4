@@ -55,6 +55,7 @@ public final class MafiaSessionLogReader implements AutoCloseable
         HYBRID_DATA_BLOCK, 
         SERVICE_BLOCK,
         COMBING_BLOCK,
+        BASTILLE_BLOCK,
         OTHER_BLOCK;
     }
 
@@ -157,8 +158,12 @@ public final class MafiaSessionLogReader implements AutoCloseable
             block = new LogBlockImpl(parseCombingBlock(), LogBlockType.COMBING_BLOCK);
         else if (isEncounterBlockStart(line, line2))
             block = new LogBlockImpl(parseEncounterBlock(), LogBlockType.ENCOUNTER_BLOCK);
-        else if (isConsumableBlockStart(line))
-            block = new LogBlockImpl(parseNormalBlock(), LogBlockType.CONSUMABLE_BLOCK);
+        else if (isConsumableBlockStart(line)) {
+            LogBlockType blockType = LogBlockType.CONSUMABLE_BLOCK;
+            if (line2.equalsIgnoreCase("encounter: bastille battalion"))
+                blockType = LogBlockType.BASTILLE_BLOCK;
+            block = new LogBlockImpl(parseNormalBlock(), blockType);
+        }
         else if (line.equals(SNAPSHOT_START_END) && line2.contains(PLAYER_SNAPSHOT_STRING))
             block = new LogBlockImpl(parsePlayerSnapshotBlock(), LogBlockType.PLAYER_SNAPSHOT_BLOCK);
         else if (line.startsWith(ASCENSION_DATA_START_STRING))

@@ -36,7 +36,6 @@ import java.util.regex.Pattern;
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.logdata.HeaderFooterComment;
 import com.googlecode.alv.logdata.LogDataHolder;
-import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.action.DayChange;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
@@ -50,6 +49,7 @@ import com.googlecode.alv.parser.line.MPGainLineParser;
 import com.googlecode.alv.parser.line.MafiaFamiliarChangeLineParser;
 import com.googlecode.alv.parser.line.MafiaLearnedSkillLineParser;
 import com.googlecode.alv.parser.line.MafiaPullLineParser;
+import com.googlecode.alv.parser.line.MafiaTookChoiceLineParser;
 import com.googlecode.alv.parser.line.MeatLineParser;
 import com.googlecode.alv.parser.line.MeatSpentLineParser;
 import com.googlecode.alv.parser.line.NotesLineParser;
@@ -59,6 +59,8 @@ import com.googlecode.alv.parser.line.StatLineParser;
 import com.googlecode.alv.parser.line.MPGainLineParser.MPGainType;
 import com.googlecode.alv.parser.line.MeatLineParser.MeatGainType;
 import com.googlecode.alv.parser.mafiablock.AscensionDataBlockParser;
+import com.googlecode.alv.parser.mafiablock.BastilleBlockParser;
+import com.googlecode.alv.parser.mafiablock.CombingBlockParser;
 import com.googlecode.alv.parser.mafiablock.ConsumableBlockParser;
 import com.googlecode.alv.parser.mafiablock.EncounterBlockParser;
 import com.googlecode.alv.parser.mafiablock.HybridDataBlockParser;
@@ -118,6 +120,10 @@ public final class MafiaLogParser implements LogParser
     private final HybridDataBlockParser hybridDataParser = new HybridDataBlockParser();
     
     private final ServiceBlockParser serviceParser = new ServiceBlockParser();
+    
+    private final CombingBlockParser combingParser = new CombingBlockParser();
+    
+    private final BastilleBlockParser bastilleParser = new BastilleBlockParser();
 
     private final List<LineParser> lineParsers = Lists.newArrayList();
 
@@ -148,6 +154,7 @@ public final class MafiaLogParser implements LogParser
         lineParsers.add(new PoolMPBuffLineParser());
         lineParsers.add(new DayChangeLineParser());
         lineParsers.add(new MafiaLearnedSkillLineParser() );
+        lineParsers.add(new MafiaTookChoiceLineParser() );
         if (isIncludeMafiaLogNotes)
             lineParsers.add(new NotesLineParser());
     }
@@ -309,7 +316,11 @@ public final class MafiaLogParser implements LogParser
             case SERVICE_BLOCK:
                 serviceParser.parseBlock(block.getBlockLines(), logData);
                 break;
-            case COMBING_BLOCK:        // TODO Fill this in
+            case COMBING_BLOCK:  
+                combingParser.parseBlock(block.getBlockLines(), logData);
+                break;
+            case BASTILLE_BLOCK:
+                bastilleParser.parseBlock(block.getBlockLines(), logData);
                 break;
             case OTHER_BLOCK:
                 for (final String line : block.getBlockLines())

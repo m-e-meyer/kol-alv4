@@ -26,9 +26,12 @@ package com.googlecode.alv.logdata.summary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
+import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.util.DataNumberPair;
 
 /**
@@ -44,10 +47,23 @@ public class LimitedUseData {
      */
     public static enum Counter
     {
-        // Note: Enum's natural ordering is the order listed here
+        // Note: Enum's natural ordering is the order listed here, so should list
+        // them here by alphabetical order of name
+        BASTILLE("Bastille", 1),
+        BEACH_HEAD_COLD("Beach Head/Cold", 1),
+        BEACH_HEAD_FAMILIAR_WT("Beach Head/Familiar Wt", 1),
+        BEACH_HEAD_HOT("Beach Head/Hot", 1),
+        BEACH_HEAD_INITIATIVE("Beach Head/Initiative", 1),
+        BEACH_HEAD_MOXIE("Beach Head/Moxie", 1),
+        BEACH_HEAD_MUSCLE("Beach Head/Muscle", 1),
+        BEACH_HEAD_MYSTICALITY("Beach Head/Mysticality", 1),
+        BEACH_HEAD_SLEAZE("Beach Head/Sleaze", 1),
+        BEACH_HEAD_SPOOKY("Beach Head/Spooky", 1),
+        BEACH_HEAD_STATS("Beach Head/Stats", 1),
+        BEACH_HEAD_STENCH("Beach Head/Stench", 1),
         CHEAT_CODE("CHEAT CODE", 100),
-        SABER_USE_FORCE("Saber/Use the Force", 5),
         SABER_UPGRADE("Saber/Upgrade", 1),
+        SABER_USE_FORCE("Saber/Use the Force", 5),
         ;
         
         public static final String REPLACE_ENEMY = "Replace Enemy";
@@ -75,6 +91,71 @@ public class LimitedUseData {
     }
     
     /**
+     * Convenience map for using strings to look up their corresponding Counter
+     * and name of counter use.
+     */
+    public static final Map<String, CounterUsePair> LIMITED_USE_MAP
+        = new HashMap<String, CounterUsePair>();
+    
+    static {
+        LIMITED_USE_MAP.put("1387/1", 
+                            new CounterUsePair(Counter.SABER_USE_FORCE, "Not the adventurer"));
+        LIMITED_USE_MAP.put("1387/2", 
+                            new CounterUsePair(Counter.SABER_USE_FORCE, "Find friends"));
+        LIMITED_USE_MAP.put("1387/3", 
+                            new CounterUsePair(Counter.SABER_USE_FORCE, "Drop things"));
+        LIMITED_USE_MAP.put("1386/1", 
+                            new CounterUsePair(Counter.SABER_UPGRADE, "MP regen"));
+        LIMITED_USE_MAP.put("1386/2", 
+                            new CounterUsePair(Counter.SABER_UPGRADE, "+20 ML"));
+        LIMITED_USE_MAP.put("1386/3", 
+                            new CounterUsePair(Counter.SABER_UPGRADE, "+3 prismatic res"));
+        LIMITED_USE_MAP.put("1386/4", 
+                            new CounterUsePair(Counter.SABER_UPGRADE, "+10 familiar wt"));
+        LIMITED_USE_MAP.put("cheat code: replace enemy", 
+                            new CounterUsePair(Counter.CHEAT_CODE, Counter.REPLACE_ENEMY));
+        LIMITED_USE_MAP.put("cheat code: triple size", 
+                            new CounterUsePair(Counter.CHEAT_CODE, "Triple Size"));
+        LIMITED_USE_MAP.put("cheat code: invisible avatar", 
+                            new CounterUsePair(Counter.CHEAT_CODE, "Invisible Avatar"));
+        LIMITED_USE_MAP.put("cheat code: shrink enemy", 
+                            new CounterUsePair(Counter.CHEAT_CODE, "Shrink Enemy"));
+        LIMITED_USE_MAP.put("hot-headed", 
+                new CounterUsePair(Counter.BEACH_HEAD_HOT, ""));
+        LIMITED_USE_MAP.put("cold as nice", 
+                new CounterUsePair(Counter.BEACH_HEAD_COLD, ""));
+        LIMITED_USE_MAP.put("a brush with grossness", 
+                new CounterUsePair(Counter.BEACH_HEAD_STENCH, ""));
+        LIMITED_USE_MAP.put("does it have a skull in there??", 
+                new CounterUsePair(Counter.BEACH_HEAD_SPOOKY, ""));
+        LIMITED_USE_MAP.put("oiled, slick", 
+                new CounterUsePair(Counter.BEACH_HEAD_SLEAZE, ""));
+        LIMITED_USE_MAP.put("lack of body-building", 
+                new CounterUsePair(Counter.BEACH_HEAD_MUSCLE, ""));
+        LIMITED_USE_MAP.put("we're all made of starfish", 
+                new CounterUsePair(Counter.BEACH_HEAD_MYSTICALITY, ""));
+        LIMITED_USE_MAP.put("pomp & circumsands", 
+                new CounterUsePair(Counter.BEACH_HEAD_MOXIE, ""));
+        LIMITED_USE_MAP.put("resting beach face", 
+                new CounterUsePair(Counter.BEACH_HEAD_INITIATIVE, ""));
+        LIMITED_USE_MAP.put("do i know you from somewhere?", 
+                new CounterUsePair(Counter.BEACH_HEAD_FAMILIAR_WT, ""));
+        LIMITED_USE_MAP.put("you learned something maybe!", 
+                new CounterUsePair(Counter.BEACH_HEAD_STATS, ""));
+    }
+
+    public static class CounterUsePair 
+    {
+        public Counter counter;
+        public String use;
+        CounterUsePair(Counter c, String u)
+        {
+            counter = c;
+            use = u;
+        }
+    }
+    
+    /**
      * 
      *
      */
@@ -84,19 +165,22 @@ public class LimitedUseData {
         private Counter counter;
         private int turn;
         private String use;
+        private Statgain statgain;
         
-        public Use(int day, int turn, Counter counter, String use)
+        public Use(int day, int turn, Counter counter, String use, Statgain statgain)
         {
             this.day = day;
             this.counter = counter;
             this.turn = turn;
             this.use = use;
+            this.statgain = statgain;
         }
         
         public int getDay() { return day; }
         public int getTurn() { return turn; }
         public Counter getCounter() { return counter; }
         public String getUse() { return use; }
+        public Statgain getStatgain() { return statgain; }
 
         @Override
         public int compareTo(Use arg0) {
@@ -126,10 +210,15 @@ public class LimitedUseData {
             this.counter = counter;
         }
         
-        public void add(int day, int turn, String use)
+        public void add(int day, int turn, String use, Statgain statgain)
         {
-            Use newuse = new Use(day, turn, counter, use);
+            Use newuse = new Use(day, turn, counter, use, statgain);
             uses.add(newuse);
+        }
+        
+        public void add(int day, int turn, String use) 
+        {
+            add(day, turn, use, Statgain.NO_STATS);
         }
         
         private void add(Use use)
@@ -175,11 +264,16 @@ public class LimitedUseData {
             return counterUses.get(counter);
         }
         
-        public void add(int day, int turn, Counter counter, String use) 
+        public void add(int day, int turn, Counter counter, String use, Statgain statgain) 
         {
             if (! counterUses.containsKey(counter))
                 counterUses.put(counter, new CounterUses(counter));
-            counterUses.get(counter).add(day, turn, use);
+            counterUses.get(counter).add(day, turn, use, statgain);
+        }
+        
+        public void add(int day, int turn, Counter counter, String use)
+        {
+            add(day, turn, counter, use, Statgain.NO_STATS);
         }
         
         private void add(Use use)
@@ -190,7 +284,6 @@ public class LimitedUseData {
             counterUses.get(counter).add(use);                
         }
     }
-    
     
     public final ArrayList<DailyUses> dailyUses 
         = new ArrayList<DailyUses>();
@@ -215,11 +308,16 @@ public class LimitedUseData {
         dayUses.add(use);
     }
     
-    public void add(int day, int turn, Counter counter, String use)
+    public void add(int day, int turn, Counter counter, String use, Statgain statgain)
     {
         ensureDaycount(day);
         DailyUses dayUses = dailyUses.get(day-1);
         dayUses.add(day, turn, counter, use);
+    }
+    
+    public void add(int day, int turn, Counter counter, String use)
+    {
+        add(day, turn, counter, use, Statgain.NO_STATS);
     }
     
     public void ensureDaycount(int daycount)

@@ -53,6 +53,7 @@ import com.googlecode.alv.parser.line.MafiaDisintegrateLineParser;
 import com.googlecode.alv.parser.line.MafiaFreeRunawaysLineParser;
 import com.googlecode.alv.parser.line.MafiaLearnedSkillLineParser;
 import com.googlecode.alv.parser.line.MafiaRedRayStatsLineParser;
+import com.googlecode.alv.parser.line.MafiaTookChoiceLineParser;
 import com.googlecode.alv.parser.line.MeatLineParser;
 import com.googlecode.alv.parser.line.MeatSpentLineParser;
 import com.googlecode.alv.parser.line.NotesLineParser;
@@ -171,6 +172,7 @@ public final class EncounterBlockParser implements LogBlockParser
         lineParsers.add(new MafiaBanishLineParser());
         lineParsers.add(new CombatItemUsedLineParser());
         lineParsers.add(new MafiaLearnedSkillLineParser() );
+        lineParsers.add(new MafiaTookChoiceLineParser());
         
         // Add a note parser to encounter blocks
         if (Settings.getBoolean("Include mafia log notes"))

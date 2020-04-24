@@ -32,7 +32,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder.CharacterClass;
-import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
 import com.googlecode.alv.util.Maps;
 import com.googlecode.alv.util.Pair;
 import com.googlecode.alv.util.Sets;
@@ -100,12 +99,6 @@ public final class UsefulPatterns {
             "cocktail napkin" // Only against clingy pirate
             );
 
-    public static final Set<String> LIMITED_SKILLS 
-        = Sets.immutableSetOf( "cheat code: replace enemy", 
-                "cheat code: triple size",
-                "cheat code: invisible avatar",
-                "cheat code: shrink enemy" );
-    
     public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP 
         = Maps.immutableMapOf(Pair.of("clobber", CharacterClass.SEAL_CLUBBER),
                               Pair.of("toss", CharacterClass.TURTLE_TAMER),

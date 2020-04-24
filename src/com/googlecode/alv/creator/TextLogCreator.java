@@ -1437,7 +1437,15 @@ public class TextLogCreator {
             write(" ");
             write(logAdditionsMap.get("limitedUseStart"));
             write(use.getCounter().getName() + ": " + use.getUse());
-            writeln(logAdditionsMap.get("limitedUseEnd"));
+            write(logAdditionsMap.get("limitedUseEnd"));
+            Statgain statgain = use.getStatgain();
+            if (! statgain.equals(Statgain.NO_STATS)) {
+                write(" ");
+                write(logAdditionsMap.get("statgainStart"));
+                write(use.getStatgain().toString());
+                write(logAdditionsMap.get("statgainEnd"));
+            }
+            writeln();
             currentLimitedUse = limitedUseIter.hasNext() ? limitedUseIter.next() : null;
         }
         
@@ -2268,8 +2276,10 @@ public class TextLogCreator {
                 int count = 0;
                 CounterUses counterUses = allUses.get(counter);
                 for (Use u : counterUses.getUses()) {
+                    /* Summary looks kinda cluttered - let's skip the individual events
                     writelnWithBreak("\t[" + u.getTurn() + "] " + counter.getName() 
                                      + ": " + u.getUse());
+                    */
                     if (counter == Counter.CHEAT_CODE) {
                         count += 5;
                         if (u.getUse() == Counter.REPLACE_ENEMY)

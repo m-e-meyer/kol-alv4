@@ -73,6 +73,7 @@ public class HTMLLogCreator extends TextLogCreator {
                 + "     text-align: right; }");
         writeln("TD.toc { font-size: 11px; padding-left: 1em; padding-right: 1em; \n" 
                 + "         text-align: left; background-color: #cccccc }");
+        writeln("SPAN.toplink { font-size: 10px; }");
         writeln("</style></head>");
         writeln("<body>");
     }
@@ -83,7 +84,8 @@ public class HTMLLogCreator extends TextLogCreator {
     @Override
     protected void printTitle(final LogDataHolder logData, final int ascensionStartDate)
     {
-        writeln("<h1>NEW " + logData.getCharacterClass() + " " + logData.getGameMode() + " "
+        writeln("<a name=\"top\"></a><h1>NEW " 
+                + logData.getCharacterClass() + " " + logData.getGameMode() + " "
                 + logData.getAscensionPath() + " ASCENSION STARTED " + ascensionStartDate + "</h1>");
     }
 
@@ -141,7 +143,8 @@ public class HTMLLogCreator extends TextLogCreator {
     @Override
     protected void printSectionHeader(String title, String anchor)
     {
-        writeln("<a name=\"" + anchor + "\"/><h2>" + title + "</h2>");
+        writeln("<a name=\"" + anchor + "\"></a><h2>" + title 
+                + " <span class=\"toplink\">[<a href=\"#top\">top</a>]</span></h2>");
     }
 
     /**

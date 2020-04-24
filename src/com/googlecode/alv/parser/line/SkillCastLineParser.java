@@ -30,7 +30,8 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.Skill;
-import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
+import com.googlecode.alv.logdata.summary.LimitedUseData;
+import com.googlecode.alv.logdata.summary.LimitedUseData.CounterUsePair;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.parser.UsefulPatterns;
@@ -111,33 +112,10 @@ public final class SkillCastLineParser extends AbstractLineParser
         }
         
         //Check for limited daily use skills
-        if (UsefulPatterns.LIMITED_SKILLS.contains(skillName)) {
+        if (LimitedUseData.LIMITED_USE_MAP.containsKey(skillName)) {
             SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-            Counter counter;
-            String subUse;
-            switch (skillName) {
-            case "cheat code: replace enemy":
-                counter = Counter.CHEAT_CODE;
-                subUse = Counter.REPLACE_ENEMY;
-                break;
-            case "cheat code: triple size":
-                counter = Counter.CHEAT_CODE;
-                subUse = "Triple Size";
-                break;
-            case "cheat code: invisible avatar":
-                counter = Counter.CHEAT_CODE;
-                subUse = "Invisible Avatar";
-                break;
-            case "cheat code: shrink enemy":
-                counter = Counter.CHEAT_CODE;
-                subUse = "Shrink Enemy";
-                break;
-            default:
-                counter = Counter.SABER_UPGRADE;
-                subUse = "";
-                break;
-            }
-            logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), counter, subUse);
+            CounterUsePair cu = LimitedUseData.LIMITED_USE_MAP.get(skillName);
+            logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.counter, cu.use);
         }
     }
 

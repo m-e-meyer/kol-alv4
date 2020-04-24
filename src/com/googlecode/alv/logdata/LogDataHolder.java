@@ -1338,14 +1338,32 @@ public final class LogDataHolder
      * @param turn Turn number of the use event
      * @param counter Use counter applicable to the event
      * @param subUse String denoting the use decrementing the counter
+     * @param statgain Statgain for stats, if any, accrued by using this item
+     */
+    public void addLimitedUse(final int day, 
+                              final int turn, 
+                              final LimitedUseData.Counter counter,
+                              final String subUse,
+                              final Statgain statgain)
+    {
+        Use use = new Use(day, turn, counter, subUse, statgain);
+        this.limitedUses.add(DataNumberPair.of(use, turn));
+    }
+    
+    /**
+     * Adds a use of a daily-limited item to the list of uses.
+     *
+     * @param day Day number of th euse event
+     * @param turn Turn number of the use event
+     * @param counter Use counter applicable to the event
+     * @param subUse String denoting the use decrementing the counter
      */
     public void addLimitedUse(final int day, 
                               final int turn, 
                               final LimitedUseData.Counter counter,
                               final String subUse)
     {
-        Use use = new Use(day, turn, counter, subUse);
-        this.limitedUses.add(DataNumberPair.of(use, turn));
+        addLimitedUse(day, turn, counter, subUse, Statgain.NO_STATS);
     }
     
     public List<DataNumberPair<LimitedUseData.Use>> getLimitedUses()
