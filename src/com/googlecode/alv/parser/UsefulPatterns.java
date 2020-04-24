@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder.CharacterClass;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
 import com.googlecode.alv.util.Maps;
 import com.googlecode.alv.util.Pair;
 import com.googlecode.alv.util.Sets;
@@ -72,7 +73,8 @@ public final class UsefulPatterns {
     public static final Set<String> TRACKED_COMBAT_ITEMS = Sets.immutableSetOf(
             "alpine watercolor set", "talisman of renenutet");
 
-    public static final Set<String> BANISH_SKILLS = Sets.immutableSetOf(
+    public static final Set<String> BANISH_SKILLS 
+        = Sets.immutableSetOf(
             "curse of vacation", // Ed
             "batter up", // Seal Clubber
             "talk about politics", // Pantsgiving skill
@@ -82,9 +84,10 @@ public final class UsefulPatterns {
             "peel out", // AoSP
             "walk away from explosion", // AoSP
             "thunder clap"// Heavy Rains
-    );
+                );
 
-    public static final Set<String> BANISH_ITEMS = Sets.immutableSetOf(
+    public static final Set<String> BANISH_ITEMS 
+        = Sets.immutableSetOf(
             "louder than bomb", // Smiths tome
             "crystal skull", // Clip-art
             "ice house",// winter garden
@@ -95,8 +98,14 @@ public final class UsefulPatterns {
             "deathchucks", // KOLHS
             "smoke grenade", // AoSP
             "cocktail napkin" // Only against clingy pirate
-    );
+            );
 
+    public static final Set<String> LIMITED_SKILLS 
+        = Sets.immutableSetOf( "cheat code: replace enemy", 
+                "cheat code: triple size",
+                "cheat code: invisible avatar",
+                "cheat code: shrink enemy" );
+    
     public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP 
         = Maps.immutableMapOf(Pair.of("clobber", CharacterClass.SEAL_CLUBBER),
                               Pair.of("toss", CharacterClass.TURTLE_TAMER),

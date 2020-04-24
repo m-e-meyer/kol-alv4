@@ -283,7 +283,7 @@ public class TextLogCreator {
         final Map<String, String> map = Maps.newHashMap();
         String tmpLine;
 
-        try ( BufferedReader br = DataUtilities.getReader(Constants.KOL_DATA_DIRECTORY,
+        try ( BufferedReader br = DataUtilities.getReader(Constants.DATA_DIRECTORY,
                                                           augmentationsFile)) {
             while ((tmpLine = br.readLine()) != null)
                 // Ignore empty lines and comments
@@ -634,6 +634,7 @@ public class TextLogCreator {
         currentBanishedCombat = banishedCombatIter.hasNext() ? banishedCombatIter.next() : null;
         currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
         currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
+        currentLimitedUse = limitedUseIter.hasNext() ? limitedUseIter.next() : null;
 
         // Level 1 can be skipped.
         levelIter.next();
@@ -1434,7 +1435,9 @@ public class TextLogCreator {
             write(use.getTurn());
             write(CLOSING_TURN_BRACKET);
             write(" ");
-            writeln(" " + use.getCounter().getName() + ": " + use.getUse());
+            write(logAdditionsMap.get("limitedUseStart"));
+            write(use.getCounter().getName() + ": " + use.getUse());
+            writeln(logAdditionsMap.get("limitedUseEnd"));
             currentLimitedUse = limitedUseIter.hasNext() ? limitedUseIter.next() : null;
         }
         

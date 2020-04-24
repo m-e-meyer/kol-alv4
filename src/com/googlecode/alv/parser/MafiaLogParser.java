@@ -214,17 +214,6 @@ public final class MafiaLogParser implements LogParser
         getLogData().setFamiliarChanges(famChanges);
         getLogData().setEquipmentChanges(equipChanges);
 
-        // TODO Remove this section when done with fake limited use data
-        getLogData().addLimitedUse(1, 5, Counter.SABER_USE_FORCE, "Drop things");
-        getLogData().addLimitedUse(1, 7, Counter.SABER_UPGRADE, "Elemental res");
-        getLogData().addLimitedUse(1, 14, Counter.SABER_USE_FORCE, "Bring friends");
-        getLogData().addLimitedUse(1, 28, Counter.CHEAT_CODE, "Invisible Avatar");
-        getLogData().addLimitedUse(1, 30, Counter.CHEAT_CODE, "Replace Enemy");
-        getLogData().addLimitedUse(1, 33, Counter.CHEAT_CODE, "Triple Size");
-        getLogData().addLimitedUse(1, 40, Counter.CHEAT_CODE, "Invisible Avatar");
-        getLogData().addLimitedUse(2, 56, Counter.SABER_USE_FORCE, "Not the adventurer");
-        getLogData().addLimitedUse(2, 78, Counter.SABER_USE_FORCE, "Bring friends");
-        
         getLogData().createLogSummary();
     }
 
