@@ -44,7 +44,8 @@ import com.googlecode.alv.util.Maps;
  * <p>
  * Note: This class has a natural ordering that is inconsistent with equals.
  */
-public abstract class Consumable extends AbstractCountable<Consumable> {
+public abstract class Consumable extends AbstractCountable<Consumable> 
+{
     static final String ADVENTURES_GAINED_STRING = "adventures gained";
 
     private int adventureGain;
@@ -69,8 +70,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @throws IllegalArgumentException
      *             if adventureGain is below 0; if amountUsed is below 1
      */
-    Consumable(
-               final String name, final int adventureGain, final int amountUsed) {
+    Consumable(final String name, final int adventureGain, final int amountUsed)
+    {
         super(name, amountUsed);
 
         if (adventureGain < 0)
@@ -97,9 +98,11 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      *             if adventureGain is below 0; if amountUsed is below 1; if
      *             turnNumberOfUsage is below 0
      */
-    Consumable(
-               final String name, final int adventureGain, final int amountUsed,
-               final int turnNumberOfUsage) {
+    Consumable(final String name, 
+               final int adventureGain, 
+               final int amountUsed,
+               final int turnNumberOfUsage) 
+    {
         this(name, adventureGain, amountUsed);
 
         if (turnNumberOfUsage < 0)
@@ -119,9 +122,10 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @throws IllegalArgumentException
      *             if adventureGain is below 0; if amountUsed is below 1
      */
-    public static Consumable newFoodConsumable(
-                                               final String name, final int adventureGain,
-                                               final int amountUsed) {
+    public static Consumable newFoodConsumable(final String name,
+                                               final int adventureGain,
+                                               final int amountUsed) 
+    {
         return new FoodConsumable(name, adventureGain, amountUsed);
     }
 
@@ -139,9 +143,11 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      *             if adventureGain is below 0; if amountUsed is below 1; if
      *             turnNumberOfUsage is below 0
      */
-    public static Consumable newFoodConsumable(
-                                               final String name, final int adventureGain,
-                                               final int amountUsed, final int turnNumberOfUsage) {
+    public static Consumable newFoodConsumable(final String name, 
+                                               final int adventureGain,
+                                               final int amountUsed, 
+                                               final int turnNumberOfUsage)
+    {
         return new FoodConsumable(name, adventureGain, amountUsed, turnNumberOfUsage);
     }
 
@@ -156,9 +162,10 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @throws IllegalArgumentException
      *             if adventureGain is below 0; if amountUsed is below 1
      */
-    public static Consumable newBoozeConsumable(
-                                                final String name, final int adventureGain,
-                                                final int amountUsed) {
+    public static Consumable newBoozeConsumable(final String name, 
+                                                final int adventureGain,
+                                                final int amountUsed) 
+    {
         return new BoozeConsumable(name, adventureGain, amountUsed);
     }
 
@@ -176,9 +183,11 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      *             if adventureGain is below 0; if amountUsed is below 1; if
      *             turnNumberOfUsage is below 0
      */
-    public static Consumable newBoozeConsumable(
-                                                final String name, final int adventureGain,
-                                                final int amountUsed, final int turnNumberOfUsage) {
+    public static Consumable newBoozeConsumable(final String name, 
+                                                final int adventureGain,
+                                                final int amountUsed, 
+                                                final int turnNumberOfUsage) 
+    {
         return new BoozeConsumable(name, adventureGain, amountUsed, turnNumberOfUsage);
     }
 
@@ -193,9 +202,10 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @throws IllegalArgumentException
      *             if adventureGain is below 0; if amountUsed is below 1
      */
-    public static Consumable newSpleenConsumable(
-                                                 final String name, final int adventureGain,
-                                                 final int amountUsed) {
+    public static Consumable newSpleenConsumable(final String name, 
+                                                 final int adventureGain,
+                                                 final int amountUsed) 
+    {
         return new SpleenConsumable(name, adventureGain, amountUsed);
     }
 
@@ -213,9 +223,11 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      *             if adventureGain is below 0; if amountUsed is below 1; if
      *             turnNumberOfUsage is below 0
      */
-    public static Consumable newSpleenConsumable(
-                                                 final String name, final int adventureGain,
-                                                 final int amountUsed, final int turnNumberOfUsage) {
+    public static Consumable newSpleenConsumable(final String name,
+                                                 final int adventureGain,
+                                                 final int amountUsed, 
+                                                 final int turnNumberOfUsage) 
+    {
         return new SpleenConsumable(name, adventureGain, amountUsed, turnNumberOfUsage);
     }
 
@@ -230,9 +242,10 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @throws IllegalArgumentException
      *             if adventureGain is below 0; if amountUsed is below 1
      */
-    public static Consumable newOtherConsumable(
-                                                final String name, final int adventureGain,
-                                                final int amountUsed) {
+    public static Consumable newOtherConsumable(final String name,
+                                                final int adventureGain,
+                                                final int amountUsed) 
+    {
         return new OtherConsumable(name, adventureGain, amountUsed);
     }
 
@@ -250,9 +263,11 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      *             if adventureGain is below 0; if amountUsed is below 1; if
      *             turnNumberOfUsage is below 0
      */
-    public static Consumable newOtherConsumable(
-                                                final String name, final int adventureGain,
-                                                final int amountUsed, final int turnNumberOfUsage) {
+    public static Consumable newOtherConsumable(final String name,
+                                                final int adventureGain,
+                                                final int amountUsed, 
+                                                final int turnNumberOfUsage)
+    {
         return new OtherConsumable(name, adventureGain, amountUsed, turnNumberOfUsage);
     }
 
@@ -264,7 +279,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
     /**
      * @return The adventure gain of this consumable.
      */
-    public int getAdventureGain() {
+    public int getAdventureGain() 
+    {
         return adventureGain;
     }
 
@@ -277,8 +293,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      *             if amountUsed is below 1
      */
     @Override
-    public void setAmount(
-                          final int amountUsed) {
+    public void setAmount(final int amountUsed) 
+    {
         if (amountUsed < 1)
             throw new IllegalArgumentException("Amount used below 1.");
 
@@ -291,8 +307,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @throws IllegalArgumentException
      *             if turnNumberOfUsage is below 0
      */
-    public void setTurnNumberOfUsage(
-                                     final int turnNumberOfUsage) {
+    public void setTurnNumberOfUsage(final int turnNumberOfUsage)
+{
         if (turnNumberOfUsage < 0)
             throw new IllegalArgumentException("Turn number must not be below 0.");
 
@@ -303,7 +319,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @return The turn number of when this consumable was used. If no value has
      *         been specified, -1 will be return.
      */
-    public int getTurnNumberOfUsage() {
+    public int getTurnNumberOfUsage() 
+    {
         return turnNumberOfUsage;
     }
 
@@ -313,8 +330,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @throws IllegalArgumentException
      *             if dayNumberOfUsage is below 1
      */
-    public void setDayNumberOfUsage(
-                                    final int dayNumberOfUsage) {
+    public void setDayNumberOfUsage(final int dayNumberOfUsage)
+    {
         if (dayNumberOfUsage < 1)
             throw new IllegalArgumentException("Day number must not be below 1.");
 
@@ -325,7 +342,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @return The day number of when this consumable was used. If no value has
      *         been specified, -1 will be return.
      */
-    public int getDayNumberOfUsage() {
+    public int getDayNumberOfUsage()
+    {
         return dayNumberOfUsage;
     }
 
@@ -333,15 +351,16 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @param statGain
      *            The stat gain of this consumable to set.
      */
-    public void setStatGain(
-                            final Statgain statGain) {
+    public void setStatGain(final Statgain statGain) 
+    {
         this.statGain = statGain;
     }
 
     /**
      * @return The stat gain of this consumable.
      */
-    public Statgain getStatGain() {
+    public Statgain getStatGain()
+    {
         return statGain;
     }
 
@@ -349,7 +368,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * @return The name of this consumable and the day it was used on.
      * @see Countable
      */
-    public ConsumableComparator getComparator() {
+    public ConsumableComparator getComparator() 
+    {
         return comparator;
     }
 
@@ -357,16 +377,16 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * {@inheritDoc}
      */
     @Override
-    public void merge(
-                      final Consumable c) {
+    public void merge(final Consumable c)
+    {
         super.merge(c);
         adventureGain += c.getAdventureGain();
-        statGain = statGain.addStats(c.getStatGain());
+        statGain = statGain.plus(c.getStatGain());
     }
 
     @Override
-    public boolean equals(
-                          final Object o) {
+    public boolean equals(final Object o) 
+    {
         if (super.equals(o) && o instanceof Consumable) {
             final Consumable c = (Consumable) o;
 
@@ -381,7 +401,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         int result = 1701;
         result = 31 * result + adventureGain;
         result = 31 * result + turnNumberOfUsage;
@@ -396,25 +417,28 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
      * Helper class to handle comparator implementation of the {@link Countable}
      * interface.
      */
-    private class ConsumableComparator implements Comparable<ConsumableComparator> {
-        private String getName() {
+    private class ConsumableComparator implements Comparable<ConsumableComparator> 
+    {
+        private String getName() 
+        {
             return Consumable.this.getName();
         }
 
-        private int getDayNumber() {
+        private int getDayNumber() 
+        {
             return dayNumberOfUsage;
         }
 
-        public int compareTo(
-                             final ConsumableComparator o) {
+        public int compareTo(final ConsumableComparator o) 
+        {
             final int tmp = Consumable.this.getName().compareTo(o.getName());
 
             return tmp != 0 ? tmp : dayNumberOfUsage - o.getDayNumber();
         }
 
         @Override
-        public boolean equals(
-                              final Object obj) {
+        public boolean equals(final Object obj) 
+        {
             if (obj == null)
                 return false;
 
@@ -430,7 +454,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
         }
 
         @Override
-        public int hashCode() {
+        public int hashCode() 
+        {
             int result = 579;
             result = 31 * result + getDayNumber();
             result = 31 * result + getName().hashCode();
@@ -442,7 +467,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
     /**
      * A simple enumeration for various consumable types.
      */
-    public static enum ConsumableVersion {
+    public static enum ConsumableVersion 
+    {
         FOOD, BOOZE, SPLEEN, OTHER;
 
         private static final Map<String, ConsumableVersion> stringToEnum = Maps.newHashMap();
@@ -458,8 +484,8 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
          *         equal to the given string. If no match is found this method
          *         will return {@code OTHER}.
          */
-        public static ConsumableVersion fromString(
-                                                   final String consumableVersionName) {
+        public static ConsumableVersion fromString(final String consumableVersionName) 
+        {
             if (consumableVersionName == null)
                 throw new NullPointerException("The turn version name must not be null.");
 

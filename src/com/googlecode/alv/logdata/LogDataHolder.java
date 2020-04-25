@@ -47,6 +47,7 @@ import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.logdata.turn.action.PlayerSnapshot;
 import com.googlecode.alv.logdata.turn.action.Pull;
+import com.googlecode.alv.util.CharacterClass;
 import com.googlecode.alv.util.DataNumberPair;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LookAheadIterator;
@@ -1656,81 +1657,6 @@ public final class LogDataHolder
     public ParsedLogClass getParsedLogCreator() 
     {
         return parsedLogCreator;
-    }
-
-    /**
-     * This enumeration represents all known character classes.
-     */
-    public static enum CharacterClass {
-        SEAL_CLUBBER("Seal Clubber", StatClass.MUSCLE),
-        TURTLE_TAMER("Turtle Tamer", StatClass.MUSCLE),
-        PASTAMANCER("Pastamancer", StatClass.MYSTICALITY),
-        SAUCEROR("Sauceror", StatClass.MYSTICALITY),
-        DISCO_BANDIT("Disco Bandit", StatClass.MOXIE),
-        ACCORDION_THIEF("Accordion Thief", StatClass.MOXIE),
-        AVATAR_OF_BORIS("Avatar of Boris", StatClass.MUSCLE),
-        AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY),
-        AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
-        ED("Ed", StatClass.MYSTICALITY),
-        VAMPYRE("Vampyre", StatClass.MYSTICALITY),
-        PLUMBER("Plumber", StatClass.MAXIMUM),    
-        NOT_DEFINED("not defined", StatClass.MUSCLE);
-
-        private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
-
-        static {
-            for (final CharacterClass op : values())
-                stringToEnum.put(op.toString(), op);
-        }
-
-        private final String className;
-
-        private final StatClass statClass;
-
-        CharacterClass(final String className, final StatClass statClass) 
-        {
-            this.className = className;
-            this.statClass = statClass;
-        }
-
-        /**
-         * @return The mainstat of this character class.
-         */
-        public StatClass getStatClass() 
-        {
-            return statClass;
-        }
-
-        @Override
-        public String toString() 
-        {
-            return className;
-        }
-
-        /**
-         * @param className The name of the adventurer's class
-         * @return The enum whose toString method returns a string which is
-         *         equal to the given string. If no match is found this method
-         *         will return {@code NOT_DEFINED}.
-         */
-        public static CharacterClass fromString(final String className) 
-        {
-            if (className == null)
-                throw new NullPointerException("Class name must not be null.");
-
-            final CharacterClass characterClass = stringToEnum.get(className);
-
-            return characterClass != null ? characterClass : NOT_DEFINED;
-        }
-    }
-
-    /**
-     * This enumeration represents the three stat classes, plus Maximum.
-     * Maximum is for the Plumber, because his leveling is based on whichever
-     * stat is highest.
-     */
-    public static enum StatClass {
-        MUSCLE, MYSTICALITY, MOXIE, MAXIMUM;
     }
 
     /**

@@ -48,6 +48,7 @@ import com.googlecode.alv.parser.line.StatLineParser;
 import com.googlecode.alv.parser.line.MPGainLineParser.MPGainType;
 import com.googlecode.alv.parser.line.MeatLineParser.MeatGainType;
 import com.googlecode.alv.util.Stack;
+import com.googlecode.alv.util.StatClass;
 import com.googlecode.alv.util.data.DataTablesHandler;
 
 import net.sourceforge.kolmafia.utilities.CharacterEntities;
@@ -212,12 +213,9 @@ public final class ConsumableBlockParser implements LogBlockParser {
 
                 if (gainIdentifier.startsWith(ADVENTURE_STRING))
                     adventureGain += gainAmount;
-                else if (UsefulPatterns.MUSCLE_SUBSTAT_NAMES.contains(gainIdentifier))
-                    consumableStatgain = consumableStatgain.addStats(gainAmount, 0, 0);
-                else if (UsefulPatterns.MYST_SUBSTAT_NAMES.contains(gainIdentifier))
-                    consumableStatgain = consumableStatgain.addStats(0, gainAmount, 0);
-                else if (UsefulPatterns.MOXIE_SUBSTAT_NAMES.contains(gainIdentifier))
-                    consumableStatgain = consumableStatgain.addStats(0, 0, gainAmount);
+                else if (StatClass.SUBSTATS.containsKey(gainIdentifier))
+                    consumableStatgain 
+                        = consumableStatgain.plus(StatClass.getStatgain(gainIdentifier, gainAmount));
             }
         }
 
@@ -244,10 +242,10 @@ public final class ConsumableBlockParser implements LogBlockParser {
             else if (usageIdentifier.contains(SPLEEN_STRING)) 
                 tmpCon = Consumable.newSpleenConsumable(itemName, adventureGain, amount, currentTurn);
             else if (DataTablesHandler.HANDLER.getSpleenHit(itemName) > 0) {
-                //TODO: This is using the old parsing where it was use _#_ _spleenItem_ it has since been changed to chew
-                //        should eventually remove this.
+                // This is using the old parsing where it was use _#_ _spleenItem_ it has since been changed to chew
+                // Leaving this in unless legacy log parsing is no longer needed.
                 tmpCon = Consumable.newSpleenConsumable(itemName, adventureGain, amount, currentTurn);
-            }else
+            } else
                 tmpCon = Consumable.newOtherConsumable(itemName, adventureGain, amount, currentTurn);
             tmpCon.setDayNumberOfUsage(logData.getLastDayChange().getDayNumber());
             tmpCon.setStatGain(consumableStatgain);

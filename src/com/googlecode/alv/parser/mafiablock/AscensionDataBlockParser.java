@@ -28,8 +28,8 @@ import java.util.List;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.LogDataHolder.AscensionPath;
-import com.googlecode.alv.logdata.LogDataHolder.CharacterClass;
 import com.googlecode.alv.logdata.LogDataHolder.GameMode;
+import com.googlecode.alv.util.CharacterClass;
 
 /**
  * A parser for the ascension data found at the start of mafia logs.

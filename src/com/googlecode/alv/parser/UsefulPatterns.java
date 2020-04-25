@@ -26,14 +26,10 @@ package com.googlecode.alv.parser;
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.googlecode.alv.logdata.LogDataHolder.CharacterClass;
-import com.googlecode.alv.util.Maps;
-import com.googlecode.alv.util.Pair;
 import com.googlecode.alv.util.Sets;
 
 /**
@@ -41,33 +37,6 @@ import com.googlecode.alv.util.Sets;
  * methods which are used for parsing preparsed or normal mafia ascension logs.
  */
 public final class UsefulPatterns {
-    public static final Set<String> MUSCLE_SUBSTAT_NAMES = Sets.immutableSetOf("Beefiness",
-                                                                               "Fortitude",
-                                                                               "Muscleboundness",
-                                                                               "Strengthliness",
-                                                                               "Strongness");
-
-    public static final Set<String> MYST_SUBSTAT_NAMES = Sets.immutableSetOf("Enchantedness",
-                                                                             "Magicalness",
-                                                                             "Mysteriousness",
-                                                                             "Wizardliness");
-
-    public static final Set<String> MOXIE_SUBSTAT_NAMES = Sets.immutableSetOf("Cheek",
-                                                                              "Chutzpah",
-                                                                              "Roguishness",
-                                                                              "Sarcasm",
-                                                                              "Smarm");
-
-    public static final Set<String> MP_NAMES = Sets.immutableSetOf("Muscularity Points",
-                                                                   "Mana Points",
-                                                                   "Mojo Points");
-
-    public static final Set<String> TRIVIAL_COMBAT_SKILL_NAMES = Sets.immutableSetOf("clobber",
-                                                                                     "toss",
-                                                                                     "spaghetti spear",
-                                                                                     "salsaball",
-                                                                                     "suckerpunch",
-                                                                                     "sing");
 
     public static final Set<String> TRACKED_COMBAT_ITEMS = Sets.immutableSetOf(
             "alpine watercolor set", "talisman of renenutet");
@@ -98,14 +67,6 @@ public final class UsefulPatterns {
             "smoke grenade", // AoSP
             "cocktail napkin" // Only against clingy pirate
             );
-
-    public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP 
-        = Maps.immutableMapOf(Pair.of("clobber", CharacterClass.SEAL_CLUBBER),
-                              Pair.of("toss", CharacterClass.TURTLE_TAMER),
-                              Pair.of("spaghetti spear", CharacterClass.PASTAMANCER),
-                              Pair.of("salsaball", CharacterClass.SAUCEROR),
-                              Pair.of("suckerpunch", CharacterClass.DISCO_BANDIT),
-                              Pair.of("sing", CharacterClass.ACCORDION_THIEF));
 
     public static final Set<String> SPECIAL_CONSUMABLES = Sets.immutableSetOf("steel margarita",
                                                                                "steel lasagna",

@@ -27,8 +27,8 @@ package com.googlecode.alv.parser.line;
 import java.util.regex.Matcher;
 
 import com.googlecode.alv.logdata.LogDataHolder;
-import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.parser.UsefulPatterns;
+import com.googlecode.alv.util.StatClass;
 
 /**
  * A parser for the substats gained/lost notation in mafia logs.
@@ -42,20 +42,19 @@ import com.googlecode.alv.parser.UsefulPatterns;
  * {@code You lose _substatAmount_ _substatName_}
  */
 public final class StatLineParser extends AbstractLineParser {
+    // String length of "You gain " or "You lose " is 9.
+    public static final int GAIN_LOSE_START_STRING_LENGTH = 9;
+
     private static final String LOSE_STRING = "You lose";
 
-    // String length of "You gain " or "You lose " is 9.
-    private static final int GAIN_LOSE_START_STRING_LENGTH = 9;
-
-    private final Matcher gainLoseMatcher = UsefulPatterns.GAIN_LOSE.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher gainLoseMatcher = UsefulPatterns.GAIN_LOSE.matcher("");
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(
-                             final String line, final LogDataHolder logData) {
-
+    protected void doParsing(final String line, final LogDataHolder logData) 
+    {
         int substrLength = GAIN_LOSE_START_STRING_LENGTH;
 
         if (line.startsWith(UsefulPatterns.AFTER_BATTLE_STRING)) {
@@ -73,8 +72,7 @@ public final class StatLineParser extends AbstractLineParser {
         // will be ignored.
         int amount;
         try {
-            amount = Integer.parseInt(amountString.replace(UsefulPatterns.COMMA,
-                                                           UsefulPatterns.EMPTY_STRING));
+            amount = Integer.parseInt(amountString.replace(",", ""));
         } catch (final NumberFormatException e) {
             e.printStackTrace();
             return;
@@ -83,26 +81,35 @@ public final class StatLineParser extends AbstractLineParser {
         if (line.startsWith(LOSE_STRING))
             amount *= -1;
 
-        if (UsefulPatterns.MUSCLE_SUBSTAT_NAMES.contains(substatName))
-            logData.getLastTurnSpent().addStatGain(new Statgain(amount, 0, 0));
-        else if (UsefulPatterns.MYST_SUBSTAT_NAMES.contains(substatName))
-            logData.getLastTurnSpent().addStatGain(new Statgain(0, amount, 0));
-        else
-            logData.getLastTurnSpent().addStatGain(new Statgain(0, 0, amount));
+        logData.getLastTurnSpent().addStatGain(StatClass.getStatgain(substatName, amount));
     }
 
+    /*
+    /**
+     * 
+     * @param line Line to parse
+     * @return Whether the line is a stat gain log
+     *
+    public static boolean isCompatibleLineStatic(final String line)
+    {
+        Matcher matcher = UsefulPatterns.GAIN_LOSE.matcher(line);
+        if (! matcher.matches())
+            return false;
+        final String gainName = line.substring(line.lastIndexOf(UsefulPatterns.WHITE_SPACE) + 1);
+        return StatClass.SUBSTATS.containsKey(gainName);
+    }
+    */
+    
     /**
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(
-                                       final String line) {
+    protected boolean isCompatibleLine(final String line)
+    {
         if (gainLoseMatcher.reset(line).matches()) {
             final String gainName = line.substring(line.lastIndexOf(UsefulPatterns.WHITE_SPACE) + 1);
 
-            return UsefulPatterns.MUSCLE_SUBSTAT_NAMES.contains(gainName)
-                   || UsefulPatterns.MYST_SUBSTAT_NAMES.contains(gainName)
-                   || UsefulPatterns.MOXIE_SUBSTAT_NAMES.contains(gainName);
+            return StatClass.SUBSTATS.containsKey(gainName);
         }
 
         return false;

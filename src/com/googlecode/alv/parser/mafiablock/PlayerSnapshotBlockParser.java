@@ -32,12 +32,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
-import com.googlecode.alv.logdata.LogDataHolder.CharacterClass;
 import com.googlecode.alv.logdata.turn.action.DayChange;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.logdata.turn.action.PlayerSnapshot;
 import com.googlecode.alv.parser.UsefulPatterns;
+import com.googlecode.alv.util.CharacterClass;
 import com.googlecode.alv.util.Stack;
 
 /**

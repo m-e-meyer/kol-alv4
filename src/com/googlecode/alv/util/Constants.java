@@ -76,6 +76,8 @@ public final class Constants {
     public static final File LICENSE_LOCATION = new File(ROOT_LOCATION, LICENSE_DIRECTORY);
 
     public static final File KOL_DATA_LOCATION = new File(ROOT_LOCATION, KOL_DATA_DIRECTORY);
+    
+    public static final String N_A = "[N/A]";   // when some enum field is not applicable
 
     // This class is not to be instanced.
     private Constants() {}

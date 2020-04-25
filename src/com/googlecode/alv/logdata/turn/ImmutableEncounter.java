@@ -89,17 +89,26 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     
     private final CountableSet<Consumable> consumables;
 
-    public ImmutableEncounter(
-                              final String areaName, final String encounterName,
-                              final int turnNumber, final int dayNumber,
+    public ImmutableEncounter(final String areaName, 
+                              final String encounterName,
+                              final int turnNumber, 
+                              final int dayNumber,
                               final EquipmentChange usedEquipment,
-                              final FamiliarChange usedFamiliar, final boolean isDisintegrated,
-                              final Statgain statgain, final MPGain mpGain,
-                              final MeatGain meatgain, final int freeRunaways,
-                              final TurnVersion turnVersion, final String notes,
-                              final Collection<Item> itemdrops, final Collection<Skill> skillCasts,
-                              final Collection<Consumable> consumables, final Collection<CombatItem> combatItemsUsed, 
-                              final boolean isBanished, final String banishedInfo) {
+                              final FamiliarChange usedFamiliar, 
+                              final boolean isDisintegrated,
+                              final Statgain statgain, 
+                              final MPGain mpGain,
+                              final MeatGain meatgain, 
+                              final int freeRunaways,
+                              final TurnVersion turnVersion, 
+                              final String notes,
+                              final Collection<Item> itemdrops, 
+                              final Collection<Skill> skillCasts,
+                              final Collection<Consumable> consumables,
+                              final Collection<CombatItem> combatItemsUsed, 
+                              final boolean isBanished, 
+                              final String banishedInfo) 
+    {
         if (areaName == null)
             throw new NullPointerException("Area name must not be null.");
         if (encounterName == null)
@@ -169,42 +178,48 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     /**
      * @return The turn number.
      */
-    public int getTurnNumber() {
+    public int getTurnNumber() 
+    {
         return turnNumber;
     }
 
     /**
      * @return The number of the day on which this turn was spent on.
      */
-    public int getDayNumber() {
+    public int getDayNumber() 
+    {
         return dayNumber;
     }
 
     /**
      * @return The name of the area this turn was spent in.
      */
-    public String getAreaName() {
+    public String getAreaName() 
+    {
         return areaName;
     }
 
     /**
      * @return The name of the encounter found on this turn.
      */
-    public String getEncounterName() {
+    public String getEncounterName() 
+    {
         return encounterName;
     }
 
     /**
      * @return The familiar used on this turn.
      */
-    public FamiliarChange getUsedFamiliar() {
+    public FamiliarChange getUsedFamiliar() 
+    {
         return usedFamiliar;
     }
 
     /**
      * @return The equipment used on this turn.
      */
-    public EquipmentChange getUsedEquipment() {
+    public EquipmentChange getUsedEquipment() 
+    {
         return usedEquipment;
     }
     
@@ -212,7 +227,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      * @return {@code true} if this combat was disintegrated. Will always return
      *         {@code false} if this turn is not a combat.
      */
-    public boolean isDisintegrated() {
+    public boolean isDisintegrated() 
+    {
         return turnVersion == TurnVersion.COMBAT ? isDisintegrated : false;
     }
 
@@ -220,17 +236,19 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      * @return The stat gain from this turn. This doesn't entail stat gains from
      *         consumables used during this turn.
      */
-    public Statgain getStatGain() {
+    public Statgain getStatGain() 
+    {
         return statgain;
     }
 
     /**
      * @return The stat gain from this turn including those from consumables.
      */
-    public Statgain getTotalStatGain() {
+    public Statgain getTotalStatGain() 
+    {
         Statgain result = statgain;
         for (final Consumable c : consumables.getElements())
-            result = result.addStats(c.getStatGain());
+            result = result.plus(c.getStatGain());
 
         return result;
     }
@@ -238,42 +256,48 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     /**
      * @return The mp gains from this turn.
      */
-    public MPGain getMPGain() {
+    public MPGain getMPGain() 
+    {
         return mpGain;
     }
 
     /**
      * @return The meat data object.
      */
-    public MeatGain getMeat() {
+    public MeatGain getMeat() 
+    {
         return meatgain;
     }
 
     /**
      * @return The number of free runaways.
      */
-    public int getFreeRunaways() {
+    public int getFreeRunaways() 
+    {
         return freeRunaways;
     }
 
     /**
      * @return The notes tagged to this turn.
      */
-    public String getNotes() {
+    public String getNotes() 
+    {
         return notes;
     }
 
     /**
      * @return The turn version.
      */
-    public TurnVersion getTurnVersion() {
+    public TurnVersion getTurnVersion()
+    {
         return turnVersion;
     }
 
     /**
      * @return The dropped items from this turn.
      */
-    public Collection<Item> getDroppedItems() {
+    public Collection<Item> getDroppedItems() 
+    {
         return getCollectionFromMap(itemdrops);
     }
 
@@ -282,8 +306,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      *         otherwise {@code false}. This check is solely based on
      *         {@link Item#getComparator()} and nothing else.
      */
-    public boolean isItemDropped(
-                                 final Item i) {
+    public boolean isItemDropped(final Item i) 
+    {
         return isItemDropped(i.getName());
     }
 
@@ -292,16 +316,18 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      *         this turn, otherwise {@code false}. This check is solely based on
      *         {@link Item#getName()} and nothing else.
      */
-    public boolean isItemDropped(
-                                 final String i) {
+    public boolean isItemDropped(final String i) 
+    {
         return itemdrops.containsKey(i);
     }
 
-    public boolean isBanished() {
+    public boolean isBanished()
+    {
         return this.isBanished;
     }
     
-    public String getBanishedInfo() {
+    public String getBanishedInfo() 
+    {
         if (this.isBanished)
             return banishInfo;
         else
@@ -311,22 +337,26 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     /**
      * @return The combat items used in this turn.
      */
-    public Collection<CombatItem> getCombatItemsUsed() {
+    public Collection<CombatItem> getCombatItemsUsed() 
+    {
         return getCollectionFromMap( combatItemsUsed );
     }
     
-    public boolean isCombatItemUsed(String name) {
+    public boolean isCombatItemUsed(String name) 
+    {
         return this.combatItemsUsed.containsKey( name );
     }
     
-    public boolean isCombatItemUsed(CombatItem ci) {
+    public boolean isCombatItemUsed(CombatItem ci) 
+    {
         return isCombatItemUsed(ci.getName());
     }
     
     /**
      * @return The skills cast this turn.
      */
-    public Collection<Skill> getSkillsCast() {
+    public Collection<Skill> getSkillsCast() 
+    {
         return getCollectionFromMap(skillCasts);
     }
 
@@ -335,8 +365,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      *         otherwise {@code false}. This check is solely based on
      *         {@link Skill#getComparator()} and nothing else.
      */
-    public boolean isSkillCast(
-                               final Skill s) {
+    public boolean isSkillCast(final Skill s) 
+    {
         return isSkillCast(s.getName());
     }
 
@@ -345,15 +375,16 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      *         turn, otherwise {@code false}. This check is solely based on
      *         {@link Skill#getName()} and nothing else.
      */
-    public boolean isSkillCast(
-                               final String s) {
+    public boolean isSkillCast(final String s) 
+    {
         return skillCasts.containsKey(s);
     }
 
     /**
      * @return The consumables used this turn.
      */
-    public Collection<Consumable> getConsumablesUsed() {
+    public Collection<Consumable> getConsumablesUsed()
+    {
         return consumables.getElementsDeepCopy();
     }
 
@@ -362,8 +393,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      *         otherwise {@code false}. This check is solely based on
      *         {@link Consumable#getComparator()} and nothing else.
      */
-    public boolean isConsumableUsed(
-                                    final Consumable c) {
+    public boolean isConsumableUsed(final Consumable c) 
+    {
         return consumables.contains(c);
     }
 
@@ -372,13 +403,13 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      *         this turn, otherwise {@code false}. This check is solely based on
      *         {@link Consumable#getName()} and nothing else.
      */
-    public boolean isConsumableUsed(
-                                    final String c) {
+    public boolean isConsumableUsed(final String c) 
+    {
         return consumables.containsByName(c);
     }
 
-    private static <T extends Countable<T>> Collection<T> getCollectionFromMap(
-                                                                               final Map<String, T> map) {
+    private static <T extends Countable<T>> Collection<T> getCollectionFromMap(final Map<String, T> map) 
+    {
         final List<T> result = Lists.newArrayList(map.size());
         for (final T t : map.values())
             result.add(t.newInstance());
@@ -390,13 +421,14 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
      * @return The difference between this encounters turn number and the turn
      *         number of the given {@link TurnEntity}.
      */
-    public int compareTo(
-                         TurnEntity te) {
+    public int compareTo(TurnEntity te) 
+    {
         return turnNumber - te.getTurnNumber();
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         final StringBuilder str = new StringBuilder(80);
 
         str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
@@ -415,8 +447,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     }
 
     @Override
-    public boolean equals(
-                          Object obj) {
+    public boolean equals(Object obj) 
+    {
         if (obj == null)
             return false;
 
@@ -426,24 +458,31 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         if (obj instanceof ImmutableEncounter) {
             final ImmutableEncounter that = (ImmutableEncounter) obj;
 
-            return turnNumber == that.getTurnNumber() && dayNumber == that.getDayNumber()
+            return turnNumber == that.getTurnNumber() 
+                   && dayNumber == that.getDayNumber()
                    && freeRunaways == that.getFreeRunaways()
                    && isDisintegrated == that.isDisintegrated()
-                   && turnVersion == that.getTurnVersion() && statgain.equals(that.getStatGain())
-                   && mpGain.equals(that.getMPGain()) && meatgain.equals(that.getMeat())
+                   && turnVersion == that.getTurnVersion() 
+                   && statgain.equals(that.getStatGain())
+                   && mpGain.equals(that.getMPGain()) 
+                   && meatgain.equals(that.getMeat())
                    && usedFamiliar.equals(that.getUsedFamiliar())
                    && usedEquipment.equals(that.getUsedEquipment())
                    && areaName.equals(that.getAreaName())
                    && encounterName.equals(that.getEncounterName())
-                   && notes.equals(that.getNotes()) && itemdrops.equals(that.itemdrops)
-                   && skillCasts.equals(that.skillCasts) && consumables.equals(that.consumables) && combatItemsUsed.equals( that.combatItemsUsed );
+                   && notes.equals(that.getNotes()) 
+                   && itemdrops.equals(that.itemdrops)
+                   && skillCasts.equals(that.skillCasts) 
+                   && consumables.equals(that.consumables) 
+                   && combatItemsUsed.equals( that.combatItemsUsed );
         }
 
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         int result = 23;
         result = 31 * result + areaName.hashCode();
         result = 31 * result + consumables.hashCode();
