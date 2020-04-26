@@ -63,6 +63,9 @@ public class LimitedUseData {
         BEACH_HEAD_STENCH("Beach Head/Stench", 1),
         CHEAT_CODE("CHEAT CODE", 100),
         DAYCARE_SPA("Daycare Spa", 1),
+        DOCTOR_BAG_HAMMER("Doctor Bag/Hammer", 3),
+        DOCTOR_BAG_OTOSCOPE("Doctor Bag/Otoscope", 3),
+        DOCTOR_BAG_XRAY("Doctor Bag/X-ray", 3),
         FORTUNE_TELLER("Fortune Teller", 1),
         SABER_UPGRADE("Saber/Upgrade", 1),
         SABER_USE_FORCE("Saber/Use the Force", 5),
@@ -92,13 +95,29 @@ public class LimitedUseData {
         }
     }
     
+    public static class CounterUsePair 
+    {
+        public Counter counter;
+        public String use;
+        CounterUsePair(Counter c, String u)
+        {
+            counter = c;
+            use = u;
+        }
+        
+        public static CounterUsePair make(Counter c, String u)
+        {
+            return new CounterUsePair(c, u);
+        }
+    }
+    
     /**
      * Convenience map for using strings to look up their corresponding Counter
      * and name of counter use.
      */
     public static final Map<String, CounterUsePair> LIMITED_USE_MAP
         = new HashMap<String, CounterUsePair>();
-    
+
     static {
         LIMITED_USE_MAP.put("1387/1", 
                             new CounterUsePair(Counter.SABER_USE_FORCE, "Not the adventurer"));
@@ -123,40 +142,35 @@ public class LimitedUseData {
         LIMITED_USE_MAP.put("cheat code: shrink enemy", 
                             new CounterUsePair(Counter.CHEAT_CODE, "Shrink Enemy"));
         LIMITED_USE_MAP.put("hot-headed", 
-                new CounterUsePair(Counter.BEACH_HEAD_HOT, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_HOT, ""));
         LIMITED_USE_MAP.put("cold as nice", 
-                new CounterUsePair(Counter.BEACH_HEAD_COLD, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_COLD, ""));
         LIMITED_USE_MAP.put("a brush with grossness", 
-                new CounterUsePair(Counter.BEACH_HEAD_STENCH, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_STENCH, ""));
         LIMITED_USE_MAP.put("does it have a skull in there??", 
-                new CounterUsePair(Counter.BEACH_HEAD_SPOOKY, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_SPOOKY, ""));
         LIMITED_USE_MAP.put("oiled, slick", 
-                new CounterUsePair(Counter.BEACH_HEAD_SLEAZE, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_SLEAZE, ""));
         LIMITED_USE_MAP.put("lack of body-building", 
-                new CounterUsePair(Counter.BEACH_HEAD_MUSCLE, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_MUSCLE, ""));
         LIMITED_USE_MAP.put("we're all made of starfish", 
-                new CounterUsePair(Counter.BEACH_HEAD_MYSTICALITY, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_MYSTICALITY, ""));
         LIMITED_USE_MAP.put("pomp & circumsands", 
-                new CounterUsePair(Counter.BEACH_HEAD_MOXIE, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_MOXIE, ""));
         LIMITED_USE_MAP.put("resting beach face", 
-                new CounterUsePair(Counter.BEACH_HEAD_INITIATIVE, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_INITIATIVE, ""));
         LIMITED_USE_MAP.put("do i know you from somewhere?", 
-                new CounterUsePair(Counter.BEACH_HEAD_FAMILIAR_WT, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_FAMILIAR_WT, ""));
         LIMITED_USE_MAP.put("you learned something maybe!", 
-                new CounterUsePair(Counter.BEACH_HEAD_STATS, ""));
+                            new CounterUsePair(Counter.BEACH_HEAD_STATS, ""));
+        LIMITED_USE_MAP.put("reflex hammer", 
+                            new CounterUsePair(Counter.DOCTOR_BAG_HAMMER, ""));
+        LIMITED_USE_MAP.put("otoscope", 
+                            new CounterUsePair(Counter.DOCTOR_BAG_OTOSCOPE, ""));
+        LIMITED_USE_MAP.put("chest x-ray", 
+                            new CounterUsePair(Counter.DOCTOR_BAG_XRAY, ""));
     }
 
-    public static class CounterUsePair 
-    {
-        public Counter counter;
-        public String use;
-        CounterUsePair(Counter c, String u)
-        {
-            counter = c;
-            use = u;
-        }
-    }
-    
     /**
      * 
      *

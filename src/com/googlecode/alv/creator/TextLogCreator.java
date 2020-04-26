@@ -1436,7 +1436,9 @@ public class TextLogCreator {
             write(CLOSING_TURN_BRACKET);
             write(" ");
             write(logAdditionsMap.get("limitedUseStart"));
-            write(use.getCounter().getName() + ": " + use.getUse());
+            write(use.getCounter().getName());
+            if (! use.getUse().equals(""))
+                write(": " + use.getUse());
             write(logAdditionsMap.get("limitedUseEnd"));
             Statgain statgain = use.getStatgain();
             if (! statgain.equals(Statgain.NO_STATS)) {
