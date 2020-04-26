@@ -31,10 +31,12 @@ import java.util.regex.Pattern;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.Skill;
 import com.googlecode.alv.logdata.summary.LimitedUseData;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
 import com.googlecode.alv.logdata.summary.LimitedUseData.CounterUsePair;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.parser.UsefulPatterns;
+import com.googlecode.alv.util.CharacterClass;
 import com.googlecode.alv.util.DataNumberPair;
 import com.googlecode.alv.util.data.DataTablesHandler;
 
@@ -114,7 +116,10 @@ public final class SkillCastLineParser extends AbstractLineParser
         if (LimitedUseData.LIMITED_USE_MAP.containsKey(skillName)) {
             SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
             CounterUsePair cu = LimitedUseData.LIMITED_USE_MAP.get(skillName);
-            logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.counter, cu.use);
+            if (cu.counter != Counter.VAMPYRIC_CLOAKE 
+                    || logData.getCharacterClass() != CharacterClass.VAMPYRE)
+                // Vampyres don't get skills from their Cloakes
+                logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.counter, cu.use);
         }
     }
 

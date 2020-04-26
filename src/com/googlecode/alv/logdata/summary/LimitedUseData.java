@@ -70,6 +70,7 @@ public class LimitedUseData {
         PILLKEEPER("Pillkeeper", 6),
         SABER_UPGRADE("Saber/Upgrade", 1),
         SABER_USE_FORCE("Saber/Use the Force", 5),
+        VAMPYRIC_CLOAKE("Vampyric Cloake", 10)
         ;
         
         public static final String REPLACE_ENEMY = "Replace Enemy";
@@ -186,6 +187,12 @@ public class LimitedUseData {
                 new CounterUsePair(Counter.DOCTOR_BAG_OTOSCOPE, ""));
         LIMITED_USE_MAP.put("chest x-ray", 
                 new CounterUsePair(Counter.DOCTOR_BAG_XRAY, ""));
+        LIMITED_USE_MAP.put("become a bat", 
+                new CounterUsePair(Counter.VAMPYRIC_CLOAKE, "Bat"));
+        LIMITED_USE_MAP.put("become a wolf", 
+                new CounterUsePair(Counter.VAMPYRIC_CLOAKE, "Wolf"));
+        LIMITED_USE_MAP.put("become a cloud of mist", 
+                new CounterUsePair(Counter.VAMPYRIC_CLOAKE, "Mist"));
     }
 
     /**
