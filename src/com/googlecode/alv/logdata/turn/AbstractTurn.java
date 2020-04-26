@@ -46,7 +46,8 @@ import com.googlecode.alv.util.CountableSet;
  * All methods in this class throw a {@link NullPointerException} if a null
  * object reference is passed in any parameter.
  */
-public abstract class AbstractTurn implements Turn {
+public abstract class AbstractTurn implements Turn 
+{
     private final String areaName;
 
     private MeatGain meat = MeatGain.NO_MEAT;
@@ -73,8 +74,8 @@ public abstract class AbstractTurn implements Turn {
      * @param areaName
      *            The name of the area to set.
      */
-    public AbstractTurn(
-                        final String areaName) {
+    public AbstractTurn(final String areaName) 
+    {
         if (areaName == null)
             throw new NullPointerException("Area name must not be null.");
 
@@ -84,40 +85,43 @@ public abstract class AbstractTurn implements Turn {
     /**
      * @see TurnEntity
      */
-    public String getAreaName() {
+    public String getAreaName() 
+    {
         return areaName;
     }
 
     /**
      * @see Turn
      */
-    public void addStatGain(
-                            final Statgain stats) {
-        statGain = statGain.addStats(stats);
+    public void addStatGain(final Statgain stats) 
+    {
+        statGain = statGain.plus(stats);
     }
 
     /**
      * @see Turn
      */
-    public void setStatGain(
-                            final Statgain stats) {
+    public void setStatGain(final Statgain stats) 
+    {
         statGain = stats;
     }
 
     /**
      * @see TurnEntity
      */
-    public Statgain getStatGain() {
+    public Statgain getStatGain() 
+    {
         return statGain;
     }
 
     /**
      * @see TurnEntity
      */
-    public Statgain getTotalStatGain() {
+    public Statgain getTotalStatGain() 
+    {
         Statgain totalStatgain = statGain;
         for (final Consumable c : consumablesUsed.getElements())
-            totalStatgain = totalStatgain.addStats(c.getStatGain());
+            totalStatgain = totalStatgain.plus(c.getStatGain());
 
         return totalStatgain;
     }
@@ -125,23 +129,24 @@ public abstract class AbstractTurn implements Turn {
     /**
      * @see Turn
      */
-    public void setMPGain(
-                          final MPGain mpGain) {
+    public void setMPGain(final MPGain mpGain) 
+    {
         this.mpGain = mpGain;
     }
 
     /**
      * @see Turn
      */
-    public void addMPGain(
-                          final MPGain mpGain) {
+    public void addMPGain(final MPGain mpGain) 
+    {
         this.mpGain = this.mpGain.addMPGains(mpGain);
     }
 
     /**
      * @see TurnEntity
      */
-    public MPGain getMPGain() {
+    public MPGain getMPGain()
+    {
         return mpGain;
     }
 
@@ -149,96 +154,104 @@ public abstract class AbstractTurn implements Turn {
      * @see Turn
      */
     public void setMeat(
-                        final MeatGain meat) {
+                        final MeatGain meat) 
+    {
         this.meat = meat;
     }
 
     /**
      * @see Turn
      */
-    public void addMeat(
-                        final MeatGain meat) {
+    public void addMeat(final MeatGain meat) 
+    {
         this.meat = this.meat.addMeatData(meat);
     }
 
     /**
      * @see TurnEntity
      */
-    public MeatGain getMeat() {
+    public MeatGain getMeat()
+    {
         return meat;
     }
 
     /**
      * @see Turn
      */
-    public void addDroppedItem(
-                               final Item droppedItem) {
+    public void addDroppedItem(final Item droppedItem) 
+    {
         droppedItems.addElement(droppedItem);
     }
 
     /**
      * @see Turn
      */
-    public void setDroppedItems(
-                                final Collection<Item> droppedItems) {
+    public void setDroppedItems(final Collection<Item> droppedItems) 
+    {
         this.droppedItems.setElements(droppedItems);
     }
 
     /**
      * @see TurnEntity
      */
-    public Collection<Item> getDroppedItems() {
+    public Collection<Item> getDroppedItems() 
+    {
         return droppedItems.getElements();
     }
 
     /**
      * @see TurnEntity
      */
-    public boolean isItemDropped(
-                                 final Item i) {
+    public boolean isItemDropped(final Item i) 
+    {
         return droppedItems.contains(i);
     }
 
     /**
      * @see TurnEntity
      */
-    public boolean isItemDropped(
-                                 final String i) {
+    public boolean isItemDropped(final String i)
+    {
         return droppedItems.containsByName(i);
     }
 
     /**
      * @see Turn
      */
-    public void addCombatItemUsed(CombatItem ci) {
+    public void addCombatItemUsed(CombatItem ci) 
+    {
         this.combatItemsUsed.addElement( ci );
     }
     
     /**
      * @see Turn
      */
-    public void setCombatItemsUsed(final Collection<CombatItem> combatItemsUsed) {
+    public void setCombatItemsUsed(final Collection<CombatItem> combatItemsUsed) 
+    {
         this.combatItemsUsed.setElements( combatItemsUsed );
     }
     
     /**
      * @see TurnEntity
      */
-    public Collection<CombatItem> getCombatItemsUsed() {
+    public Collection<CombatItem> getCombatItemsUsed()
+    {
         return this.combatItemsUsed.getElements();
     }
     
     /**
      * @see TurnEntity
      */
-    public boolean isCombatItemUsed(final CombatItem ci) {
+    public boolean isCombatItemUsed(final CombatItem ci)
+    {
         return this.combatItemsUsed.contains( ci );
     }
     
     /**
      * @see TurnEntity
      */
-    public boolean isCombatItemUsed(String combatItemName) {
+    public boolean isCombatItemUsed(String combatItemName) 
+    {
         return this.combatItemsUsed.containsByName( combatItemName );
     }
     
@@ -246,7 +259,8 @@ public abstract class AbstractTurn implements Turn {
      * @see Turn
      */
     public void addSkillCast(
-                             final Skill skill) {
+                             final Skill skill) 
+    {
         skillsCast.addElement(skill);
     }
 
@@ -254,92 +268,96 @@ public abstract class AbstractTurn implements Turn {
      * @see Turn
      */
     public void setSkillsCast(
-                              final Collection<Skill> skillsCast) {
+                              final Collection<Skill> skillsCast) 
+    {
         this.skillsCast.setElements(skillsCast);
     }
 
     /**
      * @see TurnEntity
      */
-    public Collection<Skill> getSkillsCast() {
+    public Collection<Skill> getSkillsCast() 
+    {
         return skillsCast.getElements();
     }
 
     /**
      * @see TurnEntity
      */
-    public boolean isSkillCast(
-                               final Skill s) {
+    public boolean isSkillCast(final Skill s) 
+    {
         return skillsCast.contains(s);
     }
 
     /**
      * @see TurnEntity
      */
-    public boolean isSkillCast(
-                               final String s) {
+    public boolean isSkillCast(final String s) 
+    {
         return skillsCast.containsByName(s);
     }
 
     /**
      * @see Turn
      */
-    public void addConsumableUsed(
-                                  final Consumable consumable) {
+    public void addConsumableUsed(final Consumable consumable) 
+    {
         consumablesUsed.addElement(consumable);
     }
 
     /**
      * @see Turn
      */
-    public void setConsumablesUsed(
-                                   final Collection<Consumable> consumablesUsed) {
+    public void setConsumablesUsed(final Collection<Consumable> consumablesUsed)
+    {
         this.consumablesUsed.setElements(consumablesUsed);
     }
 
     /**
      * @see TurnEntity
      */
-    public Collection<Consumable> getConsumablesUsed() {
+    public Collection<Consumable> getConsumablesUsed() 
+    {
         return consumablesUsed.getElements();
     }
 
     /**
      * @see TurnEntity
      */
-    public boolean isConsumableUsed(
-                                    final Consumable c) {
+    public boolean isConsumableUsed(final Consumable c) 
+    {
         return consumablesUsed.contains(c);
     }
 
     /**
      * @see TurnEntity
      */
-    public boolean isConsumableUsed(
-                                    final String c) {
+    public boolean isConsumableUsed(final String c) 
+    {
         return consumablesUsed.containsByName(c);
     }
 
     /**
      * @see Turn
      */
-    public void addFreeRunaways(
-                                final int freeRunaways) {
+    public void addFreeRunaways(final int freeRunaways) 
+    {
         successfulFreeRunaways += freeRunaways;
     }
 
     /**
      * @see Turn
      */
-    public void setFreeRunaways(
-                                final int freeRunaways) {
+    public void setFreeRunaways(final int freeRunaways) 
+    {
         successfulFreeRunaways = freeRunaways;
     }
 
     /**
      * @see TurnEntity
      */
-    public int getFreeRunaways() {
+    public int getFreeRunaways() 
+    {
         return successfulFreeRunaways;
     }
 
@@ -347,37 +365,40 @@ public abstract class AbstractTurn implements Turn {
      * Flags a turn as being free or not
      * @param isFreeTurn Whether the turn should be marked free
      */
-    public void setFreeTurn(boolean isFreeTurn) {
+    public void setFreeTurn(boolean isFreeTurn) 
+    {
         this.isFreeTurn = isFreeTurn;
     }
     
     /**
      * @return Whether or not this turn was "Free"
      */
-    public boolean isFreeTurn() {
+    public boolean isFreeTurn() 
+    {
         return this.isFreeTurn;
     }
     
     /**
      * @see Turn
      */
-    public void setNotes(
-                         final String notes) {
+    public void setNotes(final String notes)
+    {
         comment.setComments(notes);
     }
 
     /**
      * @see Turn
      */
-    public void addNotes(
-                         final String notes) {
+    public void addNotes(final String notes) 
+    {
         comment.addComments(notes);
     }
 
     /**
      * @see TurnEntity
      */
-    public String getNotes() {
+    public String getNotes() 
+    {
         return comment.getComments();
     }
 
@@ -385,13 +406,13 @@ public abstract class AbstractTurn implements Turn {
      * @param turn
      *            The turn whose data will be added to this turn.
      */
-    protected void addTurnData(
-                               final Turn turn) {
+    protected void addTurnData(final Turn turn) 
+    {
         if (turn == null)
             throw new NullPointerException("Turn must not be null.");
 
         meat = meat.addMeatData(turn.getMeat());
-        statGain = statGain.addStats(turn.getStatGain());
+        statGain = statGain.plus(turn.getStatGain());
         mpGain = mpGain.addMPGains(turn.getMPGain());
         successfulFreeRunaways += turn.getFreeRunaways();
         addNotes(turn.getNotes());
@@ -408,15 +429,16 @@ public abstract class AbstractTurn implements Turn {
     /**
      * Empties out all internal data collections.
      */
-    protected void clearAllTurnDataCollections() {
+    protected void clearAllTurnDataCollections()
+{
         droppedItems.clear();
         skillsCast.clear();
         consumablesUsed.clear();
     }
 
     @Override
-    public boolean equals(
-                          final Object o) {
+    public boolean equals(final Object o) 
+    {
         if (o == null)
             return false;
 
@@ -438,7 +460,8 @@ public abstract class AbstractTurn implements Turn {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = 48;
         result = 31 * result + meat.hashCode();
         result = 31 * result + mpGain.hashCode();

@@ -37,7 +37,8 @@ import com.googlecode.alv.util.Sets;
 /**
  * This class gives the tools to save and compare area statgains.
  */
-public final class AreaStatgains {
+public final class AreaStatgains 
+{
     private static final String TAB = "\t";
 
     private final Pair<String, Statgain> areaStatgainPair;
@@ -50,27 +51,30 @@ public final class AreaStatgains {
      * @throws NullPointerException
      *             if areaName is {@code null}; if areaStatgain is {@code null}
      */
-    private AreaStatgains(
-                          final String areaName, final Statgain areaStatgain) {
+    private AreaStatgains(final String areaName, final Statgain areaStatgain) 
+    {
         areaStatgainPair = Pair.of(areaName, areaStatgain);
     }
 
     /**
      * @return The area name.
      */
-    public String getAreaName() {
+    public String getAreaName()
+    {
         return areaStatgainPair.getVar1();
     }
 
     /**
      * @return The area statgain.
      */
-    public Statgain getStatgain() {
+    public Statgain getStatgain() 
+    {
         return areaStatgainPair.getVar2();
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         final StringBuilder str = new StringBuilder(50);
 
         str.append(areaStatgainPair.getVar1());
@@ -95,9 +99,9 @@ public final class AreaStatgains {
      *            The comparator used to sort the returned list.
      * @return A sorted list of area statgains from the given turn rundown.
      */
-    public static List<AreaStatgains> getSortedAreaStatgains(
-                                                             final Collection<TurnInterval> turns,
-                                                             final Comparator<AreaStatgains> comparator) {
+    public static List<AreaStatgains> getSortedAreaStatgains(final Collection<TurnInterval> turns,
+                                                             final Comparator<AreaStatgains> comparator) 
+    {
         final int initialHashCapacity = (int) (turns.size() * 0.75) + 1;
         final Set<String> areas = Sets.newHashSet(initialHashCapacity);
         final Map<String, Statgain> areaStatgains = Maps.newHashMap(initialHashCapacity);
@@ -113,11 +117,11 @@ public final class AreaStatgains {
                 areas.add(ti.getAreaName());
             }
 
-            areaStatgains.put(ti.getAreaName(), previousStats.addStats(ti.getStatGain()));
+            areaStatgains.put(ti.getAreaName(), previousStats.plus(ti.getStatGain()));
 
             // Add consumable statgains.
             for (final Consumable c : ti.getConsumablesUsed())
-                consumablesStatgain = consumablesStatgain.addStats(c.getStatGain());
+                consumablesStatgain = consumablesStatgain.plus(c.getStatGain());
         }
 
         // Create area statgain list.

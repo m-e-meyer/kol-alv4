@@ -51,6 +51,8 @@ import com.googlecode.alv.parser.UsefulPatterns;
  */
 public final class ItemAcquisitionLineParser extends AbstractLineParser 
 {
+    public static final String SINGLE_ITEM_STRING = "You acquire an item: ";
+
     private static final Pattern MULTIPLE_ITEMS_OLD = Pattern.compile("You acquire \\d+ [\\s\\w\\p{Punct}]+");
 
     private static final Pattern MULTIPLE_ITEMS_NEW = Pattern.compile("You acquire [\\s\\w\\p{Punct}]+ \\(\\d+\\)");
@@ -59,15 +61,13 @@ public final class ItemAcquisitionLineParser extends AbstractLineParser
 
     private static final Pattern MULTIPLE_ITEMS_NEW_CAPTURE_PATTERN = Pattern.compile("You acquire (.+) \\((\\d*,?\\d+)\\)");
 
-    private static final String SINGLE_ITEM_STRING = "You acquire an item: ";
-
     private static final String ACQUIRE_STRING = "You acquire";
 
     private static final String ACQUIRE_EFFECT = "You acquire an effect:";
 
-    private final Matcher multipleItemsOldMatcher = MULTIPLE_ITEMS_OLD.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher multipleItemsOldMatcher = MULTIPLE_ITEMS_OLD.matcher("");
 
-    private final Matcher multipleItemsNewMatcher = MULTIPLE_ITEMS_NEW.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher multipleItemsNewMatcher = MULTIPLE_ITEMS_NEW.matcher("");
 
     /**
      * {@inheritDoc}

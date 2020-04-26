@@ -30,9 +30,13 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.Skill;
+import com.googlecode.alv.logdata.summary.LimitedUseData;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
+import com.googlecode.alv.logdata.summary.LimitedUseData.CounterUsePair;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.parser.UsefulPatterns;
+import com.googlecode.alv.util.CharacterClass;
 import com.googlecode.alv.util.DataNumberPair;
 import com.googlecode.alv.util.data.DataTablesHandler;
 
@@ -93,8 +97,7 @@ public final class SkillCastLineParser extends AbstractLineParser
                        DataTablesHandler.HANDLER.getMPCostOffset(logData.getLastEquipmentChange()));
 
         // Trivial combat skills don't cost MP for the natural class.
-        if (UsefulPatterns.TRIVIAL_COMBAT_SKILL_NAMES.contains(skillName)
-            && logData.getCharacterClass() == UsefulPatterns.TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP.get(skillName))
+        if (logData.getCharacterClass().getTrivialSkill().equalsIgnoreCase(skillName))
             skill.setMpCost(0);
 
         currentTurn.addSkillCast(skill);
@@ -107,6 +110,16 @@ public final class SkillCastLineParser extends AbstractLineParser
         if (skillName.contains( "curse of stench" )) {
             SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
             logData.addHuntedCombat(DataNumberPair.of(st.getEncounterName(), st.getTurnNumber()));
+        }
+        
+        //Check for limited daily use skills
+        if (LimitedUseData.LIMITED_USE_MAP.containsKey(skillName)) {
+            SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
+            CounterUsePair cu = LimitedUseData.LIMITED_USE_MAP.get(skillName);
+            if (cu.counter != Counter.VAMPYRIC_CLOAKE 
+                    || logData.getCharacterClass() != CharacterClass.VAMPYRE)
+                // Vampyres don't get skills from their Cloakes
+                logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.counter, cu.use);
         }
     }
 

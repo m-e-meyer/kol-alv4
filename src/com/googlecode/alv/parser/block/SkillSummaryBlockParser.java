@@ -78,8 +78,7 @@ public final class SkillSummaryBlockParser extends AbstractBlockParser {
 
                     // Trivial combat skills don't cost MP for the natural
                     // class.
-                    if (UsefulPatterns.TRIVIAL_COMBAT_SKILL_NAMES.contains(skillName)
-                        && logData.getCharacterClass() == UsefulPatterns.TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP.get(skillName))
+                    if (logData.getCharacterClass().getTrivialSkill().equalsIgnoreCase(skillName))
                         skill.setMpCost(0);
 
                     logData.getLogSummary().getSkillsCast().add(skill);

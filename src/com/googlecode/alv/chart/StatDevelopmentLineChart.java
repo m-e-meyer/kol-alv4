@@ -44,14 +44,16 @@ import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.logdata.turn.TurnInterval;
 import com.googlecode.alv.logdata.turn.action.DayChange;
 
-public final class StatDevelopmentLineChart extends LineChartBuilder {
-    public StatDevelopmentLineChart(
-                                    final LogDataHolder logData) {
+public final class StatDevelopmentLineChart extends LineChartBuilder 
+{
+    public StatDevelopmentLineChart(final LogDataHolder logData) 
+    {
         super(logData, "Stat development", "Turn number", "Stats reached", true);
     }
 
     @Override
-    protected ChartPanel createChartPanel() {
+    protected ChartPanel createChartPanel() 
+    {
         final ChartPanel panel = super.createChartPanel();
         final XYPlot plot = (XYPlot) panel.getChart().getPlot();
 
@@ -69,7 +71,8 @@ public final class StatDevelopmentLineChart extends LineChartBuilder {
     }
 
     @Override
-    protected XYDataset createDataset() {
+    protected XYDataset createDataset() 
+    {
         final XYSeriesCollection datasets = new XYSeriesCollection();
         final XYSeries muscleDataset = new XYSeries("Muscle", false);
         final XYSeries mystDataset = new XYSeries("Mysticality", false);
@@ -93,13 +96,16 @@ public final class StatDevelopmentLineChart extends LineChartBuilder {
         return datasets;
     }
 
-    private Statgain addStatValues(
-                                   final XYSeries muscleDataset, final XYSeries mystDataset,
-                                   final XYSeries moxieDataset, Statgain stats, final Turn t) {
+    private Statgain addStatValues(final XYSeries muscleDataset, 
+                                   final XYSeries mystDataset,
+                                   final XYSeries moxieDataset,
+                                   Statgain stats, 
+                                   final Turn t) 
+    {
         // Add statgain of the current turn interval to the total statgains.
-        stats = stats.addStats(t.getStatGain());
+        stats = stats.plus(t.getStatGain());
         for (final Consumable c : t.getConsumablesUsed())
-            stats = stats.addStats(c.getStatGain());
+            stats = stats.plus(c.getStatGain());
 
         // Add current total statgains to the datasets.
         muscleDataset.add(t.getTurnNumber(), (int) Math.sqrt(stats.mus));
@@ -110,8 +116,8 @@ public final class StatDevelopmentLineChart extends LineChartBuilder {
     }
 
     @Override
-    protected void addChartPanelListeners(
-                                          final ChartPanel cp) {
+    protected void addChartPanelListeners(final ChartPanel cp) 
+    {
         cp.addChartMouseListener(new StatDevelopmentChartMouseEventListener(getLogData()));
     }
 }

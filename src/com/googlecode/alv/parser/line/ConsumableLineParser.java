@@ -109,7 +109,7 @@ public final class ConsumableLineParser extends AbstractLineParser {
                                                                   statGains.lastIndexOf(UsefulPatterns.COMMA)));
             final int moxie = Integer.parseInt(statGains.substring(statGains.lastIndexOf(UsefulPatterns.COMMA) + 1));
 
-            consumableStats = consumableStats.addStats(muscle, myst, moxie);
+            consumableStats = consumableStats.plus(muscle, myst, moxie);
         }
 
         // Turn number (only eyeballed because no specific is given)

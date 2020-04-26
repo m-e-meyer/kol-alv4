@@ -30,13 +30,15 @@ import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.MPGain;
 import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.parser.UsefulPatterns;
+import com.googlecode.alv.util.StatClass;
 
 /**
  * A parser for the mp gain notation in mafia logs.
  * <p>
  * {@code You gain _amount_ Mana/Mojo/Muscularity Points}
  */
-public final class MPGainLineParser extends AbstractLineParser {
+public final class MPGainLineParser extends AbstractLineParser 
+{
     private static final String LOSE_STRING = "You lose";
 
     private static final int GAIN_START_STRING_LENGTH = 9;
@@ -50,8 +52,8 @@ public final class MPGainLineParser extends AbstractLineParser {
      *            The mp gain type which decides to which kind of mp gain all
      *            parsed mp gains from this line parser will be added to.
      */
-    public MPGainLineParser(
-                            final MPGainType type) {
+    public MPGainLineParser(final MPGainType type) 
+    {
         mpGainType = type;
     }
 
@@ -59,8 +61,8 @@ public final class MPGainLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(
-                             final String line, final LogDataHolder logData) {
+    protected void doParsing(final String line, final LogDataHolder logData) 
+    {
         int substrLength = GAIN_START_STRING_LENGTH;
 
         if (line.startsWith(UsefulPatterns.AFTER_BATTLE_STRING)) {
@@ -108,17 +110,18 @@ public final class MPGainLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(
-                                       final String line) {
+    protected boolean isCompatibleLine(final String line) 
+    {
         if (gainLoseMatcher.reset(line).matches() && !line.startsWith(LOSE_STRING))
-            for (final String s : UsefulPatterns.MP_NAMES)
-                if (line.endsWith(s))
+            for (StatClass stat : StatClass.values())
+                if (line.endsWith(stat.getPointsName()))
                     return true;
 
         return false;
     }
 
-    public static enum MPGainType {
+    public static enum MPGainType 
+    {
         ENCOUNTER, NOT_ENCOUNTER, CONSUMABLE;
     }
 }

@@ -26,8 +26,8 @@ package com.googlecode.alv.creator.util;
 
 import java.util.Locale;
 
-import com.googlecode.alv.logdata.LogDataHolder.StatClass;
 import com.googlecode.alv.parser.UsefulPatterns;
+import com.googlecode.alv.util.StatClass;
 import com.googlecode.alv.util.data.ExtraStats;
 
 /**

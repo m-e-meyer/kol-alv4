@@ -27,7 +27,6 @@ package com.googlecode.alv.logdata.summary;
 import java.util.*;
 
 import com.googlecode.alv.logdata.*;
-import com.googlecode.alv.logdata.LogDataHolder.CharacterClass;
 import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.turn.*;
 import com.googlecode.alv.logdata.turn.action.PlayerSnapshot;
@@ -48,7 +47,8 @@ import com.googlecode.alv.util.data.DataTablesHandler;
  * Note that this class is immutable, while some of its members may be mutable.
  * This has to be taken into account while using this class.
  */
-final class SummaryDataCalculator {
+final class SummaryDataCalculator
+{
     private static final String GUILD_CHALLENGE = "Guild Challenge";
 
     private static final String ENCHANTED_BARBELL = "enchanted barbell";
@@ -138,6 +138,8 @@ final class SummaryDataCalculator {
     private final InexplicableDoor nesRealm = new InexplicableDoor();
 
     private final QuestTurncounts questTurncounts;
+    
+    private final LimitedUseData limitedUseData;
 
     private Statgain totalStatgains = Statgain.NO_STATS;
 
@@ -186,7 +188,7 @@ final class SummaryDataCalculator {
         for (final TurnInterval ti : logData.getTurnIntervalsSpent()) {
             // Consumables summary, day of usage is only a hindrance here.
             for (final Consumable c : ti.getConsumablesUsed()) {
-                totalStatgains = totalStatgains.addStats(c.getStatGain());
+                totalStatgains = totalStatgains.plus(c.getStatGain());
 
                 final Consumable tmp = c.newInstance();
                 tmp.setDayNumberOfUsage(Integer.MAX_VALUE);
@@ -214,22 +216,25 @@ final class SummaryDataCalculator {
 
             for (final SingleTurn st : ti.getTurns()) {
                 // Total turncounts and stats of different turn versions.
-                totalStatgains = totalStatgains.addStats(st.getStatGain());
+                totalStatgains = totalStatgains.plus(st.getStatGain());
+                // TODO Remove below when done debugging
+                if (st.getTurnNumber() == 719)
+                    System.out.println("Hi");
                 switch (st.getTurnVersion()) {
                     case COMBAT:
                         if (!st.isFreeTurn())
                             totalTurnsCombat++;
-                        combatsStatgains = combatsStatgains.addStats(st.getStatGain());
+                        combatsStatgains = combatsStatgains.plus(st.getStatGain());
                         break;
                     case NONCOMBAT:
                         if (!st.isFreeTurn())
                             totalTurnsNoncombat++;
-                        noncombatsStatgains = noncombatsStatgains.addStats(st.getStatGain());
+                        noncombatsStatgains = noncombatsStatgains.plus(st.getStatGain());
                         break;
                     case OTHER:
                         if (!st.isFreeTurn())
                             totalTurnsOther++;
-                        othersStatgains = othersStatgains.addStats(st.getStatGain());
+                        othersStatgains = othersStatgains.plus(st.getStatGain());
                         break;
                     default:
                         break;
@@ -383,6 +388,9 @@ final class SummaryDataCalculator {
         // Quest turncount summary
         questTurncounts = new QuestTurncounts(logData.getTurnIntervalsSpent(),
                                               droppedItems.getElements());
+        
+        limitedUseData = new LimitedUseData(logData.getLimitedUses(), 
+                                            logData.getLastDayChange().getDayNumber());
     }
 
     /**
@@ -458,9 +466,9 @@ final class SummaryDataCalculator {
         for (final TurnInterval ti : logData.getTurnIntervalsSpent())
             for (final SingleTurn st : ti.getTurns()) {
                 // Add stats to the stat counter.
-                stats = stats.addStats(st.getStatGain());
+                stats = stats.plus(st.getStatGain());
                 for (final Consumable c : st.getConsumablesUsed())
-                    stats = stats.addStats(c.getStatGain());
+                    stats = stats.plus(c.getStatGain());
 
                 if (currentPlayerSnapshot != null
                     && currentPlayerSnapshot.getTurnNumber() <= st.getTurnNumber()) {
@@ -750,6 +758,14 @@ final class SummaryDataCalculator {
         return questTurncounts;
     }
 
+    /**
+     * @return The data for uses of items with daily limits
+     */
+    LimitedUseData getLimitedUseData()
+    {
+        return limitedUseData;
+    }
+    
     /**
      * @return The total mp gains collected during this ascension.
      */

@@ -33,6 +33,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -58,6 +59,11 @@ import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.consumables.Consumable.ConsumableVersion;
 import com.googlecode.alv.logdata.summary.AreaStatgains;
 import com.googlecode.alv.logdata.summary.LevelData;
+import com.googlecode.alv.logdata.summary.LimitedUseData;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
+import com.googlecode.alv.logdata.summary.LimitedUseData.CounterUses;
+import com.googlecode.alv.logdata.summary.LimitedUseData.DailyUses;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Use;
 import com.googlecode.alv.logdata.summary.QuestTurncounts;
 import com.googlecode.alv.logdata.turn.DetailedTurnInterval;
 import com.googlecode.alv.logdata.turn.Encounter;
@@ -83,6 +89,7 @@ import com.googlecode.alv.util.data.DataTablesHandler;
 import com.googlecode.alv.util.data.ExtraStats;
 
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * This utility class creates a parsed plaintext ascension log from a
@@ -117,6 +124,7 @@ public class TextLogCreator {
     protected static final String FREE_RUNAWAYS_PREFIX      = "     &> ";
     protected static final String HYBRIDIZE_PREFIX          = "     h> ";
     protected static final String FAMILIAR_CHANGE_PREFIX    = "     -> Turn";
+    protected static final String LIMITED_USE_PREFIX        = "     !> ";
 
     protected static final String ITEM_MIDDLE_STRING = "Got ";
 
@@ -176,6 +184,10 @@ public class TextLogCreator {
     protected final Iterator<DataNumberPair<String>> hybridDataIter;
 
     protected final Iterator<DataNumberPair<String>> learnedSkillIter;
+    
+    protected final Iterator<DataNumberPair<LimitedUseData.Use>> limitedUseIter;
+    
+    protected DataNumberPair<LimitedUseData.Use> currentLimitedUse;
 
     protected DataNumberPair<String> currentLearnedSkill;
 
@@ -220,6 +232,7 @@ public class TextLogCreator {
         banishedCombatIter = logData.getLogSummary().getBanishedCombats().iterator(); //Bombar: Add banished combat support
         hybridDataIter = logData.getHybridContent().iterator();
         learnedSkillIter = logData.getLearnedSkills().iterator();
+        limitedUseIter = logData.getLimitedUses().iterator();
 
         dailyKaEarned = new HashMap<Integer, Integer>();
         setAugmentationsMap();
@@ -270,7 +283,7 @@ public class TextLogCreator {
         final Map<String, String> map = Maps.newHashMap();
         String tmpLine;
 
-        try ( BufferedReader br = DataUtilities.getReader(Constants.KOL_DATA_DIRECTORY,
+        try ( BufferedReader br = DataUtilities.getReader(Constants.DATA_DIRECTORY,
                                                           augmentationsFile)) {
             while ((tmpLine = br.readLine()) != null)
                 // Ignore empty lines and comments
@@ -621,6 +634,7 @@ public class TextLogCreator {
         currentBanishedCombat = banishedCombatIter.hasNext() ? banishedCombatIter.next() : null;
         currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
         currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
+        currentLimitedUse = limitedUseIter.hasNext() ? limitedUseIter.next() : null;
 
         // Level 1 can be skipped.
         levelIter.next();
@@ -1412,6 +1426,31 @@ public class TextLogCreator {
             currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
         }
 
+        while (currentLimitedUse != null && ti.getEndTurn() >= currentLimitedUse.getNumber()) {
+            LimitedUseData.Use use = currentLimitedUse.getData();
+            printLineBreak();
+            write(LIMITED_USE_PREFIX);
+            write(" ");
+            write(OPENING_TURN_BRACKET);
+            write(use.getTurn());
+            write(CLOSING_TURN_BRACKET);
+            write(" ");
+            write(logAdditionsMap.get("limitedUseStart"));
+            write(use.getCounter().getName());
+            if (! use.getUse().equals(""))
+                write(": " + use.getUse());
+            write(logAdditionsMap.get("limitedUseEnd"));
+            Statgain statgain = use.getStatgain();
+            if (! statgain.equals(Statgain.NO_STATS)) {
+                write(" ");
+                write(logAdditionsMap.get("statgainStart"));
+                write(use.getStatgain().toString());
+                write(logAdditionsMap.get("statgainEnd"));
+            }
+            writeln();
+            currentLimitedUse = limitedUseIter.hasNext() ? limitedUseIter.next() : null;
+        }
+        
         while (nextLevel != null && ti.getEndTurn() >= nextLevel.getLevelReachedOnTurn()) {
             // Only print the level if it actually *is* part of this turn
             // interval.
@@ -1473,6 +1512,7 @@ public class TextLogCreator {
         printConsumablesSection(logData);
         printMeatSection(logData);
         printBottlenecksSection(logData);
+        printLimitedUseSection(logData);
     }
 
     /**
@@ -2217,6 +2257,59 @@ public class TextLogCreator {
         writelnWithBreak();
     }
     
+    /**
+     * Print the summary of uses of items and skills whose uses have daily limits.
+     * 
+     * @param logData LogDataHolder holding all the log data
+     */
+    protected void printLimitedUseSection(LogDataHolder logData)
+    {
+        LimitedUseData limitedUses = logData.getLogSummary().getLimitedUseData();
+        
+        printSectionHeader("LIMITED USES", "limited");
+        for (DailyUses dailyUses : limitedUses.getDailyUses()) {
+            printParagraphStart();
+            writelnWithBreak("Day " + dailyUses.getDay());
+            TreeMap<Counter, CounterUses> allUses = dailyUses.getCounterUses();
+            ArrayList<String> dailySummary = new ArrayList<String>();
+            
+            for (Counter counter : allUses.keySet()) {
+                int limit = counter.getLimit();
+                if (counter == Counter.PILLKEEPER) {
+                    // Pillkeeper uses Spleen.  Most characters have 15; Plumbers have 5.
+                    limit = 1 + (logData.getCharacterClass().getMaxSpleen() / 3);
+                    // TODO: Ed has gradually increasing spleen.  How to account? 
+                }
+                int count = 0;
+                CounterUses counterUses = allUses.get(counter);
+                for (Use u : counterUses.getUses()) {
+                    /* Summary looks kinda cluttered - let's skip the individual events
+                    writelnWithBreak("\t[" + u.getTurn() + "] " + counter.getName() 
+                                     + ": " + u.getUse());
+                    */
+                    if (counter == Counter.CHEAT_CODE) {
+                        count += 5;
+                        if (u.getUse() == Counter.REPLACE_ENEMY)
+                            count += 5;  // Replace Enemy costs 10, not 5
+                    } else {
+                        count++;
+                    }
+                }
+                dailySummary.add(counter.getName() + "\t" + count + "/" + limit);
+            }
+            if (dailySummary.size() > 0) {
+                writelnWithBreak();
+                printTableStart();
+                for (String s : dailySummary) {
+                    String[] pieces = s.split("\t");
+                    printTableRow("\t" + pieces[0], "\t" + pieces[1]);
+                }
+                printTableEnd();
+            }
+            writelnWithBreak();
+            printParagraphEnd();
+        }
+    }
     
     /**
      * Write a string to the log output.

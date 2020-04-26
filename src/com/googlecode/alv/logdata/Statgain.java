@@ -24,13 +24,12 @@
 
 package com.googlecode.alv.logdata;
 
-import com.googlecode.alv.parser.UsefulPatterns;
-
 /**
  * A simple immutable container class for stat gains from adventures,
  * consumables and so on.
  */
-public final class Statgain {
+public final class Statgain 
+{
     public static final Statgain NO_STATS = new Statgain(0, 0, 0);
 
     public final int mus;
@@ -47,8 +46,8 @@ public final class Statgain {
      * @param mox
      *            The moxie stat gain to set.
      */
-    public Statgain(
-                    final int mus, final int myst, final int mox) {
+    public Statgain(final int mus, final int myst, final int mox) 
+    {
         this.mus = mus;
         this.myst = myst;
         this.mox = mox;
@@ -59,8 +58,8 @@ public final class Statgain {
      *            The muscle stats to set.
      * @return The new Statgain.
      */
-    public Statgain setMuscle(
-                              final int mus) {
+    public Statgain setMuscle(final int mus) 
+    {
         return new Statgain(mus, myst, mox);
     }
 
@@ -69,8 +68,8 @@ public final class Statgain {
      *            The myst stats to set.
      * @return The new Statgain.
      */
-    public Statgain setMyst(
-                            final int myst) {
+    public Statgain setMyst(final int myst) 
+    {
         return new Statgain(mus, myst, mox);
     }
 
@@ -79,22 +78,24 @@ public final class Statgain {
      *            The moxie stats to set.
      * @return The new Statgain.
      */
-    public Statgain setMoxie(
-                             final int mox) {
+    public Statgain setMoxie(final int mox) 
+    {
         return new Statgain(mus, myst, mox);
     }
 
     /**
      * @return True if all stats are zero, otherwise false.
      */
-    public boolean isAllStatsZero() {
+    public boolean isAllStatsZero() 
+    {
         return mus == 0 && myst == 0 && mox == 0;
     }
 
     /**
      * @return The total stat gain.
      */
-    public int getTotalStatgain() {
+    public int getTotalStatgain() 
+    {
         return mus + myst + mox;
     }
 
@@ -105,9 +106,9 @@ public final class Statgain {
      * @throws NullPointerException
      *             if stats is {@code null}
      */
-    public Statgain addStats(
-                             final Statgain stats) {
-        return addStats(stats.mus, stats.myst, stats.mox);
+    public Statgain plus(final Statgain stats) 
+    {
+        return plus(stats.mus, stats.myst, stats.mox);
     }
 
     /**
@@ -119,29 +120,30 @@ public final class Statgain {
      *            The moxie stat gain to add.
      * @return The new Statgain.
      */
-    public Statgain addStats(
-                             final int mus, final int myst, final int mox) {
+    public Statgain plus(final int mus, final int myst, final int mox) 
+    {
         return new Statgain(this.mus + mus, this.myst + myst, this.mox + mox);
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         final StringBuilder str = new StringBuilder(20);
 
-        str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        str.append("[");
         str.append(mus);
-        str.append(UsefulPatterns.COMMA);
+        str.append(",");
         str.append(myst);
-        str.append(UsefulPatterns.COMMA);
+        str.append(",");
         str.append(mox);
-        str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
+        str.append("]");
 
         return str.toString();
     }
 
     @Override
-    public boolean equals(
-                          final Object o) {
+    public boolean equals(final Object o) 
+    {
         if (this == o)
             return true;
 
@@ -154,7 +156,8 @@ public final class Statgain {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = 25;
         result = 31 * result + mus;
         result = 31 * result + myst;

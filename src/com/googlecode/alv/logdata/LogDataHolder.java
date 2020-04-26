@@ -34,6 +34,8 @@ import java.util.Map.Entry;
 
 import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.summary.LevelData;
+import com.googlecode.alv.logdata.summary.LimitedUseData;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Use;
 import com.googlecode.alv.logdata.summary.LogSummaryData;
 import com.googlecode.alv.logdata.turn.DetailedTurnInterval;
 import com.googlecode.alv.logdata.turn.SimpleTurnInterval;
@@ -45,6 +47,7 @@ import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.logdata.turn.action.PlayerSnapshot;
 import com.googlecode.alv.logdata.turn.action.Pull;
+import com.googlecode.alv.util.CharacterClass;
 import com.googlecode.alv.util.DataNumberPair;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LookAheadIterator;
@@ -104,6 +107,8 @@ public final class LogDataHolder
     private final List<Pull> pulls = Lists.newArrayList(100);
 
     private final List<DataNumberPair<String>> learnedSkills = Lists.newArrayList();
+    
+    private final List<DataNumberPair<LimitedUseData.Use>> limitedUses = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> hybridization = Lists.newArrayList();
 
@@ -1328,6 +1333,46 @@ public final class LogDataHolder
     }
 
     /**
+     * Adds a use of a daily-limited item to the list of uses.
+     *
+     * @param day Day number of th euse event
+     * @param turn Turn number of the use event
+     * @param counter Use counter applicable to the event
+     * @param subUse String denoting the use decrementing the counter
+     * @param statgain Statgain for stats, if any, accrued by using this item
+     */
+    public void addLimitedUse(final int day, 
+                              final int turn, 
+                              final LimitedUseData.Counter counter,
+                              final String subUse,
+                              final Statgain statgain)
+    {
+        Use use = new Use(day, turn, counter, subUse, statgain);
+        this.limitedUses.add(DataNumberPair.of(use, turn));
+    }
+    
+    /**
+     * Adds a use of a daily-limited item to the list of uses.
+     *
+     * @param day Day number of th euse event
+     * @param turn Turn number of the use event
+     * @param counter Use counter applicable to the event
+     * @param subUse String denoting the use decrementing the counter
+     */
+    public void addLimitedUse(final int day, 
+                              final int turn, 
+                              final LimitedUseData.Counter counter,
+                              final String subUse)
+    {
+        addLimitedUse(day, turn, counter, subUse, Statgain.NO_STATS);
+    }
+    
+    public List<DataNumberPair<LimitedUseData.Use>> getLimitedUses()
+    {
+        return Collections.unmodifiableList(this.limitedUses);
+    }
+    
+    /**
      * Adds a hybridation element to the current log, it should either be a
      * make - Makes a Gene tonic
      * hybridizing - Gives intrinsic 1/day
@@ -1612,81 +1657,6 @@ public final class LogDataHolder
     public ParsedLogClass getParsedLogCreator() 
     {
         return parsedLogCreator;
-    }
-
-    /**
-     * This enumeration represents all known character classes.
-     */
-    public static enum CharacterClass {
-        SEAL_CLUBBER("Seal Clubber", StatClass.MUSCLE),
-        TURTLE_TAMER("Turtle Tamer", StatClass.MUSCLE),
-        PASTAMANCER("Pastamancer", StatClass.MYSTICALITY),
-        SAUCEROR("Sauceror", StatClass.MYSTICALITY),
-        DISCO_BANDIT("Disco Bandit", StatClass.MOXIE),
-        ACCORDION_THIEF("Accordion Thief", StatClass.MOXIE),
-        AVATAR_OF_BORIS("Avatar of Boris", StatClass.MUSCLE),
-        AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY),
-        AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
-        ED("Ed", StatClass.MYSTICALITY),
-        VAMPYRE("Vampyre", StatClass.MYSTICALITY),
-        PLUMBER("Plumber", StatClass.MAXIMUM),    
-        NOT_DEFINED("not defined", StatClass.MUSCLE);
-
-        private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
-
-        static {
-            for (final CharacterClass op : values())
-                stringToEnum.put(op.toString(), op);
-        }
-
-        private final String className;
-
-        private final StatClass statClass;
-
-        CharacterClass(final String className, final StatClass statClass) 
-        {
-            this.className = className;
-            this.statClass = statClass;
-        }
-
-        /**
-         * @return The mainstat of this character class.
-         */
-        public StatClass getStatClass() 
-        {
-            return statClass;
-        }
-
-        @Override
-        public String toString() 
-        {
-            return className;
-        }
-
-        /**
-         * @param className The name of the adventurer's class
-         * @return The enum whose toString method returns a string which is
-         *         equal to the given string. If no match is found this method
-         *         will return {@code NOT_DEFINED}.
-         */
-        public static CharacterClass fromString(final String className) 
-        {
-            if (className == null)
-                throw new NullPointerException("Class name must not be null.");
-
-            final CharacterClass characterClass = stringToEnum.get(className);
-
-            return characterClass != null ? characterClass : NOT_DEFINED;
-        }
-    }
-
-    /**
-     * This enumeration represents the three stat classes, plus Maximum.
-     * Maximum is for the Plumber, because his leveling is based on whichever
-     * stat is highest.
-     */
-    public static enum StatClass {
-        MUSCLE, MYSTICALITY, MOXIE, MAXIMUM;
     }
 
     /**
