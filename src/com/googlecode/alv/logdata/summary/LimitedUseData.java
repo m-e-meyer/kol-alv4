@@ -67,6 +67,7 @@ public class LimitedUseData {
         DOCTOR_BAG_OTOSCOPE("Doctor Bag/Otoscope", 3),
         DOCTOR_BAG_XRAY("Doctor Bag/X-ray", 3),
         FORTUNE_TELLER("Fortune Teller", 1),
+        PILLKEEPER("Pillkeeper", 6),
         SABER_UPGRADE("Saber/Upgrade", 1),
         SABER_USE_FORCE("Saber/Use the Force", 5),
         ;
@@ -120,55 +121,71 @@ public class LimitedUseData {
 
     static {
         LIMITED_USE_MAP.put("1387/1", 
-                            new CounterUsePair(Counter.SABER_USE_FORCE, "Not the adventurer"));
+                new CounterUsePair(Counter.SABER_USE_FORCE, "Not the adventurer"));
         LIMITED_USE_MAP.put("1387/2", 
-                            new CounterUsePair(Counter.SABER_USE_FORCE, "Find friends"));
+                new CounterUsePair(Counter.SABER_USE_FORCE, "Find friends"));
         LIMITED_USE_MAP.put("1387/3", 
-                            new CounterUsePair(Counter.SABER_USE_FORCE, "Drop things"));
+                new CounterUsePair(Counter.SABER_USE_FORCE, "Drop things"));
         LIMITED_USE_MAP.put("1386/1", 
-                            new CounterUsePair(Counter.SABER_UPGRADE, "MP regen"));
+                new CounterUsePair(Counter.SABER_UPGRADE, "MP regen"));
         LIMITED_USE_MAP.put("1386/2", 
-                            new CounterUsePair(Counter.SABER_UPGRADE, "+20 ML"));
+                new CounterUsePair(Counter.SABER_UPGRADE, "+20 ML"));
         LIMITED_USE_MAP.put("1386/3", 
-                            new CounterUsePair(Counter.SABER_UPGRADE, "+3 prismatic res"));
+                new CounterUsePair(Counter.SABER_UPGRADE, "+3 prismatic res"));
         LIMITED_USE_MAP.put("1386/4", 
-                            new CounterUsePair(Counter.SABER_UPGRADE, "+10 familiar wt"));
+                new CounterUsePair(Counter.SABER_UPGRADE, "+10 familiar wt"));
+        LIMITED_USE_MAP.put("1395/1", 
+                new CounterUsePair(Counter.PILLKEEPER, "Explodinall"));
+        LIMITED_USE_MAP.put("1395/2", 
+                new CounterUsePair(Counter.PILLKEEPER, "Extendicillin"));
+        LIMITED_USE_MAP.put("1395/3", 
+                new CounterUsePair(Counter.PILLKEEPER, "Sneakisol"));
+        LIMITED_USE_MAP.put("1395/4", 
+                new CounterUsePair(Counter.PILLKEEPER, "Rainbowolin"));
+        LIMITED_USE_MAP.put("1395/5", 
+                new CounterUsePair(Counter.PILLKEEPER, "Hulkien"));
+        LIMITED_USE_MAP.put("1395/6", 
+                new CounterUsePair(Counter.PILLKEEPER, "Fidoxene"));
+        LIMITED_USE_MAP.put("1395/7", 
+                new CounterUsePair(Counter.PILLKEEPER, "Surprise Me"));
+        LIMITED_USE_MAP.put("1395/8", 
+                new CounterUsePair(Counter.PILLKEEPER, "Telecybin"));
         LIMITED_USE_MAP.put("cheat code: replace enemy", 
-                            new CounterUsePair(Counter.CHEAT_CODE, Counter.REPLACE_ENEMY));
+                new CounterUsePair(Counter.CHEAT_CODE, Counter.REPLACE_ENEMY));
         LIMITED_USE_MAP.put("cheat code: triple size", 
-                            new CounterUsePair(Counter.CHEAT_CODE, "Triple Size"));
+                new CounterUsePair(Counter.CHEAT_CODE, "Triple Size"));
         LIMITED_USE_MAP.put("cheat code: invisible avatar", 
-                            new CounterUsePair(Counter.CHEAT_CODE, "Invisible Avatar"));
+                new CounterUsePair(Counter.CHEAT_CODE, "Invisible Avatar"));
         LIMITED_USE_MAP.put("cheat code: shrink enemy", 
-                            new CounterUsePair(Counter.CHEAT_CODE, "Shrink Enemy"));
+                new CounterUsePair(Counter.CHEAT_CODE, "Shrink Enemy"));
         LIMITED_USE_MAP.put("hot-headed", 
-                            new CounterUsePair(Counter.BEACH_HEAD_HOT, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_HOT, ""));
         LIMITED_USE_MAP.put("cold as nice", 
-                            new CounterUsePair(Counter.BEACH_HEAD_COLD, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_COLD, ""));
         LIMITED_USE_MAP.put("a brush with grossness", 
-                            new CounterUsePair(Counter.BEACH_HEAD_STENCH, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_STENCH, ""));
         LIMITED_USE_MAP.put("does it have a skull in there??", 
-                            new CounterUsePair(Counter.BEACH_HEAD_SPOOKY, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_SPOOKY, ""));
         LIMITED_USE_MAP.put("oiled, slick", 
-                            new CounterUsePair(Counter.BEACH_HEAD_SLEAZE, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_SLEAZE, ""));
         LIMITED_USE_MAP.put("lack of body-building", 
-                            new CounterUsePair(Counter.BEACH_HEAD_MUSCLE, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_MUSCLE, ""));
         LIMITED_USE_MAP.put("we're all made of starfish", 
-                            new CounterUsePair(Counter.BEACH_HEAD_MYSTICALITY, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_MYSTICALITY, ""));
         LIMITED_USE_MAP.put("pomp & circumsands", 
-                            new CounterUsePair(Counter.BEACH_HEAD_MOXIE, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_MOXIE, ""));
         LIMITED_USE_MAP.put("resting beach face", 
-                            new CounterUsePair(Counter.BEACH_HEAD_INITIATIVE, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_INITIATIVE, ""));
         LIMITED_USE_MAP.put("do i know you from somewhere?", 
-                            new CounterUsePair(Counter.BEACH_HEAD_FAMILIAR_WT, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_FAMILIAR_WT, ""));
         LIMITED_USE_MAP.put("you learned something maybe!", 
-                            new CounterUsePair(Counter.BEACH_HEAD_STATS, ""));
+                new CounterUsePair(Counter.BEACH_HEAD_STATS, ""));
         LIMITED_USE_MAP.put("reflex hammer", 
-                            new CounterUsePair(Counter.DOCTOR_BAG_HAMMER, ""));
+                new CounterUsePair(Counter.DOCTOR_BAG_HAMMER, ""));
         LIMITED_USE_MAP.put("otoscope", 
-                            new CounterUsePair(Counter.DOCTOR_BAG_OTOSCOPE, ""));
+                new CounterUsePair(Counter.DOCTOR_BAG_OTOSCOPE, ""));
         LIMITED_USE_MAP.put("chest x-ray", 
-                            new CounterUsePair(Counter.DOCTOR_BAG_XRAY, ""));
+                new CounterUsePair(Counter.DOCTOR_BAG_XRAY, ""));
     }
 
     /**

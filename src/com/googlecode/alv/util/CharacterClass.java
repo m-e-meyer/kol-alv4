@@ -30,19 +30,19 @@ import java.util.Map;
  * This enumeration represents all known (to ALV) character classes.
  */
 public enum CharacterClass {
-    SEAL_CLUBBER("Seal Clubber", StatClass.MUSCLE, "clobber"),
-    TURTLE_TAMER("Turtle Tamer", StatClass.MUSCLE, "toss"),
-    PASTAMANCER("Pastamancer", StatClass.MYSTICALITY, "spaghetti spear"),
-    SAUCEROR("Sauceror", StatClass.MYSTICALITY, "salsaball"),
-    DISCO_BANDIT("Disco Bandit", StatClass.MOXIE, "suckerpunch"),
-    ACCORDION_THIEF("Accordion Thief", StatClass.MOXIE, "sing"),
-    AVATAR_OF_BORIS("Avatar of Boris", StatClass.MUSCLE, Constants.N_A),
-    AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY, Constants.N_A),
-    AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE, Constants.N_A),
-    ED("Ed", StatClass.MYSTICALITY, Constants.N_A),
-    VAMPYRE("Vampyre", StatClass.MYSTICALITY, Constants.N_A),
-    PLUMBER("Plumber", StatClass.MAXIMUM, Constants.N_A),    
-    NOT_DEFINED("not defined", StatClass.MUSCLE, Constants.N_A);
+    SEAL_CLUBBER("Seal Clubber", StatClass.MUSCLE, "clobber", 15),
+    TURTLE_TAMER("Turtle Tamer", StatClass.MUSCLE, "toss", 15),
+    PASTAMANCER("Pastamancer", StatClass.MYSTICALITY, "spaghetti spear", 15),
+    SAUCEROR("Sauceror", StatClass.MYSTICALITY, "salsaball", 15),
+    DISCO_BANDIT("Disco Bandit", StatClass.MOXIE, "suckerpunch", 15),
+    ACCORDION_THIEF("Accordion Thief", StatClass.MOXIE, "sing", 15),
+    AVATAR_OF_BORIS("Avatar of Boris", StatClass.MUSCLE, Constants.N_A, 15),
+    AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY, Constants.N_A, 15),
+    AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE, Constants.N_A, 15),
+    ED("Ed", StatClass.MYSTICALITY, Constants.N_A, 5),
+    VAMPYRE("Vampyre", StatClass.MYSTICALITY, Constants.N_A, 15),
+    PLUMBER("Plumber", StatClass.MAXIMUM, Constants.N_A, 5),    
+    NOT_DEFINED("not defined", StatClass.MUSCLE, Constants.N_A, 0);
 
     
     private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
@@ -57,14 +57,18 @@ public enum CharacterClass {
     private final StatClass statClass;
     
     private final String trivialSkill;
+    
+    private final int maxSpleen;
 
     CharacterClass(final String className, 
                    final StatClass statClass,
-                   final String trivialSkill) 
+                   final String trivialSkill,
+                   final int maxSpleen) 
     {
         this.className = className;
         this.statClass = statClass;
         this.trivialSkill = trivialSkill;
+        this.maxSpleen = maxSpleen;
     }
 
     /**
@@ -78,6 +82,12 @@ public enum CharacterClass {
      */
     public String getTrivialSkill() { return trivialSkill; }
 
+    /**
+     * @return The typical maximum spleen for the character class, not taking
+     *      Spleen of Steel into account.
+     */
+    public int getMaxSpleen() { return maxSpleen; }
+    
     @Override
     public String toString() 
     {

@@ -2275,6 +2275,11 @@ public class TextLogCreator {
             
             for (Counter counter : allUses.keySet()) {
                 int limit = counter.getLimit();
+                if (counter == Counter.PILLKEEPER) {
+                    // Pillkeeper uses Spleen.  Most characters have 15; Plumbers have 5.
+                    limit = 1 + (logData.getCharacterClass().getMaxSpleen() / 3);
+                    // TODO: Ed has gradually increasing spleen.  How to account? 
+                }
                 int count = 0;
                 CounterUses counterUses = allUses.get(counter);
                 for (Use u : counterUses.getUses()) {
