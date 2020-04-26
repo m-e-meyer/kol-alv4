@@ -62,6 +62,8 @@ public class LimitedUseData {
         BEACH_HEAD_STATS("Beach Head/Stats", 1),
         BEACH_HEAD_STENCH("Beach Head/Stench", 1),
         CHEAT_CODE("CHEAT CODE", 100),
+        DAYCARE_SPA("Daycare Spa", 1),
+        FORTUNE_TELLER("Fortune Teller", 1),
         SABER_UPGRADE("Saber/Upgrade", 1),
         SABER_USE_FORCE("Saber/Use the Force", 5),
         ;
