@@ -41,30 +41,49 @@ public enum CharacterClass {
     AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE, Constants.N_A, 15),
     ED("Ed", StatClass.MYSTICALITY, Constants.N_A, 5),
     VAMPYRE("Vampyre", StatClass.MYSTICALITY, Constants.N_A, 15),
-    PLUMBER("Plumber", StatClass.MAXIMUM, Constants.N_A, 5),    
+    PLUMBER("Plumber", StatClass.MAXIMUM, Constants.N_A, 5),
     NOT_DEFINED("not defined", StatClass.MUSCLE, Constants.N_A, 0);
 
-    
     private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
 
     static {
-        for (final CharacterClass op : values())
+        for (final CharacterClass op : values()) {
             stringToEnum.put(op.toString(), op);
+        }
+    }
+
+    /**
+     * @param className The name of the adventurer's class
+     * @return The enum whose toString method returns a string which is equal to the
+     *         given string. If no match is found this method will return
+     *         {@code NOT_DEFINED}.
+     */
+    public static CharacterClass fromString(
+            final String className) {
+
+        if (className == null) {
+            throw new NullPointerException("Class name must not be null.");
+        }
+
+        final CharacterClass characterClass = stringToEnum.get(className);
+
+        return characterClass != null ? characterClass : NOT_DEFINED;
     }
 
     private final String className;
 
     private final StatClass statClass;
-    
+
     private final String trivialSkill;
-    
+
     private final int maxSpleen;
 
-    CharacterClass(final String className, 
-                   final StatClass statClass,
-                   final String trivialSkill,
-                   final int maxSpleen) 
-    {
+    CharacterClass(
+            final String className,
+            final StatClass statClass,
+            final String trivialSkill,
+            final int maxSpleen) {
+
         this.className = className;
         this.statClass = statClass;
         this.trivialSkill = trivialSkill;
@@ -72,41 +91,22 @@ public enum CharacterClass {
     }
 
     /**
+     * @return The typical maximum spleen for the character class, not taking Spleen
+     *         of Steel into account.
+     */
+    public int getMaxSpleen() { return maxSpleen; }
+
+    /**
      * @return The mainstat of this character class.
      */
     public StatClass getStatClass() { return statClass; }
-    
+
     /**
      * @return The trivial skill for this character class, or, if not applicable,
-     *      {@link Constants.N_A}.
+     *         {@link com.googlecode.alv.util.Constants#N_A}.
      */
     public String getTrivialSkill() { return trivialSkill; }
 
-    /**
-     * @return The typical maximum spleen for the character class, not taking
-     *      Spleen of Steel into account.
-     */
-    public int getMaxSpleen() { return maxSpleen; }
-    
     @Override
-    public String toString() 
-    {
-        return className;
-    }
-
-    /**
-     * @param className The name of the adventurer's class
-     * @return The enum whose toString method returns a string which is
-     *         equal to the given string. If no match is found this method
-     *         will return {@code NOT_DEFINED}.
-     */
-    public static CharacterClass fromString(final String className) 
-    {
-        if (className == null)
-            throw new NullPointerException("Class name must not be null.");
-
-        final CharacterClass characterClass = stringToEnum.get(className);
-
-        return characterClass != null ? characterClass : NOT_DEFINED;
-    }
+    public String toString() { return className; }
 }

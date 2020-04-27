@@ -24,7 +24,13 @@
 
 package com.googlecode.alv.gui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,17 +42,30 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.*;
-
-import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.WindowConstants;
 
 import org.jfree.ui.RefineryUtilities;
 
+import com.googlecode.alv.LogsProcessor;
 import com.googlecode.alv.Settings;
-import com.googlecode.alv.creator.LogsCreator;
 import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.util.LogOutputFormat;
 import com.googlecode.alv.util.Pair;
+
+import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
 
 /**
  * Dialog giving all controls necessary to parse mafia logs into ascension logs
@@ -58,25 +77,29 @@ public final class InternalMafiaLogParserDialog extends JDialog {
 
         private final String preparsedLogPartialFileString = "_ascend";
 
+        @Override
         public boolean accept(
-                              final File dir, final String name) {
+                final File dir,
+                final String name) {
+
             return mafiaLogMatcher.reset(name).matches()
-                   && !name.contains(preparsedLogPartialFileString);
+                    && !name.contains(preparsedLogPartialFileString);
         }
     };
 
     private final ActionListener runParserAction = new ActionListener() {
+        @Override
         public void actionPerformed(
-                                    final ActionEvent e) {
+                final ActionEvent e) {
+
             if (!mafiaLogsDirectoryField.getText().equals("")
-                && !parsedLogsSavingDirectoryField.getText().equals("")) {
+                    && !parsedLogsSavingDirectoryField.getText().equals("")) {
                 setWaitingForComputationEnd(true);
                 runParser();
-            } else
-                JOptionPane.showMessageDialog(null,
-                                              "Please fill out all text fields.",
-                                              "Missing input",
-                                              JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Please fill out all text fields.",
+                        "Missing input", JOptionPane.WARNING_MESSAGE);
+            }
         }
     };
 
@@ -91,19 +114,22 @@ public final class InternalMafiaLogParserDialog extends JDialog {
     private LogOutputFormat logOutputFormat = LogOutputFormat.TEXT_LOG;
 
     InternalMafiaLogParserDialog(
-                                 final JFrame owner) {
+            final JFrame owner) {
+
         super(owner, true);
         setLayout(new BorderLayout(5, 20));
         setTitle("Mafia Logs Parser");
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setGlassPane(new PerformanceInfiniteProgressPanel());
 
         mafiaLogsDirectoryField = new JTextField(Settings.getString("Mafia logs location"));
-        parsedLogsSavingDirectoryField = new JTextField(Settings.getString("Parsed logs saving location"));
+        parsedLogsSavingDirectoryField = new JTextField(
+                Settings.getString("Parsed logs saving location"));
 
         File mafiaLogsDirectory = new File(mafiaLogsDirectoryField.getText());
-        if (!mafiaLogsDirectory.exists())
+        if (!mafiaLogsDirectory.exists()) {
             mafiaLogsDirectory = null;
+        }
 
         directoryChooser = new JFileChooser(mafiaLogsDirectory);
         directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -114,24 +140,24 @@ public final class InternalMafiaLogParserDialog extends JDialog {
         final JButton cancelButton = new JButton("Cancel");
         runButton.addActionListener(runParserAction);
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(
-                                        final ActionEvent e) {
-                dispose();
-            }
+                    final ActionEvent e) { dispose(); }
         });
 
         final JPanel parserPanel = new JPanel(new BorderLayout(5, 5));
         final JPanel directoryPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         directoryPanel.add(createDirectoryFinderPanel(mafiaLogsDirectoryField,
-                                                      "Mafia logs directory location"));
+                "Mafia logs directory location"));
         directoryPanel.add(createDirectoryFinderPanel(parsedLogsSavingDirectoryField,
-                                                      "Parsed logs saving destination"));
+                "Parsed logs saving destination"));
         parserPanel.add(directoryPanel, BorderLayout.CENTER);
         parserPanel.add(createLogOutputCustomizer(), BorderLayout.SOUTH);
         add(parserPanel, BorderLayout.NORTH);
 
-        add(new JLabel("<html>Note that the parsing process may take a while depending on the amount and contents<br>of the mafia logs.</html>"),
-            BorderLayout.CENTER);
+        add(new JLabel(
+                "<html>Note that the parsing process may take a while depending on the amount and contents<br>of the mafia logs.</html>"),
+                BorderLayout.CENTER);
 
         final JPanel buttonPanel = new JPanel(new GridLayout(1, 0, 10, 0));
         buttonPanel.setPreferredSize(new Dimension(150, 50));
@@ -145,8 +171,9 @@ public final class InternalMafiaLogParserDialog extends JDialog {
     }
 
     private JPanel createDirectoryFinderPanel(
-                                              final JTextField directoryLocationField,
-                                              final String description) {
+            final JTextField directoryLocationField,
+            final String description) {
+
         final JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder(description));
 
@@ -174,12 +201,15 @@ public final class InternalMafiaLogParserDialog extends JDialog {
 
         directoryChooserButton.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(
-                                        final ActionEvent e) {
+                    final ActionEvent e) {
+
                 final int state = directoryChooser.showOpenDialog(null);
-                if (state == JFileChooser.APPROVE_OPTION)
-                    directoryLocationField.setText(directoryChooser.getSelectedFile()
-                                                                   .getAbsolutePath());
+                if (state == JFileChooser.APPROVE_OPTION) {
+                    directoryLocationField
+                            .setText(directoryChooser.getSelectedFile().getAbsolutePath());
+                }
             }
         });
 
@@ -187,6 +217,7 @@ public final class InternalMafiaLogParserDialog extends JDialog {
     }
 
     private JPanel createLogOutputCustomizer() {
+
         final JPanel panel = new JPanel(new BorderLayout(5, 5));
 
         final JPanel logsAmountPanel = new JPanel(new GridBagLayout());
@@ -215,6 +246,7 @@ public final class InternalMafiaLogParserDialog extends JDialog {
     }
 
     private JPanel createOutputFormatChooserPanel() {
+
         final JPanel panel = new JPanel(new GridLayout(1, 0, 10, 10));
         final JRadioButton textButton = new JRadioButton("Text", true);
         final JRadioButton htmlButton = new JRadioButton("HTML", false);
@@ -227,22 +259,27 @@ public final class InternalMafiaLogParserDialog extends JDialog {
         group.add(xmlButton);
 
         final ActionListener listener = new ActionListener() {
+            @Override
             public void actionPerformed(
-                                        final ActionEvent e) {
-                if (htmlButton.isSelected())
+                    final ActionEvent e) {
+
+                if (htmlButton.isSelected()) {
                     logOutputFormat = LogOutputFormat.HTML_LOG;
-                else if (bbcodeButton.isSelected())
+                } else if (bbcodeButton.isSelected()) {
                     logOutputFormat = LogOutputFormat.BBCODE_LOG;
-                else
+                } else {
                     logOutputFormat = LogOutputFormat.TEXT_LOG;
+                }
             }
         };
         textButton.addActionListener(listener);
         htmlButton.addActionListener(listener);
         bbcodeButton.addActionListener(listener);
         xmlButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(
-                                        final ActionEvent e) {
+                    final ActionEvent e) {
+
                 logOutputFormat = LogOutputFormat.XML_LOG;
             }
         });
@@ -256,27 +293,17 @@ public final class InternalMafiaLogParserDialog extends JDialog {
     }
 
     /**
-     * @param isComputationNotDone
-     *            A flag showing whether the computation has ended or not.
-     */
-    private void setWaitingForComputationEnd(
-                                             final boolean isComputationNotDone) {
-        getGlassPane().setVisible(isComputationNotDone);
-    }
-
-    /**
      * Runs the parser with the data from the TextFields of the GUI.
      */
     private void runParser() {
+
         final File mafiaLogsDirectory = new File(mafiaLogsDirectoryField.getText());
         final File parsedLogsSavingDirectory = new File(parsedLogsSavingDirectoryField.getText());
 
         if (!mafiaLogsDirectory.isDirectory() || !parsedLogsSavingDirectory.isDirectory()) {
             setWaitingForComputationEnd(false);
-            JOptionPane.showMessageDialog(null,
-                                          "Please only specify existing directories.",
-                                          "Problem occurred",
-                                          JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please only specify existing directories.",
+                    "Problem occurred", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -284,35 +311,37 @@ public final class InternalMafiaLogParserDialog extends JDialog {
         if (mafiaLogs.length == 0) {
             setWaitingForComputationEnd(false);
             JOptionPane.showMessageDialog(null,
-                                          "The directory specified for mafia logs does not contain any mafia logs.",
-                                          "Problem occurred",
-                                          JOptionPane.WARNING_MESSAGE);
+                    "The directory specified for mafia logs does not contain any mafia logs.",
+                    "Problem occurred", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         // If the input seems to be correct, save the directories used.
         Settings.setString("Mafia logs location", mafiaLogsDirectoryField.getText());
-        Settings.setString("Parsed logs saving location",
-                                  parsedLogsSavingDirectoryField.getText());
+        Settings.setString("Parsed logs saving location", parsedLogsSavingDirectoryField.getText());
 
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
+            @Override
             public void run() {
+
                 try {
-                    final int logToParse = ((Integer) numberToParseSpinner.getModel().getValue()).intValue();
-                    final List<Pair<String, Encounter>> errorFileList = LogsCreator.createParsedLogs(mafiaLogs,
-                                                                                                    parsedLogsSavingDirectory,
-                                                                                                    logOutputFormat,
-                                                                                                    logToParse > 0 ? logToParse
-                                                                                                                  : Integer.MAX_VALUE);
+                    final int logToParse = ((Integer) numberToParseSpinner.getModel().getValue())
+                            .intValue();
+                    final List<Pair<String, Encounter>> errorFileList = LogsProcessor
+                            .createParsedLogs(mafiaLogs, parsedLogsSavingDirectory, logOutputFormat,
+                                    logToParse > 0 ? logToParse : Integer.MAX_VALUE);
 
                     EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
+
                             // If there were error logs, give the user feedback
                             // on them.
-                            if (!errorFileList.isEmpty())
-                                ErrorLogTableDialog.showErrorLogTableDialog(InternalMafiaLogParserDialog.this,
-                                                                            errorFileList);
+                            if (!errorFileList.isEmpty()) {
+                                ErrorLogTableDialog.showErrorLogTableDialog(
+                                        InternalMafiaLogParserDialog.this, errorFileList);
+                            }
 
                             dispose();
                         }
@@ -320,13 +349,22 @@ public final class InternalMafiaLogParserDialog extends JDialog {
                 } catch (final IOException e) {
                     setWaitingForComputationEnd(false);
                     JOptionPane.showMessageDialog(null,
-                                                  "There was a problem while running the parser. Please check whether the parsed logs were created.",
-                                                  "Error occurred",
-                                                  JOptionPane.ERROR_MESSAGE);
+                            "There was a problem while running the parser. Please check whether the parsed logs were created.",
+                            "Error occurred", JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
             }
         });
         executor.shutdown();
+    }
+
+    /**
+     * @param isComputationNotDone A flag showing whether the computation has ended
+     *                             or not.
+     */
+    private void setWaitingForComputationEnd(
+            final boolean isComputationNotDone) {
+
+        getGlassPane().setVisible(isComputationNotDone);
     }
 }

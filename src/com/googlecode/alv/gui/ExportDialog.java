@@ -24,20 +24,34 @@
 
 package com.googlecode.alv.gui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import org.jfree.ui.RefineryUtilities;
 
+import com.googlecode.alv.LogsProcessor;
 import com.googlecode.alv.Settings;
-import com.googlecode.alv.creator.BBCodeLogCreator;
-import com.googlecode.alv.creator.HTMLLogCreator;
-import com.googlecode.alv.creator.LogsCreator;
 import com.googlecode.alv.creator.TextLogCreator;
 import com.googlecode.alv.creator.XMLLogCreator;
 import com.googlecode.alv.creator.util.FileAccessException;
@@ -50,23 +64,20 @@ import com.googlecode.alv.util.LogOutputFormat;
  * to a file.
  */
 public final class ExportDialog extends JDialog {
-    private final JTextField directoryLocationField = new JTextField(Settings.getString("Parsed logs saving location"));
-
-    private final LogDataHolder logData;
-
-    private LogOutputFormat logVersion;
-
     /**
      * Creates and shows the export dialog in the centre of the screen.
+     *
+     * Please note that this dialog is also modal on the given frame. If the dialog
+     * should instead be modal over the whole application, you may use a null
+     * reference instead.
      * 
-     * Please note that this dialog is also modal on the given frame. If the
-     * dialog should instead be modal over the whole application, you may use a
-     * null reference instead.
-     * @param frame Frame
+     * @param frame   Frame
      * @param logData Collection of log data
      */
     public static void showExportDialog(
-                                        final JFrame frame, final LogDataHolder logData) {
+            final JFrame frame,
+            final LogDataHolder logData) {
+
         new ExportDialog(frame, logData, LogOutputFormat.TEXT_LOG);
     }
 
@@ -74,28 +85,42 @@ public final class ExportDialog extends JDialog {
      * Creates and shows the export dialog in the centre of the screen with the
      * given log output version preselected.
      * <p>
-     * Please note that this dialog is also modal on the given frame. If the
-     * dialog should instead be modal over the whole application, you may use a
-     * null reference instead.
-     * @param frame Frame 
-     * @param logData Collection of log data
+     * Please note that this dialog is also modal on the given frame. If the dialog
+     * should instead be modal over the whole application, you may use a null
+     * reference instead.
+     * 
+     * @param frame      Frame
+     * @param logData    Collection of log data
      * @param logVersion Version of log data
      */
     public static void showExportDialog(
-                                        final JFrame frame, final LogDataHolder logData,
-                                        final LogOutputFormat logVersion) {
+            final JFrame frame,
+            final LogDataHolder logData,
+            final LogOutputFormat logVersion) {
+
         new ExportDialog(frame, logData, logVersion);
     }
 
+    private final JTextField directoryLocationField = new JTextField(
+            Settings.getString("Parsed logs saving location"));
+
+    private final LogDataHolder logData;
+
+    private LogOutputFormat logVersion;
+
     private ExportDialog(
-                         final JFrame frame, final LogDataHolder logData,
-                         final LogOutputFormat logVersion) {
+            final JFrame frame,
+            final LogDataHolder logData,
+            final LogOutputFormat logVersion) {
+
         super(frame, true);
 
-        if (logData == null)
+        if (logData == null) {
             throw new NullPointerException("The to be exported log must not be null.");
-        if (logVersion == null)
+        }
+        if (logVersion == null) {
             throw new NullPointerException("The log output version must not be null.");
+        }
 
         this.logData = logData;
         this.logVersion = logVersion;
@@ -115,80 +140,51 @@ public final class ExportDialog extends JDialog {
         setVisible(true);
     }
 
-    private JPanel createLogVersionChooserPanel() {
-        final JPanel panel = new JPanel(new BorderLayout(10, 10));
-        final JPanel buttonPanel = new JPanel(new GridLayout(1, 0, 10, 10));
-        final JTextArea previewArea = new JTextArea();
-        final JRadioButton textButton = new JRadioButton("Text", false);
-        final JRadioButton htmlButton = new JRadioButton("HTML", false);
-        final JRadioButton bbcodeButton = new JRadioButton("BBCode", false);
-        final JRadioButton xmlButton = new JRadioButton("XML", false);
-        final ButtonGroup group = new ButtonGroup();
-        group.add(textButton);
-        group.add(htmlButton);
-        group.add(bbcodeButton);
-        group.add(xmlButton);
+    private JPanel createButtonPanel() {
 
-        final ActionListener listener = new ActionListener() {
-            public void actionPerformed(final ActionEvent e) {
-                previewArea.setEnabled(true);
-                if (htmlButton.isSelected())
-                    previewArea.setText(HTMLLogCreator.getTextualLog(logData, 
-                                                                     LogOutputFormat.HTML_LOG));
-                else if (bbcodeButton.isSelected())
-                    previewArea.setText(BBCodeLogCreator.getTextualLog(logData,
-                                                                       LogOutputFormat.BBCODE_LOG));
-                else
-                    previewArea.setText(TextLogCreator.getTextualLog(logData,
-                                                                     LogOutputFormat.TEXT_LOG));
-                previewArea.setCaretPosition(0);
-            }
-        };
-        textButton.addActionListener(listener);
-        htmlButton.addActionListener(listener);
-        bbcodeButton.addActionListener(listener);
-        xmlButton.addActionListener(new ActionListener() {
+        final JPanel buttonPanel = new JPanel(new GridLayout(1, 0, 100, 0));
+        final JButton closeButton = new JButton("Back");
+        final JButton saveButton = new JButton("Save log to file");
+
+        saveButton.setPreferredSize(new Dimension(0, 30));
+        saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(
-                                        final ActionEvent e) {
-                logVersion = LogOutputFormat.XML_LOG;
+                    final ActionEvent e) {
 
-                previewArea.setText("");
-                previewArea.setEnabled(false);
+                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+                String filePath = directoryLocationField.getText();
+                if (!filePath.endsWith(File.separator)) {
+                    filePath += File.separator;
+                }
+
+                if (logVersion != LogOutputFormat.XML_LOG) {
+                    saveTextualLog(filePath, logVersion);
+                } else {
+                    saveXMLLog(filePath, logVersion);
+                }
+                logData.setEdited(false);
+
+                setCursor(Cursor.getDefaultCursor());
+                dispose();
             }
         });
+        closeButton.setPreferredSize(new Dimension(0, 30));
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(
+                    final ActionEvent e) { dispose(); }
+        });
 
-        buttonPanel.add(textButton);
-        buttonPanel.add(htmlButton);
-        buttonPanel.add(bbcodeButton);
-        buttonPanel.add(xmlButton);
+        buttonPanel.add(saveButton);
+        buttonPanel.add(closeButton);
 
-        final JScrollPane scrollPane = new JScrollPane(previewArea);
-        previewArea.setWrapStyleWord(true);
-        previewArea.setLineWrap(true);
-        scrollPane.setPreferredSize(new Dimension(0, 300));
-
-        panel.add(buttonPanel, BorderLayout.NORTH);
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        switch (logVersion) {
-            case TEXT_LOG:
-                textButton.doClick();
-                break;
-            case HTML_LOG:
-                htmlButton.doClick();
-                break;
-            case BBCODE_LOG:
-                bbcodeButton.doClick();
-                break;
-            case XML_LOG:
-                xmlButton.doClick();
-                break;
-        }
-
-        return panel;
+        return buttonPanel;
     }
 
     private JPanel createDirectoryFinderPanel() {
+
         final JPanel panel = new JPanel(new GridBagLayout());
         final JButton directoryChooserButton = new JButton("Find Directory");
         GridBagConstraints gbc;
@@ -211,114 +207,156 @@ public final class ExportDialog extends JDialog {
         panel.add(directoryChooserButton, gbc);
 
         File logsDirectory = new File(directoryLocationField.getText());
-        if (!logsDirectory.exists())
+        if (!logsDirectory.exists()) {
             logsDirectory = null;
+        }
 
         final JFileChooser directoryChooser = new JFileChooser(logsDirectory);
         directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         directoryChooserButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(
-                                        final ActionEvent e) {
+                    final ActionEvent e) {
+
                 final int state = directoryChooser.showOpenDialog(null);
-                if (state == JFileChooser.APPROVE_OPTION)
-                    directoryLocationField.setText(directoryChooser.getSelectedFile()
-                                                                   .getAbsolutePath());
+                if (state == JFileChooser.APPROVE_OPTION) {
+                    directoryLocationField
+                            .setText(directoryChooser.getSelectedFile().getAbsolutePath());
+                }
             }
         });
 
         return panel;
     }
 
-    private JPanel createButtonPanel() {
-        final JPanel buttonPanel = new JPanel(new GridLayout(1, 0, 100, 0));
-        final JButton closeButton = new JButton("Back");
-        final JButton saveButton = new JButton("Save log to file");
+    private JPanel createLogVersionChooserPanel() {
 
-        saveButton.setPreferredSize(new Dimension(0, 30));
-        saveButton.addActionListener(new ActionListener() {
+        final JPanel panel = new JPanel(new BorderLayout(10, 10));
+        final JPanel buttonPanel = new JPanel(new GridLayout(1, 0, 10, 10));
+        final JTextArea previewArea = new JTextArea();
+        final JRadioButton textButton = new JRadioButton("Text", false);
+        final JRadioButton htmlButton = new JRadioButton("HTML", false);
+        final JRadioButton bbcodeButton = new JRadioButton("BBCode", false);
+        final JRadioButton xmlButton = new JRadioButton("XML", false);
+        final ButtonGroup group = new ButtonGroup();
+        group.add(textButton);
+        group.add(htmlButton);
+        group.add(bbcodeButton);
+        group.add(xmlButton);
+
+        final ActionListener listener = new ActionListener() {
+            @Override
             public void actionPerformed(
-                                        final ActionEvent e) {
-                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    final ActionEvent e) {
 
-                String filePath = directoryLocationField.getText();
-                if (!filePath.endsWith(File.separator))
-                    filePath += File.separator;
+                previewArea.setEnabled(true);
+                if (htmlButton.isSelected()) {
+                    previewArea.setText(
+                            TextLogCreator.getTextualLog(logData, LogOutputFormat.HTML_LOG));
+                } else if (bbcodeButton.isSelected()) {
+                    previewArea.setText(
+                            TextLogCreator.getTextualLog(logData, LogOutputFormat.BBCODE_LOG));
+                } else {
+                    previewArea.setText(
+                            TextLogCreator.getTextualLog(logData, LogOutputFormat.TEXT_LOG));
+                }
+                previewArea.setCaretPosition(0);
+            }
+        };
+        textButton.addActionListener(listener);
+        htmlButton.addActionListener(listener);
+        bbcodeButton.addActionListener(listener);
+        xmlButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(
+                    final ActionEvent e) {
 
-                if (logVersion != LogOutputFormat.XML_LOG)
-                    saveTextualLog(filePath, logVersion);
-                else
-                    saveXMLLog(filePath, logVersion);
-                logData.setEdited(false);
+                logVersion = LogOutputFormat.XML_LOG;
 
-                setCursor(Cursor.getDefaultCursor());
-                dispose();
+                previewArea.setText("");
+                previewArea.setEnabled(false);
             }
         });
-        closeButton.setPreferredSize(new Dimension(0, 30));
-        closeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(
-                                        final ActionEvent e) {
-                dispose();
-            }
-        });
 
-        buttonPanel.add(saveButton);
-        buttonPanel.add(closeButton);
+        buttonPanel.add(textButton);
+        buttonPanel.add(htmlButton);
+        buttonPanel.add(bbcodeButton);
+        buttonPanel.add(xmlButton);
 
-        return buttonPanel;
+        final JScrollPane scrollPane = new JScrollPane(previewArea);
+        previewArea.setWrapStyleWord(true);
+        previewArea.setLineWrap(true);
+        scrollPane.setPreferredSize(new Dimension(0, 300));
+
+        panel.add(buttonPanel, BorderLayout.NORTH);
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        switch (logVersion) {
+        case TEXT_LOG:
+            textButton.doClick();
+            break;
+        case HTML_LOG:
+            htmlButton.doClick();
+            break;
+        case BBCODE_LOG:
+            bbcodeButton.doClick();
+            break;
+        case XML_LOG:
+            xmlButton.doClick();
+            break;
+        }
+
+        return panel;
     }
 
-    private void saveTextualLog(final String directoryPath, final LogOutputFormat format) 
-    {
+    private void saveTextualLog(
+            final String directoryPath,
+            final LogOutputFormat format) {
+
         try {
             final File directory = new File(directoryPath);
-            if (!directory.exists())
+            if (!directory.exists()) {
                 directory.mkdir();
+            }
 
             final File logDest = new File(directory,
-                                          LogsCreator.getParsedLogNameFromCondensedMafiaLog(logData.getLogName()
-                                                                                                    + ".txt",
-                                                                                            format));
-            if (logDest.exists())
+                    LogsProcessor.parsedLogName(logData.getLogName() + ".txt", format));
+            if (logDest.exists()) {
                 logDest.delete();
+            }
             logDest.createNewFile();
 
-            
             TextLogCreator.saveTextualLogToFile(logData, logDest, format);
 
-            Settings.setString("Parsed logs saving location",
-                                      directoryLocationField.getText());
+            Settings.setString("Parsed logs saving location", directoryLocationField.getText());
         } catch (final IOException e) {
-            JOptionPane.showMessageDialog(null,
-                                          "A problem occurred while creating the log.",
-                                          "Error occurred",
-                                          JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "A problem occurred while creating the log.",
+                    "Error occurred", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
 
     private void saveXMLLog(
-                            final String directoryPath, final LogOutputFormat format) {
+            final String directoryPath,
+            final LogOutputFormat format) {
+
         try {
             final File logDest = new File(directoryPath);
-            if (!logDest.exists())
+            if (!logDest.exists()) {
                 logDest.mkdir();
+            }
 
             XMLLogCreator.createXMLLog(logData, logDest);
 
-            Settings.setString("Parsed logs saving location",
-                               directoryLocationField.getText());
+            Settings.setString("Parsed logs saving location", directoryLocationField.getText());
         } catch (final FileAccessException e) {
             JOptionPane.showMessageDialog(null,
-                                          "A problem occurred while creating/writing to the file.",
-                                          "Error occurred",
-                                          JOptionPane.ERROR_MESSAGE);
+                    "A problem occurred while creating/writing to the file.", "Error occurred",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final XMLAccessException e) {
-            JOptionPane.showMessageDialog(null,
-                                          "A problem occurred while creating the XML.",
-                                          "Error occurred",
-                                          JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "A problem occurred while creating the XML.",
+                    "Error occurred", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }

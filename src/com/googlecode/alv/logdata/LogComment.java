@@ -37,27 +37,88 @@ public final class LogComment {
     // Lazy initialisation of the StringBuilder.
     private StringBuilder comment;
 
-    private void checkCommentInitialization() {
-        if (comment == null)
-            comment = new StringBuilder(60);
-    }
-
     /**
-     * @return {@code true} if the log comment is empty, otherwise {@code false}
-     *         .
+     * Adds the given log comment. The already existing comments and the ones added
+     * will be divided by a line break ({@code "\n"}).
+     *
+     * @param notes The log comment to add.
      */
-    public boolean isEmpty() {
-        return comment == null ? true : comment.length() == 0;
+    public void addComments(
+            final String notes) {
+
+        if (notes == null) {
+            throw new NullPointerException("notes must not be null.");
+        }
+
+        if (notes.length() > 0) {
+            checkCommentInitialization();
+
+            if (!isEmpty()) {
+                comment.append("\n");
+            }
+            comment.append(notes);
+        }
+    }
+
+    private void checkCommentInitialization() {
+
+        if (comment == null) {
+            comment = new StringBuilder(60);
+        }
+    }
+
+    @Override
+    public boolean equals(
+            final Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj instanceof LogComment) {
+            final LogComment that = (LogComment) obj;
+
+            return isEmpty() && that.isEmpty() || comment.equals(that.comment);
+        }
+
+        return false;
     }
 
     /**
-     * @param notes
-     *            The log comment to set.
+     * @return The log comments, or an empty string if there are none.
+     */
+    public String getComments() {
+
+        return isEmpty() ? UsefulPatterns.EMPTY_STRING : comment.toString();
+    }
+
+    @Override
+    public int hashCode() {
+
+        int result = 124;
+        result = 31 * result + getComments().hashCode();
+
+        return result;
+    }
+
+    /**
+     * @return {@code true} if the log comment is empty, otherwise {@code false} .
+     */
+    public boolean isEmpty() { return comment == null ? true : comment.length() == 0; }
+
+    /**
+     * @param notes The log comment to set.
      */
     public void setComments(
-                            final String notes) {
-        if (notes == null)
+            final String notes) {
+
+        if (notes == null) {
             throw new NullPointerException("notes must not be null.");
+        }
 
         if (notes.length() == 0) {
             comment = null;
@@ -70,62 +131,6 @@ public final class LogComment {
         comment.append(notes);
     }
 
-    /**
-     * Adds the given log comment. The already existing comments and the ones
-     * added will be divided by a line break ({@code"\n"}).
-     * 
-     * @param notes
-     *            The log comment to add.
-     */
-    public void addComments(
-                            final String notes) {
-        if (notes == null)
-            throw new NullPointerException("notes must not be null.");
-
-        if (notes.length() > 0) {
-            checkCommentInitialization();
-
-            if (!isEmpty())
-                comment.append("\n");
-            comment.append(notes);
-        }
-    }
-
-    /**
-     * @return The log comments, or an empty string if there are none.
-     */
-    public String getComments() {
-        return isEmpty() ? UsefulPatterns.EMPTY_STRING : comment.toString();
-    }
-
     @Override
-    public String toString() {
-        return getComments();
-    }
-
-    @Override
-    public boolean equals(
-                          final Object obj) {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (obj instanceof LogComment) {
-            final LogComment that = (LogComment) obj;
-
-            return isEmpty() && that.isEmpty() || comment.equals(that.comment);
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = 124;
-        result = 31 * result + getComments().hashCode();
-
-        return result;
-    }
+    public String toString() { return getComments(); }
 }
