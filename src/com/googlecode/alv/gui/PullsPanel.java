@@ -30,7 +30,6 @@ import javax.swing.JTextArea;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.action.Pull;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.LookAheadIterator;
 
 final class PullsPanel extends JTabbedPane {
@@ -61,12 +60,11 @@ final class PullsPanel extends JTabbedPane {
 
     private void printPull(
                            final JTextArea lister, final Pull currentItem) {
-        lister.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        lister.append("[");
         lister.append(String.valueOf(currentItem.getTurnNumber()));
-        lister.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        lister.append(UsefulPatterns.WHITE_SPACE);
+        lister.append("] ");
         lister.append(String.valueOf(currentItem.getAmount()));
-        lister.append(UsefulPatterns.WHITE_SPACE);
+        lister.append(" ");
         lister.append(currentItem.getItemName());
         lister.append(NEW_LINE);
     }

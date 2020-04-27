@@ -40,7 +40,6 @@ import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.TurnEntity;
 import com.googlecode.alv.logdata.turn.TurnInterval;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Sets;
 
 public final class TurnDataPane extends JEditorPane {
@@ -69,11 +68,9 @@ public final class TurnDataPane extends JEditorPane {
             str.append("<html>");
 
             // Caption
-            str.append("<h1>");
-            str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            str.append("<h1>[");
             str.append(t.getTurnNumber());
-            str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-            str.append(UsefulPatterns.WHITE_SPACE);
+            str.append("] ");
             str.append(t.getAreaName());
             str.append("</h1><p>");
 
@@ -113,21 +110,18 @@ public final class TurnDataPane extends JEditorPane {
 
         // Caption
         str.append("<h1>");
-        str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        str.append("[");
         if (ti.getTotalTurns() > 1) {
             str.append(ti.getStartTurn() + 1);
-            str.append(UsefulPatterns.MINUS);
+            str.append("-");
         }
         str.append(ti.getEndTurn());
-        str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append("] ");
         str.append(ti.getAreaName());
         str.append("</h1><p>");
 
         // General data
-        str.append("<h2>");
-        str.append("General Data");
-        str.append("</h2><br>");
+        str.append("<h2>General Data</h2><br>");
         str.append("Meat gained inside encounters: " + ti.getMeat().encounterMeatGain + "<br>");
         str.append("Meat gained outside encounters: " + ti.getMeat().otherMeatGain + "<br>");
         str.append("Meat spent: " + ti.getMeat().meatSpent + "<br>");
@@ -160,10 +154,9 @@ public final class TurnDataPane extends JEditorPane {
         str.append("Encounters");
         str.append("</h2><br>");
         for (final SingleTurn st : ti.getTurns()) {
-            str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            str.append("[");
             str.append(st.getTurnNumber());
-            str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-            str.append(UsefulPatterns.WHITE_SPACE);
+            str.append("] ");
             str.append(st.getEncounterName());
             str.append("<br>");
         }
@@ -185,17 +178,14 @@ public final class TurnDataPane extends JEditorPane {
 
         // Caption
         str.append("<h1>");
-        str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        str.append("[");
         str.append(e.getTurnNumber());
-        str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append("] ");
         str.append(e.getEncounterName());
         str.append("</h1><p>");
 
         // General data
-        str.append("<h2>");
-        str.append("General Data");
-        str.append("</h2><br>");
+        str.append("<h2>General Data</h2><br>");
         str.append("Turn spent on day: " + e.getDayNumber() + "<br>");
         str.append("Meat gained inside the encounter: " + e.getMeat().encounterMeatGain + "<br>");
         str.append("Meat gained outside the encounter: " + e.getMeat().otherMeatGain + "<br>");
@@ -262,23 +252,17 @@ public final class TurnDataPane extends JEditorPane {
         str.append("</h2><br>");
         for (final Skill s : t.getSkillsCast()) {
             str.append(s.getAmount());
-            str.append(UsefulPatterns.WHITE_SPACE);
+            str.append(" ");
             str.append(s.getName());
-            str.append(UsefulPatterns.WHITE_SPACE);
-            str.append(UsefulPatterns.ROUND_BRACKET_OPEN);
+            str.append(" (");
             str.append(s.getMpCost());
-            str.append(UsefulPatterns.WHITE_SPACE);
-            str.append("MP");
-            str.append(UsefulPatterns.ROUND_BRACKET_CLOSE);
-            str.append("<br>");
+            str.append(" MP)<br>");
         }
         str.append("<p>");
 
         // MP summary
         final MPGain mpGains = t.getMPGain();
-        str.append("<h2>");
-        str.append("MP Gains");
-        str.append("</h2><br>");
+        str.append("<h2>MP Gains</h2><br>");
         str.append("Total mp gained: " + mpGains.getTotalMPGains() + "<br><br>");
         str.append("Inside Encounters: " + mpGains.encounterMPGain + "<br>");
         str.append("Starfish Familiars: " + mpGains.starfishMPGain + "<br>");

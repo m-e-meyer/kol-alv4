@@ -42,7 +42,6 @@ import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.parser.LineParser;
 import com.googlecode.alv.parser.MafiaSessionLogReader;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.parser.line.CombatItemUsedLineParser;
 import com.googlecode.alv.parser.line.CombatRecognizerLineParser;
 import com.googlecode.alv.parser.line.EffectAcquisitionLineParser;
@@ -183,7 +182,7 @@ public final class EncounterBlockParser implements LogBlockParser
     public void parseBlock(final List<String> block, final LogDataHolder logData) 
     {
         String turnSpentLine 
-            = block.get(0).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(0)
+            = block.get(0).startsWith("[") ? block.get(0)
                                                                           : block.get(1);
         final SingleTurn turn;
         final int dayNumber = logData.getLastDayChange().getDayNumber();
@@ -205,7 +204,7 @@ public final class EncounterBlockParser implements LogBlockParser
             turn.setTurnVersion(TurnVersion.OTHER);
         } else {
             // Area name
-            final int positionTurnEndBrace = turnSpentLine.indexOf(UsefulPatterns.SQUARE_BRACKET_CLOSE);
+            final int positionTurnEndBrace = turnSpentLine.indexOf("]");
 
             String areaName = turnSpentLine.substring(positionTurnEndBrace + 2);
 
@@ -225,7 +224,7 @@ public final class EncounterBlockParser implements LogBlockParser
             // turn numbers of those.
             // NOTE (MM): I don't think Mafia screws up those turn numbers anymore
             int turnNumber;
-            final int positionTurnStartBrace = turnSpentLine.indexOf(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            final int positionTurnStartBrace = turnSpentLine.indexOf("[");
             //if (isCraftingTurn)
             //    turnNumber = Integer.parseInt(turnSpentLine.substring(positionTurnStartBrace + 1,
             //            positionTurnEndBrace)) - 1;
@@ -234,7 +233,7 @@ public final class EncounterBlockParser implements LogBlockParser
                                                                   positionTurnEndBrace));
 
             // Now parse the encounter name.
-            String encounterName = UsefulPatterns.EMPTY_STRING;
+            String encounterName = "";
             boolean isMultipleCombatsHandling = false;
             for (final String line : block)
             {
@@ -417,12 +416,12 @@ public final class EncounterBlockParser implements LogBlockParser
 
             return true;
         } else if (turn.getEncounterName().equals(CLOWNLORD_CHOICE_ENCOUNTER_STRING)) {
-            String firstChoice = UsefulPatterns.EMPTY_STRING;
-            String secondChoice = UsefulPatterns.EMPTY_STRING;
+            String firstChoice = "";
+            String secondChoice = "";
             for (final String line : block)
                 if (line.contains("choice.php?")) {
                     final String tmp = line.replace("pwd", "").replace("&", "");
-                    if (firstChoice.equals(UsefulPatterns.EMPTY_STRING))
+                    if (firstChoice.equals(""))
                         firstChoice = tmp;
                     else
                         secondChoice = tmp;
@@ -493,7 +492,7 @@ public final class EncounterBlockParser implements LogBlockParser
             // want to check the very last encounter for whether it was won or
             // lost.
             int lastEncounterLineIndex = 0;
-            if (!turn.getEncounterName().equals(UsefulPatterns.EMPTY_STRING))
+            if (!turn.getEncounterName().equals(""))
                 for (int i = block.size() - 1; i >= 0; i--)
                     if (block.get(i).startsWith(ENCOUNTER_START_STRING)) {
                         lastEncounterLineIndex = i;

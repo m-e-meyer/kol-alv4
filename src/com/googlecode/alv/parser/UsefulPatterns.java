@@ -130,27 +130,7 @@ public final class UsefulPatterns {
     public static final String ACQUIRE_EFFECT_STRING = "You acquire an effect:";
 
     public static final String AFTER_BATTLE_STRING = "After Battle: ";
-
-    public static final String COMMA = ",";
-
-    public static final String MINUS = "-";
-
-    public static final String COLON = ":";
-
-    public static final String PERCENTAGE_SIGN = "%";
-
-    public static final String SQUARE_BRACKET_OPEN = "[";
-
-    public static final String SQUARE_BRACKET_CLOSE = "]";
-
-    public static final String ROUND_BRACKET_OPEN = "(";
-
-    public static final String ROUND_BRACKET_CLOSE = ")";
-
-    public static final String WHITE_SPACE = " ";
-
-    public static final String EMPTY_STRING = "";
-
+    
     /**
      * Returns the creation date of the given mafia log file. Uses the method
      * {@link #getMafiaLogCalendarDate(String)} to parse out the creation date.

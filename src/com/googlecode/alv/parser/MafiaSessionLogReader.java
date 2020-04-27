@@ -152,7 +152,7 @@ public final class MafiaSessionLogReader implements AutoCloseable
         if (line == null)
             throw new IllegalStateException("There are no more blocks to be read.");
         if (line2 == null)
-            line2 = UsefulPatterns.EMPTY_STRING;
+            line2 = "";
 
         if (isCombingBlockStart(line))
             block = new LogBlockImpl(parseCombingBlock(), LogBlockType.COMBING_BLOCK);
@@ -215,7 +215,7 @@ public final class MafiaSessionLogReader implements AutoCloseable
     {
         // Add support for Rain Man detection
 
-        boolean isAdventure = (line.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) &&
+        boolean isAdventure = (line.startsWith("[") &&
                 UsefulPatterns.TURNS_USED.matcher(line).matches()) ||
                 (line2.startsWith(ENCOUNTER_START_STRING) &&
                         BROKEN_AREAS_ENCOUNTER_SET.contains(line2));
@@ -307,7 +307,7 @@ public final class MafiaSessionLogReader implements AutoCloseable
                     
                     String lookAhead;
                     while (edIsDead && (lookAhead = log.readLine()) != null ) {
-                        if (lookAhead.startsWith( UsefulPatterns.SQUARE_BRACKET_OPEN )) {
+                        if (lookAhead.startsWith( "[" )) {
                             //Means a new turn happened and something went wrong with log
                             //just reset all the way back.
                             break;
@@ -350,7 +350,7 @@ public final class MafiaSessionLogReader implements AutoCloseable
                         final String tmpLine = log.readLine();
                         // A square bracket means that a new turn was started. Extra
                         // check for the level 12 quest bossfight.
-                        if (tmpLine == null || tmpLine.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN)
+                        if (tmpLine == null || tmpLine.startsWith("[")
                                 || tmpLine.startsWith(LEVEL_12_QUEST_BOSSFIGHT_BEGINNING_STRING))
                             break;
                         else if (tmpLine.startsWith(UsefulPatterns.COMBAT_ROUND_LINE_BEGINNING_STRING)) {

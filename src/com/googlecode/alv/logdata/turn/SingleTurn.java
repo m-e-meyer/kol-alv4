@@ -34,7 +34,6 @@ import com.googlecode.alv.logdata.Skill;
 import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.SingleElementList;
 import com.googlecode.alv.util.data.DataTablesHandler;
@@ -438,16 +437,15 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
     public String toString() {
         final StringBuilder str = new StringBuilder(80);
 
-        str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        str.append("[");
         str.append(turnNumber);
-        str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append("] ");
         str.append(getAreaName());
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(DELIMITER_STRING);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(encounterName);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getStatGain().toString());
 
         return str.toString();

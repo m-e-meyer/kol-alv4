@@ -53,13 +53,13 @@ public class MafiaLogIndex {
 
     private static final String INDEX_NAME = "alv-index";
     
-    private static final Matcher ASCENSION_NUMBER_MATCHER
+    private final Matcher ASCENSION_NUMBER_MATCHER
         = Pattern.compile("^Ascension #([0-9]*):").matcher("");
     
-    private static final Matcher INDEX_LINE_MATCHER 
+    private final Matcher INDEX_LINE_MATCHER 
         = Pattern.compile("([^ ]*) ([^ ]*) (.*_([0-9]+)[.].*)").matcher("");
     
-    private static final Matcher LOG_FILE_NAME_MATCHER 
+    private final Matcher LOG_FILE_NAME_MATCHER 
         = Pattern.compile("(.*)_([0-9]+).txt").matcher("");
     
     private static final Map<String, MafiaLogIndex> indexCache

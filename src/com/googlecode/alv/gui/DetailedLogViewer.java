@@ -35,7 +35,6 @@ import org.jfree.ui.RefineryUtilities;
 import com.googlecode.alv.creator.HTMLLogCreator;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.*;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.LogOutputFormat;
 
 /**
@@ -136,16 +135,15 @@ final class DetailedLogViewer extends JFrame {
         public String toString() {
             final StringBuilder str = new StringBuilder(50);
 
-            str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            str.append("[");
 
             if (ti.getTotalTurns() > 1) {
                 str.append(ti.getStartTurn() + 1);
-                str.append(UsefulPatterns.MINUS);
+                str.append("-");
             }
 
             str.append(ti.getEndTurn());
-            str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-            str.append(UsefulPatterns.WHITE_SPACE);
+            str.append("] ");
             str.append(ti.getAreaName());
 
             return str.toString();
@@ -168,10 +166,9 @@ final class DetailedLogViewer extends JFrame {
         public String toString() {
             final StringBuilder str = new StringBuilder(40);
 
-            str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            str.append("[");
             str.append(e.getTurnNumber());
-            str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-            str.append(UsefulPatterns.WHITE_SPACE);
+            str.append("] ");
             str.append(e.getEncounterName());
 
             return str.toString();

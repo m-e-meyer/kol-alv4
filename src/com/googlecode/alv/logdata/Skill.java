@@ -24,7 +24,6 @@
 
 package com.googlecode.alv.logdata;
 
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.AbstractCountable;
 import com.googlecode.alv.util.Countable;
 import com.googlecode.alv.util.data.DataTablesHandler;
@@ -194,7 +193,7 @@ public final class Skill extends AbstractCountable<Skill> {
 
         str.append(CAST_START_STRING);
         str.append(getAmount());
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getName());
 
         return str.toString();

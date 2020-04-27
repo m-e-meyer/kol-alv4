@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.action.Pull;
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * A parser for the pull notation in mafia logs.
@@ -42,11 +41,11 @@ import com.googlecode.alv.parser.UsefulPatterns;
 public final class MafiaPullLineParser extends AbstractLineParser {
     private static final Pattern PULL_PATTERN = Pattern.compile("pull: \\d+ .+");
 
-    private final Matcher pullMatcher = PULL_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher pullMatcher = PULL_PATTERN.matcher("");
 
     private static final Pattern PULLED_ITEM_PATTERN = Pattern.compile("([0-9]+ ((?:[^,]+)|(?:, [^0-9]))*)(?:, )?");
 
-    private final Matcher itemMatcher = PULLED_ITEM_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher itemMatcher = PULLED_ITEM_PATTERN.matcher("");
 
 
     /**
@@ -60,7 +59,7 @@ public final class MafiaPullLineParser extends AbstractLineParser {
         while (itemMatcher.find()) {
             String s = itemMatcher.group(1);
 
-            final int firstWhiteSpacePosition = s.indexOf(UsefulPatterns.WHITE_SPACE);
+            final int firstWhiteSpacePosition = s.indexOf(" ");
             final int amount = Math.max(1,
                                         Integer.parseInt(s.substring(0, firstWhiteSpacePosition)));
             final String itemName = s.substring(firstWhiteSpacePosition + 1);

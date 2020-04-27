@@ -24,7 +24,6 @@
 
 package com.googlecode.alv.logdata;
 
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * Helper class to make handling of turn notes and other log comments more
@@ -93,7 +92,7 @@ public final class LogComment {
      */
     public String getComments() {
 
-        return isEmpty() ? UsefulPatterns.EMPTY_STRING : comment.toString();
+        return isEmpty() ? "" : comment.toString();
     }
 
     @Override

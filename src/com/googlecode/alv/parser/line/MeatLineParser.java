@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.MeatGain;
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * A parser for the meat gained notation in mafia logs.
@@ -44,7 +43,7 @@ public final class MeatLineParser extends AbstractLineParser {
 
     private static final Pattern MEAT_GAIN = Pattern.compile("^You gain \\d*,?\\d+ Meat");
 
-    private final Matcher meatGainMatcher = MEAT_GAIN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher meatGainMatcher = MEAT_GAIN.matcher("");
 
     private final MeatGainType meatGainType;
 
@@ -65,11 +64,10 @@ public final class MeatLineParser extends AbstractLineParser {
     protected void doParsing(
                              final String line, final LogDataHolder logData) {
         final String informationPart = line.substring(GAIN_START_STRING_LENGHT);
-        final int whiteSpaceIndex = informationPart.indexOf(UsefulPatterns.WHITE_SPACE);
+        final int whiteSpaceIndex = informationPart.indexOf(" ");
 
         final String amountString = informationPart.substring(0, whiteSpaceIndex);
-        final int amount = Integer.parseInt(amountString.replace(UsefulPatterns.COMMA,
-                                                                 UsefulPatterns.EMPTY_STRING));
+        final int amount = Integer.parseInt(amountString.replace(",", ""));
 
         if (meatGainType == MeatGainType.ENCOUNTER)
             logData.getLastTurnSpent().addMeat(new MeatGain(amount, 0, 0));

@@ -56,7 +56,7 @@ public final class SemirareSummaryBlockParser extends AbstractBlockParser {
         Scanner scanner;
 
         while ((line = reader.readLine()) != null)
-            if (!line.equals(UsefulPatterns.EMPTY_STRING)) {
+            if (!line.equals("")) {
                 if (NUMBER_COLON_NAME.matcher(line).matches()) {
                     final String semirareName;
                     final int turnNumber;

@@ -43,7 +43,7 @@ public final class MPGainLineParser extends AbstractLineParser
 
     private static final int GAIN_START_STRING_LENGTH = 9;
 
-    private final Matcher gainLoseMatcher = UsefulPatterns.GAIN_LOSE.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher gainLoseMatcher = UsefulPatterns.GAIN_LOSE.matcher("");
 
     private final MPGainType mpGainType;
 
@@ -71,7 +71,7 @@ public final class MPGainLineParser extends AbstractLineParser
 
         final String informationPart = line.substring(substrLength);
 
-        final int whiteSpaceIndex = informationPart.indexOf(UsefulPatterns.WHITE_SPACE);
+        final int whiteSpaceIndex = informationPart.indexOf(" ");
 
         final String amountString = informationPart.substring(0, whiteSpaceIndex);
 
@@ -79,8 +79,7 @@ public final class MPGainLineParser extends AbstractLineParser
         // ignored.
         final int amount;
         try {
-            amount = Integer.parseInt(amountString.replace(UsefulPatterns.COMMA,
-                                                           UsefulPatterns.EMPTY_STRING));
+            amount = Integer.parseInt(amountString.replace(",", ""));
         } catch (final NumberFormatException e) {
             e.printStackTrace();
             return;

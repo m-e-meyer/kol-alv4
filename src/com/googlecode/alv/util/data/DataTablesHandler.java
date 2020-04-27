@@ -42,7 +42,6 @@ import javax.xml.stream.XMLStreamWriter;
 import com.googlecode.alv.creator.util.XMLAccessException;
 import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.Maps;
 import com.googlecode.alv.util.Pair;
@@ -134,7 +133,7 @@ public enum DataTablesHandler {
                     if (arg.getVar1().equals("name")) {
                         badmoonAdventuresSet.add(arg.getVar2());
                         badmoonAdventuresSet.add(NON_ASCII.matcher(arg.getVar2())
-                                                          .replaceAll(UsefulPatterns.EMPTY_STRING));
+                                                          .replaceAll(""));
                     }
             }
         };
@@ -146,7 +145,7 @@ public enum DataTablesHandler {
                     if (arg.getVar1().equals("name")) {
                         semirareAdventuresSet.add(arg.getVar2());
                         semirareAdventuresSet.add(NON_ASCII.matcher(arg.getVar2())
-                                                           .replaceAll(UsefulPatterns.EMPTY_STRING));
+                                                           .replaceAll(""));
                     }
             }
         };
@@ -158,7 +157,7 @@ public enum DataTablesHandler {
                     if (arg.getVar1().equals("name")) {
                         wanderingAdventuresSet.add(arg.getVar2());
                         wanderingAdventuresSet.add(NON_ASCII.matcher(arg.getVar2())
-                                                            .replaceAll(UsefulPatterns.EMPTY_STRING));
+                                                            .replaceAll(""));
                     }
             }
         };
@@ -178,7 +177,7 @@ public enum DataTablesHandler {
                 if (name != null && onetimeOnly != null) {
                     itemdropsMap.put(name, onetimeOnly);
                     itemdropsMap.put(NON_ASCII.matcher(name)
-                                              .replaceAll(UsefulPatterns.EMPTY_STRING), onetimeOnly);
+                                              .replaceAll(""), onetimeOnly);
                 }
             }
         };
@@ -225,7 +224,7 @@ public enum DataTablesHandler {
                 if (name != null && !value.equals(ExtraStats.NO_STATS)) {
                     statsEquipmentsMap.put(name, value);
                     statsEquipmentsMap.put(NON_ASCII.matcher(name)
-                                                    .replaceAll(UsefulPatterns.EMPTY_STRING),
+                                                    .replaceAll(""),
                                            value);
                 }
             }
@@ -266,7 +265,7 @@ public enum DataTablesHandler {
 
                 if (name != null) {
                     final String nameNoASCII = NON_ASCII.matcher(name)
-                                                        .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                                        .replaceAll("");
                     outfitsMap.put(name, new Outfit(name,
                                                     hat,
                                                     weapon,
@@ -473,7 +472,7 @@ public enum DataTablesHandler {
     public int getFullnessHit(final String consumableName) 
     {
         final String name = NON_ASCII.matcher(consumableName)
-                                     .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                     .replaceAll("");
         return getOrZero(fullnessHitMap.get(name.toLowerCase(Locale.ENGLISH)));
     }
 
@@ -485,7 +484,7 @@ public enum DataTablesHandler {
     public int getDrunkennessHit(final String consumableName) 
     {
         final String name = NON_ASCII.matcher(consumableName)
-                                     .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                     .replaceAll("");
         return getOrZero(drunkennessHitMap.get(name.toLowerCase(Locale.ENGLISH)));
     }
 
@@ -497,7 +496,7 @@ public enum DataTablesHandler {
     public int getSpleenHit(final String consumableName) 
     {
         final String name = NON_ASCII.matcher(consumableName)
-                                     .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                     .replaceAll("");
         return getOrZero(spleenHitMap.get(name.toLowerCase(Locale.ENGLISH)));
     }
 
@@ -521,7 +520,7 @@ public enum DataTablesHandler {
     public boolean isSemirareEncounter(final String encounterName) 
     {
         final String name = NON_ASCII.matcher(encounterName)
-                                     .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                     .replaceAll("");
 
         return semirareAdventuresSet.contains(name.toLowerCase(Locale.ENGLISH));
     }
@@ -546,7 +545,7 @@ public enum DataTablesHandler {
     public boolean isBadMoonEncounter(final String encounterName) 
     {
         final String name = NON_ASCII.matcher(encounterName.toLowerCase(Locale.ENGLISH))
-                                     .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                     .replaceAll("");
 
         return badmoonAdventuresSet.contains(name) ? true
                                                   : name.startsWith(FLOWERS_FOR_BAD_MOON_ADVENUTRE);
@@ -572,7 +571,7 @@ public enum DataTablesHandler {
     public boolean isWanderingEncounter(final String encounterName) 
     {
         final String name = NON_ASCII.matcher(encounterName.toLowerCase(Locale.ENGLISH))
-                                     .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                     .replaceAll("");
 
         return wanderingAdventuresSet.contains(name);
     }
@@ -584,7 +583,7 @@ public enum DataTablesHandler {
      */
     public int getSkillMPCost(final String skillName) 
     {
-        final String name = NON_ASCII.matcher(skillName).replaceAll(UsefulPatterns.EMPTY_STRING);
+        final String name = NON_ASCII.matcher(skillName).replaceAll("");
         return getOrZero(skillsMap.get(name.toLowerCase(Locale.ENGLISH)));
     }
 
@@ -623,7 +622,7 @@ public enum DataTablesHandler {
     public int getMPFromEquipment(final String equipmentName) 
     {
         final String name = NON_ASCII.matcher(equipmentName)
-                                     .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                     .replaceAll("");
         return getOrZero(mpRegenEquipmentsMap.get(name.toLowerCase(Locale.ENGLISH)));
     }
 
@@ -799,7 +798,7 @@ public enum DataTablesHandler {
                     final Matcher m = capturePattern.matcher(tmpLine);
                     if (m.matches()) {
                         final String name = NON_ASCII.matcher(m.group(1))
-                                                     .replaceAll(UsefulPatterns.EMPTY_STRING);
+                                                     .replaceAll("");
                         savedToMap.put(name.toLowerCase(Locale.ENGLISH),
                                        Integer.valueOf(Integer.parseInt(m.group(2))));
                     }
@@ -871,7 +870,7 @@ public enum DataTablesHandler {
 
             if (name != null && intValue != null) {
                 map.put(name, intValue);
-                map.put(NON_ASCII.matcher(name).replaceAll(UsefulPatterns.EMPTY_STRING), intValue);
+                map.put(NON_ASCII.matcher(name).replaceAll(""), intValue);
             }
         }
     }

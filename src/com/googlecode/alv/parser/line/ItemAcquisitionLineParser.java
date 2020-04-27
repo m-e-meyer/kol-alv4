@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 import com.googlecode.alv.logdata.Item;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.Turn;
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * A parser for the item acquired notation in mafia logs.
@@ -87,9 +86,8 @@ public final class ItemAcquisitionLineParser extends AbstractLineParser
             scanner.findInLine(MULTIPLE_ITEMS_OLD_CAPTURE_PATTERN);
             final MatchResult result = scanner.match();
 
-            if (result.group(1).contains(UsefulPatterns.COMMA))
-                amount = Integer.parseInt(result.group(1).replace(UsefulPatterns.COMMA,
-                                                                  UsefulPatterns.EMPTY_STRING));
+            if (result.group(1).contains(","))
+                amount = Integer.parseInt(result.group(1).replace(",", ""));
             else
                 amount = Integer.parseInt(result.group(1));
             itemName = result.group(2);
@@ -101,9 +99,8 @@ public final class ItemAcquisitionLineParser extends AbstractLineParser
             final MatchResult result = scanner.match();
 
             itemName = result.group(1);
-            if (result.group(2).contains(UsefulPatterns.COMMA))
-                amount = Integer.parseInt(result.group(2).replace(UsefulPatterns.COMMA,
-                                                                  UsefulPatterns.EMPTY_STRING));
+            if (result.group(2).contains(","))
+                amount = Integer.parseInt(result.group(2).replace(",", ""));
             else
                 amount = Integer.parseInt(result.group(2));
 

@@ -25,7 +25,6 @@
 package com.googlecode.alv.logdata.turn.action;
 
 import com.googlecode.alv.logdata.Statgain;
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * This immutable class is a representation of a player login snapshot as
@@ -146,23 +145,23 @@ public final class PlayerSnapshot extends AbstractTurnAction<PlayerSnapshot> {
         final StringBuilder str = new StringBuilder(60);
 
         str.append("Mus:");
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(musStats);
         str.append(newLine);
         str.append("Myst:");
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(mystStats);
         str.append(newLine);
         str.append("Mox:");
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(moxStats);
         str.append(newLine);
         str.append("Adventures left:");
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(adventures);
         str.append(newLine);
         str.append("Current meat:");
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(meat);
 
         return str.toString();

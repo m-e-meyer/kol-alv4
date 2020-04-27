@@ -89,10 +89,10 @@ public final class MafiaLogParser implements LogParser
     
     private static final String DONATE_BODY = "Took choice 1089/30";
     
-    private static final Matcher ROUND0 
+    private final Matcher ROUND0 
         = Pattern.compile("Round 0: (.*) +(wins|loses) initiative!").matcher("");
     
-    private static final Matcher ENCOUNTER 
+    private final Matcher ENCOUNTER 
         = Pattern.compile("Encounter: (.*) *$").matcher("");
 
     private final LogDataHolder logData = new LogDataHolder(true);
@@ -140,7 +140,7 @@ public final class MafiaLogParser implements LogParser
         this.log = log;
 
         // Set the log name
-        getLogData().setLogName(log.getName().replace(".txt", UsefulPatterns.EMPTY_STRING));
+        getLogData().setLogName(log.getName().replace(".txt", ""));
 
         lineParsers.add(new ItemAcquisitionLineParser());
         lineParsers.add(new SkillCastLineParser());

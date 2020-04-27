@@ -65,7 +65,7 @@ public final class SkillCastLineParser extends AbstractLineParser
 
     private static final String COMBAT_CAST_STRING = "casts";
 
-    private final Matcher skillCastMatcher = SKILL_CAST.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher skillCastMatcher = SKILL_CAST.matcher("");
 
     /**
      * {@inheritDoc}

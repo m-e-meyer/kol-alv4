@@ -287,7 +287,7 @@ public final class LogVisualizer
      */
     public static class ALVParameters
     {
-        private static final Matcher VALID_DATE = Pattern.compile("^[0-9]{8}$").matcher(""); 
+        private final Matcher VALID_DATE = Pattern.compile("^[0-9]{8}$").matcher(""); 
         public boolean isParsing = false;
         public boolean hasError = false;
         public LogOutputFormat format = LogOutputFormat.TEXT_LOG;

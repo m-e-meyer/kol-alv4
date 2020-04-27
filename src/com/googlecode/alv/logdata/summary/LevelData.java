@@ -25,7 +25,6 @@
 package com.googlecode.alv.logdata.summary;
 
 import com.googlecode.alv.logdata.Statgain;
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * This is a container class for various data on levels.
@@ -205,11 +204,11 @@ public final class LevelData implements Comparable<LevelData> {
         final StringBuilder str = new StringBuilder(40);
 
         str.append(HIT_LEVEL_START_STRING);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getLevelNumber());
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(HIT_LEVEL_MIDDLE_STRING);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getLevelReachedOnTurn());
 
         return str.toString();

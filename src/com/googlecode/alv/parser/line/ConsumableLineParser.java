@@ -57,9 +57,9 @@ public final class ConsumableLineParser extends AbstractLineParser {
 
     private static final String DRANK_STRING = "Drank";
 
-    private final Matcher consumedMatcher = UsefulPatterns.CONSUMED.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher consumedMatcher = UsefulPatterns.CONSUMED.matcher("");
 
-    private final Matcher consumableStatsMatcher = STATS_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher consumableStatsMatcher = STATS_PATTERN.matcher("");
 
     /**
      * {@inheritDoc}
@@ -100,14 +100,14 @@ public final class ConsumableLineParser extends AbstractLineParser {
 
         // Stat gain
         if (consumableStatsMatcher.reset(line).matches()) {
-            final String statGains = line.substring(line.lastIndexOf(UsefulPatterns.SQUARE_BRACKET_OPEN) + 1,
-                                                    line.lastIndexOf(UsefulPatterns.SQUARE_BRACKET_CLOSE));
+            final String statGains = line.substring(line.lastIndexOf("[") + 1,
+                                                    line.lastIndexOf("]"));
 
             final int muscle = Integer.parseInt(statGains.substring(0,
-                                                                    statGains.indexOf(UsefulPatterns.COMMA)));
-            final int myst = Integer.parseInt(statGains.substring(statGains.indexOf(UsefulPatterns.COMMA) + 1,
-                                                                  statGains.lastIndexOf(UsefulPatterns.COMMA)));
-            final int moxie = Integer.parseInt(statGains.substring(statGains.lastIndexOf(UsefulPatterns.COMMA) + 1));
+                                                                    statGains.indexOf(",")));
+            final int myst = Integer.parseInt(statGains.substring(statGains.indexOf(",") + 1,
+                                                                  statGains.lastIndexOf(",")));
+            final int moxie = Integer.parseInt(statGains.substring(statGains.lastIndexOf(",") + 1));
 
             consumableStats = consumableStats.plus(muscle, myst, moxie);
         }

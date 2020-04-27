@@ -47,9 +47,9 @@ import com.googlecode.alv.parser.UsefulPatterns;
 public final class TurnsSpentLineParser extends AbstractLineParser {
     private static final String ASCENSION_START_STRING = "Ascension Start";
 
-    private final Matcher turnsUsedMatcher = UsefulPatterns.TURNS_USED.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher turnsUsedMatcher = UsefulPatterns.TURNS_USED.matcher("");
 
-    private final Matcher areaStatgainMatcher = UsefulPatterns.AREA_STATGAIN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher areaStatgainMatcher = UsefulPatterns.AREA_STATGAIN.matcher("");
 
     /**
      * {@inheritDoc}
@@ -62,19 +62,19 @@ public final class TurnsSpentLineParser extends AbstractLineParser {
         // Area name
         final String areaName;
         if (isStatgainsPresent)
-            areaName = line.substring(line.indexOf(UsefulPatterns.WHITE_SPACE) + 1,
-                                      line.lastIndexOf(UsefulPatterns.SQUARE_BRACKET_OPEN) - 1);
+            areaName = line.substring(line.indexOf(" ") + 1,
+                                      line.lastIndexOf("[") - 1);
         else
-            areaName = line.substring(line.indexOf(UsefulPatterns.WHITE_SPACE) + 1);
+            areaName = line.substring(line.indexOf(" ") + 1);
 
         // Parse out the turncount string
-        final String turnCounts = line.substring(line.indexOf(UsefulPatterns.SQUARE_BRACKET_OPEN) + 1,
-                                                 line.indexOf(UsefulPatterns.SQUARE_BRACKET_CLOSE));
+        final String turnCounts = line.substring(line.indexOf("[") + 1,
+                                                 line.indexOf("]"));
 
         // Depending on the turncount string format do further processing
         // and create the turn interval.
         final TurnInterval area;
-        if (!turnCounts.contains(UsefulPatterns.MINUS)) {
+        if (!turnCounts.contains("-")) {
             final int turnCount = Integer.parseInt(turnCounts);
 
             if (turnCount == 0 && areaName.equals(ASCENSION_START_STRING))
@@ -83,8 +83,8 @@ public final class TurnsSpentLineParser extends AbstractLineParser {
                 area = new SimpleTurnInterval(areaName, turnCount - 1, turnCount);
         } else {
             final int turnCountMin = Integer.parseInt(turnCounts.substring(0,
-                                                                           turnCounts.indexOf(UsefulPatterns.MINUS)));
-            final int turnCountMax = Integer.parseInt(turnCounts.substring(turnCounts.indexOf(UsefulPatterns.MINUS) + 1));
+                                                                           turnCounts.indexOf("-")));
+            final int turnCountMax = Integer.parseInt(turnCounts.substring(turnCounts.indexOf("-") + 1));
 
             area = new SimpleTurnInterval(areaName, turnCountMin - 1, turnCountMax);
         }
@@ -92,14 +92,14 @@ public final class TurnsSpentLineParser extends AbstractLineParser {
         // Check for area statgain string and add the statgains if it is
         // present.
         if (isStatgainsPresent) {
-            final String statGains = line.substring(line.lastIndexOf(UsefulPatterns.SQUARE_BRACKET_OPEN) + 1,
-                                                    line.lastIndexOf(UsefulPatterns.SQUARE_BRACKET_CLOSE));
+            final String statGains = line.substring(line.lastIndexOf("[") + 1,
+                                                    line.lastIndexOf("]"));
 
             final int muscle = Integer.parseInt(statGains.substring(0,
-                                                                    statGains.indexOf(UsefulPatterns.COMMA)));
-            final int myst = Integer.parseInt(statGains.substring(statGains.indexOf(UsefulPatterns.COMMA) + 1,
-                                                                  statGains.lastIndexOf(UsefulPatterns.COMMA)));
-            final int moxie = Integer.parseInt(statGains.substring(statGains.lastIndexOf(UsefulPatterns.COMMA) + 1));
+                                                                    statGains.indexOf(",")));
+            final int myst = Integer.parseInt(statGains.substring(statGains.indexOf(",") + 1,
+                                                                  statGains.lastIndexOf(",")));
+            final int moxie = Integer.parseInt(statGains.substring(statGains.lastIndexOf(",") + 1));
 
             area.setStatGain(new Statgain(muscle, myst, moxie));
         }

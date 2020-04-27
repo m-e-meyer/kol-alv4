@@ -47,7 +47,7 @@ public final class CombatItemUsedLineParser extends AbstractLineParser
 
     private static final String COMBAT_ITEM_USED_STRING = "uses the";
 
-    private final Matcher combatItemUsedMatcher = COMBAT_ITEM_USED_CAPTURE_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher combatItemUsedMatcher = COMBAT_ITEM_USED_CAPTURE_PATTERN.matcher("");
 
     /**
      * {@inheritDoc}

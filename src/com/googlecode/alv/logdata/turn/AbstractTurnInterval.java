@@ -25,7 +25,6 @@
 package com.googlecode.alv.logdata.turn;
 
 import com.googlecode.alv.logdata.LogComment;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Countable;
 
 /**
@@ -137,18 +136,17 @@ public abstract class AbstractTurnInterval extends AbstractTurn implements TurnI
     public String toString() {
         final StringBuilder str = new StringBuilder(60);
 
-        str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        str.append("[");
 
         if (getTotalTurns() > 1) {
             str.append(getStartTurn() + 1);
-            str.append(UsefulPatterns.MINUS);
+            str.append("-");
         }
 
         str.append(getEndTurn());
-        str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append("] ");
         str.append(getAreaName());
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getStatGain().toString());
 
         return str.toString();

@@ -58,7 +58,7 @@ public final class FamiliarSummaryBlockParser extends AbstractBlockParser {
         Scanner scanner;
 
         while ((line = reader.readLine()) != null)
-            if (!line.equals(UsefulPatterns.EMPTY_STRING)) {
+            if (!line.equals("")) {
                 if (UsefulPatterns.NAME_COLON_NUMBER.matcher(line).matches()) {
                     String familiarName;
                     int turns;

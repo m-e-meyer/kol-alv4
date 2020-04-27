@@ -24,7 +24,6 @@
 
 package com.googlecode.alv.logdata.turn.action;
 
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * This immutable class is a representation of a day change. It holds the turn
@@ -70,7 +69,7 @@ public final class DayChange extends AbstractTurnAction<DayChange> {
 
         str.append(DELIMITER_STRING);
         str.append(DAY_STRING);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(dayNumber);
         str.append(DELIMITER_STRING);
 

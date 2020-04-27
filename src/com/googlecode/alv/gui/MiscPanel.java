@@ -34,7 +34,6 @@ import javax.swing.JTextArea;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.TurnInterval;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.DataNumberPair;
 
 final class MiscPanel extends JTabbedPane {
@@ -68,10 +67,9 @@ final class MiscPanel extends JTabbedPane {
         final JTextArea lister = new JTextArea();
 
         for (final DataNumberPair<String> dn : summaryData) {
-            lister.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            lister.append("[");
             lister.append(dn.getNumber().toString());
-            lister.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-            lister.append(UsefulPatterns.WHITE_SPACE);
+            lister.append("] ");
             lister.append(dn.getData());
             lister.append(NEW_LINE);
         }
@@ -103,10 +101,9 @@ final class MiscPanel extends JTabbedPane {
             lister.append(NEW_LINE);
             lister.append("Romantic Arrow usage:" + NEW_LINE);
             for (final DataNumberPair<String> dn : logData.getLogSummary().getRomanticArrowUsages()) {
-                lister.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+                lister.append("[");
                 lister.append(dn.getNumber().toString());
-                lister.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-                lister.append(UsefulPatterns.WHITE_SPACE);
+                lister.append("] ");
                 lister.append(dn.getData());
                 lister.append(NEW_LINE);
             }
@@ -120,10 +117,9 @@ final class MiscPanel extends JTabbedPane {
     private static final void addCopiedMonsterLine(
                                                    final JTextArea lister, final int turnNumber,
                                                    final String description) {
-        lister.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        lister.append("[");
         lister.append(String.valueOf(turnNumber));
-        lister.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        lister.append(UsefulPatterns.WHITE_SPACE);
+        lister.append("] ");
         lister.append(description);
         lister.append(NEW_LINE);
     }

@@ -72,9 +72,9 @@ public class EffectAcquisitionLineParser extends AbstractLineParser {
     private static final Pattern MAJOR_YELLOW_RAY = Pattern.compile("Round \\d+: .+? swings his eyestalk around and unleashes a massive"
             + " ray of yellow energy, completely disintegrating your opponent.");
 
-    private final Matcher majorYellowRayMatcher = MAJOR_YELLOW_RAY.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher majorYellowRayMatcher = MAJOR_YELLOW_RAY.matcher("");
     
-    private static final Matcher EFFECT_MATCHER = EFFECT_PATTERN.matcher("");
+    private final Matcher EFFECT_MATCHER = EFFECT_PATTERN.matcher("");
 
     
     @Override

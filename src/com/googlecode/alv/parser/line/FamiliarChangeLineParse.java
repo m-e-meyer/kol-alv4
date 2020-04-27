@@ -41,7 +41,7 @@ import com.googlecode.alv.parser.UsefulPatterns;
  * {@code -> Turn [*turnNumber*] *familiarName* (*familiarPoundage* lbs)}
  */
 public final class FamiliarChangeLineParse extends AbstractLineParser {
-    private final Matcher familiarChangedMatcher = UsefulPatterns.FAMILIAR_CHANGED.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher familiarChangedMatcher = UsefulPatterns.FAMILIAR_CHANGED.matcher("");
 
     private static final Pattern NOT_FAMILIAR_NAME = Pattern.compile("^.*\\]\\s*|\\s*\\(.*\\)\\s*$");
 
