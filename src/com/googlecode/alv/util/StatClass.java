@@ -29,52 +29,45 @@ import java.util.Map;
 import com.googlecode.alv.logdata.Statgain;
 
 /**
- * This enumeration represents the three stat classes, plus Maximum.
- * Maximum is for the Plumber, because his leveling is based on whichever
- * stat is highest.
+ * This enumeration represents the three stat classes, plus Maximum. Maximum is
+ * for the Plumber, because his leveling is based on whichever stat is highest.
  */
 public enum StatClass {
-    MUSCLE("Muscularity Points"),
+    MUSCLE("Muscularity Points"), 
     MYSTICALITY("Mana Points"), 
-    MOXIE("Mojo Points"), 
+    MOXIE("Mojo Points"),
     MAXIMUM(Constants.N_A);
-    
-    private String pointsName;
-    
-    StatClass(String pointsName)
-    {
-        this.pointsName = pointsName;
-    }
-    
-    /**
-     * @return The name for MP for a given StatClass
-     */
-    public String getPointsName() { return pointsName; }
 
     /**
-     *  Table for associating substat names with stats
+     * Table for associating substat names with stats
      */
-    public static final Map<String, StatClass> SUBSTATS 
-        = Maps.immutableMapOf(Pair.of("Beefiness", StatClass.MUSCLE),
-                              Pair.of("Fortitude", StatClass.MUSCLE),
-                              Pair.of("Muscleboundness", StatClass.MUSCLE),
-                              Pair.of("Strengthliness", StatClass.MUSCLE),
-                              Pair.of("Strongness", StatClass.MUSCLE),
-                              Pair.of("Enchantedness", StatClass.MYSTICALITY),
-                              Pair.of("Magicalness", StatClass.MYSTICALITY),
-                              Pair.of("Mysteriousness", StatClass.MYSTICALITY),
-                              Pair.of("Wizardliness", StatClass.MYSTICALITY),
-                              Pair.of("Cheek", StatClass.MOXIE),
-                              Pair.of("Chutzpah", StatClass.MOXIE),
-                              Pair.of("Roguishness", StatClass.MOXIE),
-                              Pair.of("Sarcasm", StatClass.MOXIE),
-                              Pair.of("Smarm", StatClass.MOXIE));
+    public static final Map<String, StatClass> SUBSTATS = Maps.immutableMapOf(
+            Pair.of("Beefiness", StatClass.MUSCLE), 
+            Pair.of("Fortitude", StatClass.MUSCLE),
+            Pair.of("Muscleboundness", StatClass.MUSCLE),
+            Pair.of("Strengthliness", StatClass.MUSCLE), 
+            Pair.of("Strongness", StatClass.MUSCLE),
+            Pair.of("Enchantedness", StatClass.MYSTICALITY),
+            Pair.of("Magicalness", StatClass.MYSTICALITY),
+            Pair.of("Mysteriousness", StatClass.MYSTICALITY),
+            Pair.of("Wizardliness", StatClass.MYSTICALITY), 
+            Pair.of("Cheek", StatClass.MOXIE),
+            Pair.of("Chutzpah", StatClass.MOXIE), 
+            Pair.of("Roguishness", StatClass.MOXIE),
+            Pair.of("Sarcasm", StatClass.MOXIE), 
+            Pair.of("Smarm", StatClass.MOXIE));
 
     /**
      * Given a substat name and an amount, return the appropriate Statgain.
+     *
+     * @param substat Name of a substat, such as Beefiness
+     * @param amount  Number of substats
+     * @return Object representing the stat gain
      */
-    public static Statgain getStatgain(String substat, int amount)
-    {
+    public static Statgain getStatgain(
+            final String substat,
+            final int amount) {
+
         switch (SUBSTATS.get(substat)) {
         case MUSCLE:
             return new Statgain(amount, 0, 0);
@@ -84,6 +77,16 @@ public enum StatClass {
             return new Statgain(0, 0, amount);
         default:
             return Statgain.NO_STATS;
-         }
+        }
     }
+
+    private String pointsName;
+
+    StatClass(
+            final String pointsName) { this.pointsName = pointsName; }
+
+    /**
+     * @return The name for MP for a given StatClass
+     */
+    public String getPointsName() { return pointsName; }
 }

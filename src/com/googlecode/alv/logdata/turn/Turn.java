@@ -26,7 +26,12 @@ package com.googlecode.alv.logdata.turn;
 
 import java.util.Collection;
 
-import com.googlecode.alv.logdata.*;
+import com.googlecode.alv.logdata.CombatItem;
+import com.googlecode.alv.logdata.Item;
+import com.googlecode.alv.logdata.MPGain;
+import com.googlecode.alv.logdata.MeatGain;
+import com.googlecode.alv.logdata.Skill;
+import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.consumables.Consumable;
 
 /**
@@ -36,129 +41,115 @@ import com.googlecode.alv.logdata.consumables.Consumable;
  * accessible through the {@link TurnEntity} interface.
  */
 public interface Turn extends TurnEntity {
-    /**
-     * @param stats
-     *            The stat gains to add.
-     */
-    public void addStatGain(
-                            final Statgain stats);
-
-    /**
-     * @param stats
-     *            The stat gains to set.
-     */
-    public void setStatGain(
-                            final Statgain stats);
-
-    /**
-     * @param mpGain
-     *            The MP gains to set.
-     */
-    public void setMPGain(
-                          final MPGain mpGain);
-
-    /**
-     * @param mpGain
-     *            The MP gains to add.
-     */
-    public void addMPGain(
-                          final MPGain mpGain);
-
-    /**
-     * @param meat
-     *            The meat data to set.
-     */
-    public void setMeat(
-                        final MeatGain meat);
-
-    /**
-     * @param meat
-     *            The meat data to add.
-     */
-    public void addMeat(
-                        final MeatGain meat);
-
-    /**
-     * @param droppedItem
-     *            The item to add.
-     */
-    public void addDroppedItem(
-                               final Item droppedItem);
-
-    /**
-     * @param droppedItems
-     *            The dropped items to set.
-     */
-    public void setDroppedItems(
-                                final Collection<Item> droppedItems);
-
     /***
-     * 
+     *
      * @param combatItem the combat item to add
      */
-    public void addCombatItemUsed(final CombatItem combatItem);
-    
+    void addCombatItemUsed(
+            final CombatItem combatItem);
+
+    /**
+     * @param consumable The consumable to add.
+     */
+    void addConsumableUsed(
+            final Consumable consumable);
+
+    /**
+     * @param droppedItem The item to add.
+     */
+    void addDroppedItem(
+            final Item droppedItem);
+
+    /**
+     * @param freeRunaways The number of successful free runaways to add.
+     */
+    void addFreeRunaways(
+            final int freeRunaways);
+
+    /**
+     * @param meat The meat data to add.
+     */
+    void addMeat(
+            final MeatGain meat);
+
+    /**
+     * @param mpGain The MP gains to add.
+     */
+    void addMPGain(
+            final MPGain mpGain);
+
+    /**
+     * Adds the given notes to this turn. The already existing notes and the ones
+     * added will be divided by a line break ({@code "\n"}).
+     *
+     * @param notes The notes tagged to this turn to add.
+     */
+    void addNotes(
+            final String notes);
+
+    /**
+     * @param skill The skill to add.
+     */
+    void addSkillCast(
+            final Skill skill);
+
+    /**
+     * @param stats The stat gains to add.
+     */
+    void addStatGain(
+            final Statgain stats);
+
     /**
      * @param combatItems collection of combat items to set
      */
-    public void setCombatItemsUsed(final Collection<CombatItem> combatItems);
-    
-    /**
-     * @param skill
-     *            The skill to add.
-     */
-    public void addSkillCast(
-                             final Skill skill);
+    void setCombatItemsUsed(
+            final Collection<CombatItem> combatItems);
 
     /**
-     * @param skillsCast
-     *            The skills cast to set.
+     * @param consumablesUsed The consumables used to set.
      */
-    public void setSkillsCast(
-                              final Collection<Skill> skillsCast);
+    void setConsumablesUsed(
+            final Collection<Consumable> consumablesUsed);
 
     /**
-     * @param consumable
-     *            The consumable to add.
+     * @param droppedItems The dropped items to set.
      */
-    public void addConsumableUsed(
-                                  final Consumable consumable);
+    void setDroppedItems(
+            final Collection<Item> droppedItems);
 
     /**
-     * @param consumablesUsed
-     *            The consumables used to set.
+     * @param freeRunaways The number of successful free runaways to set.
      */
-    public void setConsumablesUsed(
-                                   final Collection<Consumable> consumablesUsed);
+    void setFreeRunaways(
+            final int freeRunaways);
 
     /**
-     * @param freeRunaways
-     *            The number of successful free runaways to add.
+     * @param meat The meat data to set.
      */
-    public void addFreeRunaways(
-                                final int freeRunaways);
+    void setMeat(
+            final MeatGain meat);
 
     /**
-     * @param freeRunaways
-     *            The number of successful free runaways to set.
+     * @param mpGain The MP gains to set.
      */
-    public void setFreeRunaways(
-                                final int freeRunaways);
+    void setMPGain(
+            final MPGain mpGain);
 
     /**
-     * @param notes
-     *            The notes tagged to this turn to set.
+     * @param notes The notes tagged to this turn to set.
      */
-    public void setNotes(
-                         final String notes);
+    void setNotes(
+            final String notes);
 
     /**
-     * Adds the given notes to this turn. The already existing notes and the
-     * ones added will be divided by a line break ({@code"\n"}).
-     * 
-     * @param notes
-     *            The notes tagged to this turn to add.
+     * @param skillsCast The skills cast to set.
      */
-    public void addNotes(
-                         final String notes);
+    void setSkillsCast(
+            final Collection<Skill> skillsCast);
+
+    /**
+     * @param stats The stat gains to set.
+     */
+    void setStatGain(
+            final Statgain stats);
 }
