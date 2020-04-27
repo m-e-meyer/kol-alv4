@@ -24,7 +24,6 @@
 
 package com.googlecode.alv.logdata.turn.action;
 
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * This immutable class is a representation of a familiar change. It holds the
@@ -70,10 +69,9 @@ public final class FamiliarChange extends AbstractTurnAction<FamiliarChange> {
     public String toString() {
         final StringBuilder str = new StringBuilder(30);
 
-        str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        str.append("[");
         str.append(getTurnNumber());
-        str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append("] ");
         str.append(familiarName);
 
         return str.toString();

@@ -46,7 +46,7 @@ public final class PullLineParser extends AbstractLineParser {
 
     private static final Pattern NOT_PULL_NAME = Pattern.compile("^\\d+\\s*");
 
-    private final Matcher pullMatcher = UsefulPatterns.PULL.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher pullMatcher = UsefulPatterns.PULL.matcher("");
 
     /**
      * {@inheritDoc}

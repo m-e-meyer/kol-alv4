@@ -39,7 +39,7 @@ import com.googlecode.alv.parser.UsefulPatterns;
  * {@code &> _successfulAttempts_ / _totslAttempts_ free retreats}
  */
 public final class FreeRunawaysLineParser extends AbstractLineParser {
-    private final Matcher freeRunawaysMatcher = UsefulPatterns.FREE_RUNAWAYS_USAGE.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher freeRunawaysMatcher = UsefulPatterns.FREE_RUNAWAYS_USAGE.matcher("");
 
     /**
      * {@inheritDoc}

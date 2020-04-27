@@ -29,7 +29,6 @@ import java.util.Map;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Maps;
 import com.googlecode.alv.util.Stack;
 import com.googlecode.alv.util.data.DataTablesHandler;
@@ -96,7 +95,7 @@ public final class EquipmentLineParser extends AbstractLineParser {
                              final String line, final LogDataHolder logData) {
         // Outfit handling
         if (line.startsWith(OUTFIT_STRING)) {
-            final Outfit outfit = DataTablesHandler.HANDLER.getOutfitChange(line.substring(line.indexOf(UsefulPatterns.WHITE_SPACE) + 1));
+            final Outfit outfit = DataTablesHandler.HANDLER.getOutfitChange(line.substring(line.indexOf(" ") + 1));
             if (outfit != null) {
                 final EquipmentChange lastChange = usedEquipment.peek().get();
 
@@ -171,8 +170,8 @@ public final class EquipmentLineParser extends AbstractLineParser {
         }
 
         // Equip/Unequip handling
-        final String tmp = line.substring(line.indexOf(UsefulPatterns.WHITE_SPACE) + 1);
-        final int whiteSpaceIndex = tmp.indexOf(UsefulPatterns.WHITE_SPACE);
+        final String tmp = line.substring(line.indexOf(" ") + 1);
+        final int whiteSpaceIndex = tmp.indexOf(" ");
 
         // Familiar equipment removed from a familiar that isn't currently used.
         if (line.startsWith(FAM_UNEQUIP_STRING)) {

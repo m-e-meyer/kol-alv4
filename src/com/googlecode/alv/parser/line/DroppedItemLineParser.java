@@ -42,7 +42,7 @@ import com.googlecode.alv.parser.UsefulPatterns;
  * this will be appended as long as needed->, *itemName*)}
  */
 public final class DroppedItemLineParser extends AbstractLineParser {
-    private final Matcher droppedItemMatcher = UsefulPatterns.ITEM_FOUND.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher droppedItemMatcher = UsefulPatterns.ITEM_FOUND.matcher("");
 
     private static final Pattern NOT_ITEM_NAME = Pattern.compile("^.*\\]\\s*Got\\s*|,\\s*");
 
@@ -53,8 +53,8 @@ public final class DroppedItemLineParser extends AbstractLineParser {
     protected void doParsing(
                              final String line, final LogDataHolder logData) {
         // Parse the turn number
-        final int foundTurn = Integer.parseInt(line.substring(line.indexOf(UsefulPatterns.SQUARE_BRACKET_OPEN) + 1,
-                                                              line.indexOf(UsefulPatterns.SQUARE_BRACKET_CLOSE)));
+        final int foundTurn = Integer.parseInt(line.substring(line.indexOf("[") + 1,
+                                                              line.indexOf("]")));
 
         // Parse out the item names and add all items
         final Scanner scanner = new Scanner(line);

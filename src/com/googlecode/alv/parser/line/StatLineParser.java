@@ -62,7 +62,7 @@ public final class StatLineParser extends AbstractLineParser {
         }
 
         final String informationPart = line.substring(substrLength);
-        final int whiteSpaceIndex = informationPart.indexOf(UsefulPatterns.WHITE_SPACE);
+        final int whiteSpaceIndex = informationPart.indexOf(" ");
 
         final String substatName = informationPart.substring(whiteSpaceIndex + 1,
                                                              informationPart.length());
@@ -95,7 +95,7 @@ public final class StatLineParser extends AbstractLineParser {
         Matcher matcher = UsefulPatterns.GAIN_LOSE.matcher(line);
         if (! matcher.matches())
             return false;
-        final String gainName = line.substring(line.lastIndexOf(UsefulPatterns.WHITE_SPACE) + 1);
+        final String gainName = line.substring(line.lastIndexOf(" ") + 1);
         return StatClass.SUBSTATS.containsKey(gainName);
     }
     */
@@ -107,7 +107,7 @@ public final class StatLineParser extends AbstractLineParser {
     protected boolean isCompatibleLine(final String line)
     {
         if (gainLoseMatcher.reset(line).matches()) {
-            final String gainName = line.substring(line.lastIndexOf(UsefulPatterns.WHITE_SPACE) + 1);
+            final String gainName = line.substring(line.lastIndexOf(" ") + 1);
 
             return StatClass.SUBSTATS.containsKey(gainName);
         }

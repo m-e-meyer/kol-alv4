@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.MeatGain;
-import com.googlecode.alv.parser.UsefulPatterns;
 
 /**
  * A parser for the meat spent notation in mafia logs.
@@ -47,7 +46,7 @@ public final class MeatSpentLineParser extends AbstractLineParser {
 
     private static final Pattern MEAT_SPENT = Pattern.compile("^You (?:spent|lose) \\d*,?\\d+ Meat");
 
-    private final Matcher meatSpentMatcher = MEAT_SPENT.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher meatSpentMatcher = MEAT_SPENT.matcher("");
 
     /**
      * {@inheritDoc}
@@ -61,11 +60,10 @@ public final class MeatSpentLineParser extends AbstractLineParser {
             informationPart = line.substring(10);
         else
             informationPart = line.substring(9);
-        final int whiteSpaceIndex = informationPart.indexOf(UsefulPatterns.WHITE_SPACE);
+        final int whiteSpaceIndex = informationPart.indexOf(" ");
 
         final String amountString = informationPart.substring(0, whiteSpaceIndex);
-        final int amount = Integer.parseInt(amountString.replace(UsefulPatterns.COMMA,
-                                                                 UsefulPatterns.EMPTY_STRING));
+        final int amount = Integer.parseInt(amountString.replace(",", ""));
 
         logData.getLastTurnSpent().addMeat(new MeatGain(0, 0, amount));
     }

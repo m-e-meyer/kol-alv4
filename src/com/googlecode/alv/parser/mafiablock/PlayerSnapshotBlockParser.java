@@ -36,7 +36,6 @@ import com.googlecode.alv.logdata.turn.action.DayChange;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.logdata.turn.action.PlayerSnapshot;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.CharacterClass;
 import com.googlecode.alv.util.Stack;
 
@@ -94,9 +93,9 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
 
     private static final String DAY_CHANGE_STRING = "Day change occurred";
 
-    private final Matcher statsWithBuffed = PLAYERSTATS_WBUFFED_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher statsWithBuffed = PLAYERSTATS_WBUFFED_PATTERN.matcher("");
 
-    private final Matcher statsWithoutBuffed = PLAYERSTATS_WOBUFFED_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher statsWithoutBuffed = PLAYERSTATS_WOBUFFED_PATTERN.matcher("");
 
     private final Stack<EquipmentChange> equipmentStack;
 
@@ -158,12 +157,11 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
 
                     s.close();
                 } else if (line.startsWith(ADVENTURES_LINE_BEGINNING_STRING))
-                    adventuresLeft = Integer.parseInt(line.substring(line.indexOf(UsefulPatterns.COLON) + 2));
+                    adventuresLeft = Integer.parseInt(line.substring(line.indexOf(":") + 2));
                 else if (line.startsWith(MEAT_LINE_BEGINNING_STRING)
-                        && !line.contains(UsefulPatterns.PERCENTAGE_SIGN))
-                    meat = Integer.parseInt(line.substring(line.indexOf(UsefulPatterns.COLON) + 2)
-                            .replace(UsefulPatterns.COMMA,
-                                    UsefulPatterns.EMPTY_STRING));
+                        && !line.contains("%"))
+                    meat = Integer.parseInt(line.substring(line.indexOf(":") + 2)
+                            .replace(",", ""));
                 else if (line.startsWith(HAT_BEGINNING_STRING))
                     hat = getEquipmentName(line);
                 else if (line.startsWith(WEAPON_BEGINNING_STRING))
@@ -181,7 +179,7 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
                 else if (line.startsWith(ACC3_BEGINNING_STRING))
                     acc3 = getEquipmentName(line);
                 else if (line.startsWith(FAM_EQUIP_BEGINNING_STRING)
-                        && !line.contains(UsefulPatterns.PERCENTAGE_SIGN))
+                        && !line.contains("%"))
                     famEquip = getEquipmentName(line);
                 else if (line.startsWith(DAY_CHANGE_STRING)) {
                     // Get day number of last day change
@@ -226,35 +224,35 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
 
     private String getEquipmentName(
             final String line) {
-        String itemName = line.substring(line.indexOf(UsefulPatterns.COLON) + 2)
+        String itemName = line.substring(line.indexOf(":") + 2)
                 .toLowerCase(Locale.ENGLISH);
 
         if (itemName.contains(NO_EQUIP_STRING))
             itemName = EquipmentChange.NO_EQUIPMENT_STRING;
-        else if (itemName.endsWith(UsefulPatterns.ROUND_BRACKET_CLOSE))
+        else if (itemName.endsWith(")"))
             // If there is something in brackets in the end simply ignore that,
             // if the whole name is in brackets just pull the brackets out.
-            if (itemName.startsWith(UsefulPatterns.ROUND_BRACKET_OPEN))
+            if (itemName.startsWith("("))
                 itemName = itemName.substring(1, itemName.length() - 2);
             else
                 itemName = itemName.substring(0,
-                        itemName.lastIndexOf(UsefulPatterns.ROUND_BRACKET_OPEN) - 1);
+                        itemName.lastIndexOf("(") - 1);
 
         return itemName;
     }
 
     private static int parseStatWBuffed(
             final String line) {
-        return Integer.parseInt(line.substring(line.indexOf(UsefulPatterns.ROUND_BRACKET_OPEN) + 1,
-                line.indexOf(UsefulPatterns.ROUND_BRACKET_CLOSE)));
+        return Integer.parseInt(line.substring(line.indexOf("(") + 1,
+                line.indexOf(")")));
     }
 
     private static int parseStatWOBuffed(
             final String line) {
-        final String tmp = line.substring(line.indexOf(UsefulPatterns.WHITE_SPACE) + 1);
+        final String tmp = line.substring(line.indexOf(" ") + 1);
 
-        if (tmp.contains(UsefulPatterns.COMMA))
-            return Integer.parseInt(tmp.substring(0, tmp.indexOf(UsefulPatterns.COMMA)));
+        if (tmp.contains(","))
+            return Integer.parseInt(tmp.substring(0, tmp.indexOf(",")));
 
         return Integer.parseInt(tmp);
     }

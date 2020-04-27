@@ -53,7 +53,7 @@ public final class BottleneckSummaryBlockParser extends AbstractBlockParser {
         Scanner scanner;
 
         while ((line = reader.readLine()) != null)
-            if (!line.equals(UsefulPatterns.EMPTY_STRING)) {
+            if (!line.equals("")) {
                 try {
                     if (line.endsWith("bloopers")) {
                         scanner = new Scanner(line);

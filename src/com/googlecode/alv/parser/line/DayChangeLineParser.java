@@ -40,7 +40,7 @@ import com.googlecode.alv.parser.UsefulPatterns;
  * {@code ===Day *dayNumber*===}
  */
 public final class DayChangeLineParser extends AbstractLineParser {
-    private final Matcher dayChangeMatcher = UsefulPatterns.DAY_CHANGE.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher dayChangeMatcher = UsefulPatterns.DAY_CHANGE.matcher("");
 
     /**
      * {@inheritDoc}

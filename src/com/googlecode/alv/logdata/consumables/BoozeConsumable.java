@@ -24,7 +24,6 @@
 
 package com.googlecode.alv.logdata.consumables;
 
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Countable;
 
 /**
@@ -76,17 +75,15 @@ final class BoozeConsumable extends Consumable {
         final StringBuilder str = new StringBuilder(50);
 
         str.append(CONSUMED_START_STRING);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getAmount());
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getName());
-        str.append(UsefulPatterns.WHITE_SPACE);
-        str.append(UsefulPatterns.ROUND_BRACKET_OPEN);
+        str.append(" (");
         str.append(getAdventureGain());
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(ADVENTURES_GAINED_STRING);
-        str.append(UsefulPatterns.ROUND_BRACKET_CLOSE);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(") ");
         str.append(getStatGain().toString());
 
         return str.toString();

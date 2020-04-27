@@ -59,7 +59,7 @@ public final class LevelSummaryBlockParser extends AbstractBlockParser {
         Scanner scanner;
 
         while ((line = reader.readLine()) != null)
-            if (!line.equals(UsefulPatterns.EMPTY_STRING)) {
+            if (!line.equals("")) {
 
                 // Check whether this line contains level data or total turn
                 // version distribution data.

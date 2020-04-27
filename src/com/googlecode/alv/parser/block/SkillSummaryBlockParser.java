@@ -53,7 +53,7 @@ public final class SkillSummaryBlockParser extends AbstractBlockParser {
         Scanner scanner;
 
         while ((line = reader.readLine()) != null)
-            if (!line.equals(UsefulPatterns.EMPTY_STRING)) {
+            if (!line.equals("")) {
                 if (line.startsWith(CAST_STRING)) {
                     final int numberOfCasts;
                     final String skillName;

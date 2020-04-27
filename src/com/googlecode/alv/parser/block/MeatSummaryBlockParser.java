@@ -54,7 +54,7 @@ public final class MeatSummaryBlockParser extends AbstractBlockParser {
         Scanner scanner;
 
         while ((line = reader.readLine()) != null)
-            if (!line.equals(UsefulPatterns.EMPTY_STRING)) {
+            if (!line.equals("")) {
                 if (line.startsWith(TOTAL_MEAT_GAIN)) {
                     // Parse and set total meat gain
                     scanner = new Scanner(line);

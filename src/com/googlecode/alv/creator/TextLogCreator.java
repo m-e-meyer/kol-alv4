@@ -210,7 +210,7 @@ public class TextLogCreator {
             logOutput = logCreator.createTextLog(logData, ascensionStartDate);
         } else {
             logOutput = NON_ASCII.matcher(logCreator.createTextLog(logData, ascensionStartDate))
-                    .replaceAll(UsefulPatterns.EMPTY_STRING);
+                    .replaceAll("");
         }
 
         return logOutput;
@@ -975,7 +975,7 @@ public class TextLogCreator {
         for (final CombatItem ci : logData.getLogSummary().getCombatItemsUsed()) {
             write("Used ");
             write(ci.getAmount());
-            write(UsefulPatterns.WHITE_SPACE);
+            write(" ");
             writelnWithBreak(ci.getName());
         }
         writeln();
@@ -1092,22 +1092,21 @@ public class TextLogCreator {
 
                     write(logAdditionsMap.get("consumableStart"));
                     write(c.getAmount());
-                    write(UsefulPatterns.WHITE_SPACE);
+                    write(" ");
                     write(c.getName());
                     write(logAdditionsMap.get("consumableEnd"));
 
                     if (c.getAdventureGain() > 0
                             || c.getConsumableVersion() == ConsumableVersion.FOOD
                             || c.getConsumableVersion() == ConsumableVersion.BOOZE) {
-                        write(UsefulPatterns.WHITE_SPACE);
-                        write(UsefulPatterns.ROUND_BRACKET_OPEN);
+                        write(" (");
                         write(c.getAdventureGain());
-                        write(UsefulPatterns.WHITE_SPACE);
+                        write(" ");
                         write("adventures gained");
-                        write(UsefulPatterns.ROUND_BRACKET_CLOSE);
+                        write(")");
                     }
 
-                    write(UsefulPatterns.WHITE_SPACE);
+                    write(" ");
                     write(logAdditionsMap.get("statgainStart"));
                     write(c.getStatGain().toString());
                     writeln(logAdditionsMap.get("statgainEnd"));
@@ -1138,10 +1137,10 @@ public class TextLogCreator {
             write(currentPull.getTurnNumber());
             write(CLOSING_TURN_BRACKET);
             write("pulled");
-            write(UsefulPatterns.WHITE_SPACE);
+            write(" ");
             write(logAdditionsMap.get("pullStart"));
             write(currentPull.getAmount());
-            write(UsefulPatterns.WHITE_SPACE);
+            write(" ");
             write(currentPull.getItemName());
             writeln(logAdditionsMap.get("pullEnd"));
 
@@ -1548,7 +1547,7 @@ public class TextLogCreator {
         for (final DataNumberPair<MeatGain> dnp : logData.getLogSummary().getMeatSummary()
                 .getAllLevelsData()) {
             printParagraphStart();
-            writelnWithBreak("Level " + dnp.getNumber() + UsefulPatterns.COLON);
+            writelnWithBreak("Level " + dnp.getNumber() + ":");
             writelnWithBreak("   Meat gain inside Encounters: " + dnp.getData().encounterMeatGain);
             writelnWithBreak("   Meat gain outside Encounters: " + dnp.getData().otherMeatGain);
             writeln("   Meat spent: " + dnp.getData().meatSpent);
@@ -1581,7 +1580,7 @@ public class TextLogCreator {
         for (final DataNumberPair<MPGain> dnp : logData.getLogSummary().getMPGainSummary()
                 .getAllLevelsData()) {
             printParagraphStart();
-            writelnWithBreak("Level " + dnp.getNumber() + UsefulPatterns.COLON);
+            writelnWithBreak("Level " + dnp.getNumber() + ":");
             writelnWithBreak("   Inside Encounters: " + dnp.getData().encounterMPGain);
             writelnWithBreak("   Starfish Familiars: " + dnp.getData().starfishMPGain);
             writelnWithBreak("   Resting: " + dnp.getData().restingMPGain);
@@ -2033,18 +2032,18 @@ public class TextLogCreator {
         printNotes(ti.getPreIntervalComment().getComments());
 
         write(logAdditionsMap.get("turnStart"));
-        write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        write("[");
         if (ti.getTotalTurns() > 1) {
             write(ti.getStartTurn() + 1);
-            write(UsefulPatterns.MINUS);
+            write("-");
         }
         write(ti.getEndTurn());
-        write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
+        write("]");
         write(logAdditionsMap.get("turnEnd"));
 
-        write(UsefulPatterns.WHITE_SPACE);
+        write(" ");
         write(ti.getAreaName());
-        write(UsefulPatterns.WHITE_SPACE);
+        write(" ");
 
         write(logAdditionsMap.get("statgainStart"));
         write(ti.getStatGain().toString());
@@ -2069,11 +2068,9 @@ public class TextLogCreator {
         }
 
         if (kaAcquired > 0) {
-            write(UsefulPatterns.WHITE_SPACE);
-            write(UsefulPatterns.ROUND_BRACKET_OPEN);
-            write("Ka: ");
+            write(" (Ka: ");
             write(kaAcquired);
-            write(UsefulPatterns.ROUND_BRACKET_CLOSE);
+            write(")");
 
             // Store ka for daily total
             int currentDailyKa = 0;
@@ -2122,12 +2119,11 @@ public class TextLogCreator {
                         // Log it using the free runaway prefix
                         printLineBreak();
                         write(FREE_RUNAWAYS_PREFIX);
-                        write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+                        write("[");
                         write(st.getTurnNumber());
-                        write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-                        write(UsefulPatterns.WHITE_SPACE);
+                        write("] ");
                         write(e.getAreaName());
-                        write(UsefulPatterns.WHITE_SPACE);
+                        write(" ");
                         write(logAdditionsMap.get("statgainStart"));
                         write(e.getStatGain().toString());
                         writeln(logAdditionsMap.get("statgainEnd"));
@@ -2141,10 +2137,9 @@ public class TextLogCreator {
                         // Log it using the free runaway prefix
                         printLineBreak();
                         write(FREE_RUNAWAYS_PREFIX);
-                        write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+                        write("[");
                         write(st.getTurnNumber());
-                        write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-                        write(UsefulPatterns.WHITE_SPACE);
+                        write("] ");
                         writeln(e.getAreaName());
                     }
                 }
@@ -2153,7 +2148,7 @@ public class TextLogCreator {
             final List<Item> importantItems = Lists.newArrayList();
             for (final Item i : st.getDroppedItems()) {
                 final String itemName = NON_ASCII.matcher(i.getName().toLowerCase(Locale.ENGLISH))
-                        .replaceAll(UsefulPatterns.EMPTY_STRING);
+                        .replaceAll("");
                 if (DataTablesHandler.HANDLER.isImportantItem(itemName)) {
                     importantItems.add(i);
                 } else if (localeOnetimeItemsSet.contains(itemName)) {
@@ -2222,10 +2217,9 @@ public class TextLogCreator {
         while (currentHybridData != null && ti.getEndTurn() >= currentHybridData.getNumber()) {
             printLineBreak();
             write(HYBRIDIZE_PREFIX);
-            write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            write("[");
             write(currentHybridData.getNumber());
-            write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-            write(UsefulPatterns.WHITE_SPACE);
+            write("] ");
             writeln(currentHybridData.getData());
 
             currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
@@ -2249,11 +2243,9 @@ public class TextLogCreator {
                 && ti.getEndTurn() >= currentBanishedCombat.getNumber()) {
             printLineBreak();
             write(BANISHED_COMBAT_PREFIX);
-            write(UsefulPatterns.WHITE_SPACE);
-            write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            write(" [");
             write(currentBanishedCombat.getNumber());
-            write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-            write(UsefulPatterns.WHITE_SPACE);
+            write("] ");
             writeln(BANISHED_COMBAT_DESC + currentBanishedCombat.getData());
 
             currentBanishedCombat = banishedCombatIter.hasNext() ? banishedCombatIter.next() : null;
@@ -2301,7 +2293,7 @@ public class TextLogCreator {
         while (currentLearnedSkill != null && ti.getEndTurn() >= currentLearnedSkill.getNumber()) {
             printLineBreak();
             write(LEARN_SKILL_PREFIX);
-            write(UsefulPatterns.WHITE_SPACE);
+            write(" ");
             writeln("Learned: " + currentLearnedSkill.getData() + " (Turn "
                     + currentLearnedSkill.getNumber() + ")");
 
@@ -2354,7 +2346,7 @@ public class TextLogCreator {
                 write(mystStat);
                 write("/");
                 write(moxStat);
-                write(UsefulPatterns.ROUND_BRACKET_CLOSE);
+                write(")");
                 writeln(logAdditionsMap.get("levelEnd"));
             }
 

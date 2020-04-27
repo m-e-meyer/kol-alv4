@@ -118,11 +118,11 @@ public final class ConsumableBlockParser implements LogBlockParser {
 
     private final NotesLineParser notesParser = new NotesLineParser();
 
-    private final Matcher consumableBoughtMatcher = CONSUMABLE_BOUGHT_USED_CAPTURE_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher consumableBoughtMatcher = CONSUMABLE_BOUGHT_USED_CAPTURE_PATTERN.matcher("");
 
-    private final Matcher consumableUsedMatcher = CONSUMABLE_USED_CAPTURE_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher consumableUsedMatcher = CONSUMABLE_USED_CAPTURE_PATTERN.matcher("");
 
-    private final Matcher gainLoseMatcher = UsefulPatterns.GAIN_LOSE.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher gainLoseMatcher = UsefulPatterns.GAIN_LOSE.matcher("");
 
     public ConsumableBlockParser(
             final Stack<EquipmentChange> equipmentStack,
@@ -199,9 +199,8 @@ public final class ConsumableBlockParser implements LogBlockParser {
                 m.find();
 
                 int gainAmount;
-                if (m.group(1).contains(UsefulPatterns.COMMA))
-                    gainAmount = Integer.parseInt(m.group(1).replace(UsefulPatterns.COMMA,
-                            UsefulPatterns.EMPTY_STRING));
+                if (m.group(1).contains(","))
+                    gainAmount = Integer.parseInt(m.group(1).replace(",", ""));
                 else
                     gainAmount = Integer.parseInt(m.group(1));
                 final String gainIdentifier = m.group(2);

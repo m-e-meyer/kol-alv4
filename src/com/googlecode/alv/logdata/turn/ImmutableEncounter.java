@@ -32,7 +32,6 @@ import com.googlecode.alv.logdata.*;
 import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Countable;
 import com.googlecode.alv.util.CountableSet;
 import com.googlecode.alv.util.Lists;
@@ -431,16 +430,13 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     {
         final StringBuilder str = new StringBuilder(80);
 
-        str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        str.append("[");
         str.append(turnNumber);
-        str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append("] ");
         str.append(getAreaName());
-        str.append(UsefulPatterns.WHITE_SPACE);
-        str.append("--");
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" -- ");
         str.append(encounterName);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getStatGain().toString());
 
         return str.toString();

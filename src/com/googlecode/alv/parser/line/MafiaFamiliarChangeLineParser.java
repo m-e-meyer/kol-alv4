@@ -33,7 +33,6 @@ import java.util.regex.Pattern;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Stack;
 
 /**
@@ -49,7 +48,7 @@ public final class MafiaFamiliarChangeLineParser extends AbstractLineParser
 
     private static final Pattern  ED_CHANGE_SERVANT_PATTERN = Pattern.compile("choice\\.php\\?whichchoice=1053&option=[0-9].*&sid=([0-9])");
 
-    private final Matcher edChangedServant = ED_CHANGE_SERVANT_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+    private final Matcher edChangedServant = ED_CHANGE_SERVANT_PATTERN.matcher("");
 
     private static final String FAMILIAR_CHANGE_START_STRING = "familiar ";
 

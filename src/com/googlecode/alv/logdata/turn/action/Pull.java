@@ -24,7 +24,6 @@
 
 package com.googlecode.alv.logdata.turn.action;
 
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.DataNumberPair;
 
 /**
@@ -94,14 +93,13 @@ public final class Pull extends AbstractTurnAction<Pull> {
     public String toString() {
         final StringBuilder str = new StringBuilder(50);
 
-        str.append(UsefulPatterns.SQUARE_BRACKET_OPEN);
+        str.append("[");
         str.append(getTurnNumber());
-        str.append(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append("] ");
         str.append(PULLED_STRING);
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getAmount());
-        str.append(UsefulPatterns.WHITE_SPACE);
+        str.append(" ");
         str.append(getItemName());
 
         return str.toString();

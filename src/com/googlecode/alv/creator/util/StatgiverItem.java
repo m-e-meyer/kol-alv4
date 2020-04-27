@@ -26,7 +26,6 @@ package com.googlecode.alv.creator.util;
 
 import java.util.Locale;
 
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.StatClass;
 import com.googlecode.alv.util.data.ExtraStats;
 
@@ -219,9 +218,9 @@ final public class StatgiverItem
     {
         final StringBuilder str = new StringBuilder(200);
         str.append(itemName);
-        str.append(UsefulPatterns.COLON);
+        str.append(":");
         for (int i = itemName.length(); i < 55; i++)
-            str.append(UsefulPatterns.WHITE_SPACE);
+            str.append(" ");
 
         str.append(TAB);
         str.append(getLvl1Stats());

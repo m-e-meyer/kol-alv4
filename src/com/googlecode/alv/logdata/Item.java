@@ -25,7 +25,6 @@
 package com.googlecode.alv.logdata;
 
 import com.googlecode.alv.logdata.consumables.Consumable;
-import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.AbstractCountable;
 import com.googlecode.alv.util.Countable;
 
@@ -162,10 +161,9 @@ public final class Item extends AbstractCountable<Item> {
         final StringBuilder str = new StringBuilder(40);
 
         str.append(getName());
-        str.append(UsefulPatterns.WHITE_SPACE);
-        str.append(UsefulPatterns.ROUND_BRACKET_OPEN);
+        str.append(" (");
         str.append(getAmount());
-        str.append(UsefulPatterns.ROUND_BRACKET_CLOSE);
+        str.append(")");
 
         return str.toString();
     }

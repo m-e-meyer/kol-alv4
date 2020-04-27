@@ -84,7 +84,7 @@ public final class PreparsedLogParser extends AbstractLogParser {
             getLogData().setLogName(scanner.next() + "-" + scanner.next());
             scanner.close();
         } else
-            getLogData().setLogName(log.getName().replace(".txt", UsefulPatterns.EMPTY_STRING));
+            getLogData().setLogName(log.getName().replace(".txt", ""));
 
         // Add line parsers for parsing the turn rundown data
         addLineParser(new TurnsSpentLineParser());
@@ -223,7 +223,7 @@ public final class PreparsedLogParser extends AbstractLogParser {
 
         // Disintegrated combat parser
         addLineParser(new AbstractLineParser() {
-            private final Matcher disintegrateMatcher = UsefulPatterns.DISINTEGRATED_COMBAT.matcher(UsefulPatterns.EMPTY_STRING);
+            private final Matcher disintegrateMatcher = UsefulPatterns.DISINTEGRATED_COMBAT.matcher("");
 
             private final Pattern notCombatName = Pattern.compile("^.*Disintegrated\\s+");
 
