@@ -26,12 +26,11 @@ package com.googlecode.alv.logdata.summary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import com.googlecode.alv.logdata.Statgain;
+import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.DataNumberPair;
 
 /**
@@ -40,165 +39,7 @@ import com.googlecode.alv.util.DataNumberPair;
  *
  */
 public class LimitedUseData {
-    
-    /**
-     * 
-     *
-     */
-    public static enum Counter
-    {
-        // Note: Enum's natural ordering is the order listed here, so should list
-        // them here by alphabetical order of name
-        BASTILLE("Bastille", 1),
-        BEACH_HEAD_COLD("Beach Head/Cold", 1),
-        BEACH_HEAD_FAMILIAR_WT("Beach Head/Familiar Wt", 1),
-        BEACH_HEAD_HOT("Beach Head/Hot", 1),
-        BEACH_HEAD_INITIATIVE("Beach Head/Initiative", 1),
-        BEACH_HEAD_MOXIE("Beach Head/Moxie", 1),
-        BEACH_HEAD_MUSCLE("Beach Head/Muscle", 1),
-        BEACH_HEAD_MYSTICALITY("Beach Head/Mysticality", 1),
-        BEACH_HEAD_SLEAZE("Beach Head/Sleaze", 1),
-        BEACH_HEAD_SPOOKY("Beach Head/Spooky", 1),
-        BEACH_HEAD_STATS("Beach Head/Stats", 1),
-        BEACH_HEAD_STENCH("Beach Head/Stench", 1),
-        CHEAT_CODE("CHEAT CODE", 100),
-        CLIP_ART("Clip Art", 3),
-        DAYCARE_SPA("Daycare Spa", 1),
-        DOCTOR_BAG_HAMMER("Doctor Bag/Hammer", 3),
-        DOCTOR_BAG_OTOSCOPE("Doctor Bag/Otoscope", 3),
-        DOCTOR_BAG_XRAY("Doctor Bag/X-ray", 3),
-        FORTUNE_TELLER("Fortune Teller", 1),
-        PILLKEEPER("Pillkeeper", 6),
-        SABER_UPGRADE("Saber/Upgrade", 1),
-        SABER_USE_FORCE("Saber/Use the Force", 5),
-        VAMPYRIC_CLOAKE("Vampyric Cloake", 10)
-        ;
         
-        public static final String REPLACE_ENEMY = "Replace Enemy";
-        
-        private String name;
-        private int limit;
-        
-        public int getLimit() { return limit; }
-        public String getName() { return name; }
-        
-        private Counter(String name, int limit)
-        {
-            this.name = name;
-            this.limit = limit;
-        }
-        
-        public static Counter from(String s)
-        {
-            for (Counter c : Counter.values()) {
-                if (c.getName().equalsIgnoreCase(s))
-                    return c;
-            }
-            return valueOf(s);
-        }
-    }
-    
-    public static class CounterUsePair 
-    {
-        public Counter counter;
-        public String use;
-        CounterUsePair(Counter c, String u)
-        {
-            counter = c;
-            use = u;
-        }
-        
-        public static CounterUsePair make(Counter c, String u)
-        {
-            return new CounterUsePair(c, u);
-        }
-    }
-    
-    /**
-     * Convenience map for using strings to look up their corresponding Counter
-     * and name of counter use.
-     */
-    public static final Map<String, CounterUsePair> LIMITED_USE_MAP
-        = new HashMap<String, CounterUsePair>();
-
-    static {
-        LIMITED_USE_MAP.put("1387/1", 
-                new CounterUsePair(Counter.SABER_USE_FORCE, "Not the adventurer"));
-        LIMITED_USE_MAP.put("1387/2", 
-                new CounterUsePair(Counter.SABER_USE_FORCE, "Find friends"));
-        LIMITED_USE_MAP.put("1387/3", 
-                new CounterUsePair(Counter.SABER_USE_FORCE, "Drop things"));
-        LIMITED_USE_MAP.put("1386/1", 
-                new CounterUsePair(Counter.SABER_UPGRADE, "MP regen"));
-        LIMITED_USE_MAP.put("1386/2", 
-                new CounterUsePair(Counter.SABER_UPGRADE, "+20 ML"));
-        LIMITED_USE_MAP.put("1386/3", 
-                new CounterUsePair(Counter.SABER_UPGRADE, "+3 prismatic res"));
-        LIMITED_USE_MAP.put("1386/4", 
-                new CounterUsePair(Counter.SABER_UPGRADE, "+10 familiar wt"));
-        LIMITED_USE_MAP.put("1395/1", 
-                new CounterUsePair(Counter.PILLKEEPER, "Explodinall"));
-        LIMITED_USE_MAP.put("1395/2", 
-                new CounterUsePair(Counter.PILLKEEPER, "Extendicillin"));
-        LIMITED_USE_MAP.put("1395/3", 
-                new CounterUsePair(Counter.PILLKEEPER, "Sneakisol"));
-        LIMITED_USE_MAP.put("1395/4", 
-                new CounterUsePair(Counter.PILLKEEPER, "Rainbowolin"));
-        LIMITED_USE_MAP.put("1395/5", 
-                new CounterUsePair(Counter.PILLKEEPER, "Hulkien"));
-        LIMITED_USE_MAP.put("1395/6", 
-                new CounterUsePair(Counter.PILLKEEPER, "Fidoxene"));
-        LIMITED_USE_MAP.put("1395/7", 
-                new CounterUsePair(Counter.PILLKEEPER, "Surprise Me"));
-        LIMITED_USE_MAP.put("1395/8", 
-                new CounterUsePair(Counter.PILLKEEPER, "Telecybin"));
-        LIMITED_USE_MAP.put("cheat code: replace enemy", 
-                new CounterUsePair(Counter.CHEAT_CODE, Counter.REPLACE_ENEMY));
-        LIMITED_USE_MAP.put("cheat code: triple size", 
-                new CounterUsePair(Counter.CHEAT_CODE, "Triple Size"));
-        LIMITED_USE_MAP.put("cheat code: invisible avatar", 
-                new CounterUsePair(Counter.CHEAT_CODE, "Invisible Avatar"));
-        LIMITED_USE_MAP.put("cheat code: shrink enemy", 
-                new CounterUsePair(Counter.CHEAT_CODE, "Shrink Enemy"));
-        LIMITED_USE_MAP.put("hot-headed", 
-                new CounterUsePair(Counter.BEACH_HEAD_HOT, ""));
-        LIMITED_USE_MAP.put("cold as nice", 
-                new CounterUsePair(Counter.BEACH_HEAD_COLD, ""));
-        LIMITED_USE_MAP.put("a brush with grossness", 
-                new CounterUsePair(Counter.BEACH_HEAD_STENCH, ""));
-        LIMITED_USE_MAP.put("does it have a skull in there??", 
-                new CounterUsePair(Counter.BEACH_HEAD_SPOOKY, ""));
-        LIMITED_USE_MAP.put("oiled, slick", 
-                new CounterUsePair(Counter.BEACH_HEAD_SLEAZE, ""));
-        LIMITED_USE_MAP.put("lack of body-building", 
-                new CounterUsePair(Counter.BEACH_HEAD_MUSCLE, ""));
-        LIMITED_USE_MAP.put("we're all made of starfish", 
-                new CounterUsePair(Counter.BEACH_HEAD_MYSTICALITY, ""));
-        LIMITED_USE_MAP.put("pomp & circumsands", 
-                new CounterUsePair(Counter.BEACH_HEAD_MOXIE, ""));
-        LIMITED_USE_MAP.put("resting beach face", 
-                new CounterUsePair(Counter.BEACH_HEAD_INITIATIVE, ""));
-        LIMITED_USE_MAP.put("do i know you from somewhere?", 
-                new CounterUsePair(Counter.BEACH_HEAD_FAMILIAR_WT, ""));
-        LIMITED_USE_MAP.put("you learned something maybe!", 
-                new CounterUsePair(Counter.BEACH_HEAD_STATS, ""));
-        LIMITED_USE_MAP.put("reflex hammer", 
-                new CounterUsePair(Counter.DOCTOR_BAG_HAMMER, ""));
-        LIMITED_USE_MAP.put("otoscope", 
-                new CounterUsePair(Counter.DOCTOR_BAG_OTOSCOPE, ""));
-        LIMITED_USE_MAP.put("chest x-ray", 
-                new CounterUsePair(Counter.DOCTOR_BAG_XRAY, ""));
-        LIMITED_USE_MAP.put("become a bat", 
-                new CounterUsePair(Counter.VAMPYRIC_CLOAKE, "Bat"));
-        LIMITED_USE_MAP.put("become a wolf", 
-                new CounterUsePair(Counter.VAMPYRIC_CLOAKE, "Wolf"));
-        LIMITED_USE_MAP.put("become a cloud of mist", 
-                new CounterUsePair(Counter.VAMPYRIC_CLOAKE, "Mist"));
-        LIMITED_USE_MAP.put("summon clip art", 
-                new CounterUsePair(Counter.CLIP_ART, ""));
-
-    }
-
     /**
      * 
      *

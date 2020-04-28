@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.consumables.Consumable;
-import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.parser.line.ItemAcquisitionLineParser;
+import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.StatClass;
 
 /**

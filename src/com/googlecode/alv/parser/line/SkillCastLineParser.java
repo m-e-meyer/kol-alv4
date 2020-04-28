@@ -30,14 +30,13 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.Skill;
-import com.googlecode.alv.logdata.summary.LimitedUseData;
-import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
-import com.googlecode.alv.logdata.summary.LimitedUseData.CounterUsePair;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.CharacterClass;
+import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.DataNumberPair;
+import com.googlecode.alv.util.Pair;
 import com.googlecode.alv.util.data.DataTablesHandler;
 
 /**
@@ -113,13 +112,13 @@ public final class SkillCastLineParser extends AbstractLineParser
         }
         
         //Check for limited daily use skills
-        if (LimitedUseData.LIMITED_USE_MAP.containsKey(skillName)) {
+        if (Counter.LIMITED_USE_MAP.containsKey(skillName)) {
             SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-            CounterUsePair cu = LimitedUseData.LIMITED_USE_MAP.get(skillName);
-            if (cu.counter != Counter.VAMPYRIC_CLOAKE 
+            Pair<Counter, String> cu = Counter.LIMITED_USE_MAP.get(skillName);
+            if (cu.getVar1() != Counter.VAMPYRIC_CLOAKE 
                     || logData.getCharacterClass() != CharacterClass.VAMPYRE)
                 // Vampyres don't get skills from their Cloakes
-                logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.counter, cu.use);
+                logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.getVar1(), cu.getVar2());
         }
     }
 

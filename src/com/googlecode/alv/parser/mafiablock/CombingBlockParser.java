@@ -1,3 +1,27 @@
+/* Copyright (c) 2020-2020, developers of the Ascension Log Visualizer
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom
+ * the Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package com.googlecode.alv.parser.mafiablock;
 
 import java.util.List;
@@ -5,9 +29,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
-import com.googlecode.alv.logdata.summary.LimitedUseData;
-import com.googlecode.alv.logdata.summary.LimitedUseData.CounterUsePair;
 import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.util.Counter;
+import com.googlecode.alv.util.Pair;
 
 /**
  * Parses a Combing block, which records a Beach Combing visit to a Beach Head.  
@@ -26,10 +50,10 @@ public class CombingBlockParser implements LogBlockParser {
          Matcher m = effectPattern.matcher(block.get(1));
          if (m.find()) {
              String effect = m.group(1).toLowerCase();
-             CounterUsePair cu = LimitedUseData.LIMITED_USE_MAP.get(effect);
+             Pair<Counter, String> cu = Counter.LIMITED_USE_MAP.get(effect);
              if (cu != null) {
                  SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-                 logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.counter, cu.use);
+                 logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.getVar1(), cu.getVar2());
              } else {
                  System.out.println("You shouldn't be here with effect: " + effect);
              }
