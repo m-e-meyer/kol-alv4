@@ -37,6 +37,7 @@ import com.googlecode.alv.Settings;
 import com.googlecode.alv.logdata.HeaderFooterComment;
 import com.googlecode.alv.logdata.Item;
 import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.Skill;
 import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.action.DayChange;
@@ -72,6 +73,7 @@ import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.Maps;
 import com.googlecode.alv.util.Pair;
 import com.googlecode.alv.util.Stack;
+import com.googlecode.alv.util.data.DataTablesHandler;
 
 public final class MafiaLogParser implements LogParser 
 {
@@ -341,6 +343,12 @@ public final class MafiaLogParser implements LogParser
                     final String clipArt = acquire.substring(ACQUIRE_ITEM.length());
                     final SingleTurn turn = (SingleTurn) logData.getLastTurnSpent();
                     turn.addDroppedItem(new Item(clipArt, 1, turn.getTurnNumber()));
+                    // Record skill use
+                    final Skill skill = new Skill("summon clip art", turn.getTurnNumber());
+                    skill.setCasts(1,
+                                   DataTablesHandler.HANDLER.getMPCostOffset(logData.getLastEquipmentChange()));
+                    skill.setMpCost(2);
+                    turn.addSkillCast(skill);
                     // Record limited use
                     logData.addLimitedUse(turn.getDayNumber(), turn.getTurnNumber(),  
                             Counter.CLIP_ART, clipArt);
