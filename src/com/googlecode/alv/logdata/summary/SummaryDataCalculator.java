@@ -217,9 +217,6 @@ final class SummaryDataCalculator
             for (final SingleTurn st : ti.getTurns()) {
                 // Total turncounts and stats of different turn versions.
                 totalStatgains = totalStatgains.plus(st.getStatGain());
-                // TODO Remove below when done debugging
-                if (st.getTurnNumber() == 719)
-                    System.out.println("Hi");
                 switch (st.getTurnVersion()) {
                     case COMBAT:
                         if (!st.isFreeTurn())
@@ -390,7 +387,7 @@ final class SummaryDataCalculator
                                               droppedItems.getElements());
         
         limitedUseData = new LimitedUseData(logData.getLimitedUses(), 
-                                            logData.getLastDayChange().getDayNumber());
+                                            logData.getCurrentDayNumber());
     }
 
     /**

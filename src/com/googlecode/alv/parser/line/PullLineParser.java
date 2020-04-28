@@ -61,7 +61,7 @@ public final class PullLineParser extends AbstractLineParser {
         scanner.close();
 
         // Get current day number
-        final int dayNumber = logData.getLastDayChange().getDayNumber();
+        final int dayNumber = logData.getCurrentDayNumber();
 
         // Parse out all single pull strings (some older versions of the AFH
         // parser had pulls in one single line)

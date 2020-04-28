@@ -183,7 +183,7 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
                     famEquip = getEquipmentName(line);
                 else if (line.startsWith(DAY_CHANGE_STRING)) {
                     // Get day number of last day change
-                    final int dayNumber = logData.getLastDayChange().getDayNumber();
+                    final int dayNumber = logData.getCurrentDayNumber();
 
                     // Get turn number of last turn spent
                     final int turn = logData.getLastTurnSpent().getTurnNumber();

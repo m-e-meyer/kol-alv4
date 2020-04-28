@@ -104,11 +104,11 @@ public class EffectAcquisitionLineParser extends AbstractLineParser {
                     && majorYellowRayMatcher.reset(line).matches())
                 effect = "everything looks yellow";     // if so, pretend we have effect
             else
-                return;     // else give up -- whay are we here?
+                return;     // else give up -- why are we here?
         }
         
         SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-        int day = st.getDayNumber();
+        int day = logData.getCurrentDayNumber();
         int turn = st.getTurnNumber();
         switch (effect) {
         // Note: Maybe keeping these in order newest to oldest would be more efficient

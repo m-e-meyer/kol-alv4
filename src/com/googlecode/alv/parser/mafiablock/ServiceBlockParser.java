@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.turn.SingleTurn;
-import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.logdata.turn.TurnVersion;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
@@ -84,11 +83,12 @@ public class ServiceBlockParser implements LogBlockParser
         // Now record the service by adding multiple turns
         EquipmentChange equipmentChange = logData.getLastEquipmentChange();
         FamiliarChange familiarChange = logData.getLastFamiliarChange();
-        int dayNumber = logData.getLastDayChange().getDayNumber();
+        int dayNumber = logData.getCurrentDayNumber();
         // If the last turn probably spent an adventure, increment the turn counter
-        Turn prev = logData.getLastTurnSpent();
+        SingleTurn prev = (SingleTurn) logData.getLastTurnSpent();
         int turnNumber = prev.getTurnNumber();
-        if (probablySpentTurn(prev))
+        //if (probablySpentTurn(prev))
+        if (! prev.isFreeTurn())
             turnNumber++;
         // Now add the turns
         while (adventures > 0) {
@@ -104,27 +104,5 @@ public class ServiceBlockParser implements LogBlockParser
         }
         // Acquire item
         acquisitionParser.parseLine(block.get(3), logData);
-    }
-
-    /**
-     * Make best guess as to whether the turn spent an adventure.  
-     * It did if it was a combat.  (Need to check for runaway?)
-     * It did not if it was mixing or cooking.  (It might have, though.
-     *   check the final product?)
-     * Otherwise, it probably did.
-     * 
-     * @param t Turn to evaluate
-     * @return true if a turn was probably spent, false otherwise
-     */
-    private boolean probablySpentTurn(Turn t) 
-    {
-        if (t.getTurnVersion() == TurnVersion.COMBAT) {
-            return true;
-        }
-        String area = t.getAreaName();
-        if (area.startsWith("Mix") || area.startsWith("Cook")) {
-            return false;
-        }
-        return true;
     }
 }

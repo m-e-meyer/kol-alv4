@@ -67,7 +67,7 @@ public final class MafiaPullLineParser extends AbstractLineParser {
             logData.addPull(new Pull(itemName,
                                      amount,
                                      logData.getLastTurnSpent().getTurnNumber(),
-                                     logData.getLastDayChange().getDayNumber()));
+                                     logData.getCurrentDayNumber()));
         }
     }
 

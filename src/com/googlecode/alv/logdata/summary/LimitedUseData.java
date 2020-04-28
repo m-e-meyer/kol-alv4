@@ -62,6 +62,7 @@ public class LimitedUseData {
         BEACH_HEAD_STATS("Beach Head/Stats", 1),
         BEACH_HEAD_STENCH("Beach Head/Stench", 1),
         CHEAT_CODE("CHEAT CODE", 100),
+        CLIP_ART("Clip Art", 3),
         DAYCARE_SPA("Daycare Spa", 1),
         DOCTOR_BAG_HAMMER("Doctor Bag/Hammer", 3),
         DOCTOR_BAG_OTOSCOPE("Doctor Bag/Otoscope", 3),
@@ -193,6 +194,9 @@ public class LimitedUseData {
                 new CounterUsePair(Counter.VAMPYRIC_CLOAKE, "Wolf"));
         LIMITED_USE_MAP.put("become a cloud of mist", 
                 new CounterUsePair(Counter.VAMPYRIC_CLOAKE, "Mist"));
+        LIMITED_USE_MAP.put("summon clip art", 
+                new CounterUsePair(Counter.CLIP_ART, ""));
+
     }
 
     /**

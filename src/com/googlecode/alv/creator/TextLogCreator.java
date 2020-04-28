@@ -67,7 +67,6 @@ import com.googlecode.alv.logdata.summary.LimitedUseData.CounterUses;
 import com.googlecode.alv.logdata.summary.LimitedUseData.DailyUses;
 import com.googlecode.alv.logdata.summary.LimitedUseData.Use;
 import com.googlecode.alv.logdata.summary.QuestTurncounts;
-import com.googlecode.alv.logdata.turn.DetailedTurnInterval;
 import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.logdata.turn.FreeRunaways;
 import com.googlecode.alv.logdata.turn.SingleTurn;
@@ -559,18 +558,30 @@ public class TextLogCreator {
             printNotes(logData.getHeaderFooterComment(currentDay).getHeaderComments());
         }
 
-        for (int turnIntervalNdx = 0; turnIntervalNdx < logData.getTurnIntervalsSpent()
-                .size(); turnIntervalNdx++) {
-            final TurnInterval ti = logData.getTurnIntervalsSpent().get(turnIntervalNdx);
-
+        final List<TurnInterval> turnIntervals = logData.getTurnIntervalsSpent();
+        for (int tiIndex = 0; tiIndex < turnIntervals.size(); tiIndex++) {
+            final TurnInterval ti = turnIntervals.get(tiIndex);
+            // With the introduction of the Start of Day turn, TurnIntervals will no longer
+            // cross day boundaries.  This makes determining when to not eday changes
+            // MUCH easier.
+            int tiDay = ti.getTurns().last().getDayNumber();
+            int dayNumber = currentDay.getDayNumber();
+            if (tiDay > dayNumber) {
+                final Pair<DayChange, DayChange> newDayChangeData 
+                    = printDayChanges(logData, ti.getStartTurn(), currentDay, 
+                            nextDay, dayChangeIter);
+                currentDay = newDayChangeData.getVar1();
+                nextDay = newDayChangeData.getVar2();
+            }
+            printTurnIntervalContents(ti, currentDay.getDayNumber());
+/*
             if (!nextDay.equals(NO_DAY_CHANGE) && ti.getEndTurn() >= nextDay.getTurnNumber()) {
                 if (ti.getEndTurn() == nextDay.getTurnNumber()) {
                     printTurnIntervalContents(ti, currentDay.getDayNumber());
 
                     // Peek at next interval to make sure it doesn't contain any current day turns
-                    if (turnIntervalNdx + 1 < logData.getTurnIntervalsSpent().size()) {
-                        final TurnInterval next = logData.getTurnIntervalsSpent()
-                                .get(turnIntervalNdx + 1);
+                    if (tiIndex + 1 < turnIntervals.size()) {
+                        final TurnInterval next = turnIntervals.get(tiIndex + 1);
                         boolean hasOneOnCurrentDay = false;
                         for (final SingleTurn st : next.getTurns()) {
                             if (st.getDayNumber() == currentDay.getDayNumber()) {
@@ -638,9 +649,8 @@ public class TextLogCreator {
 
                         // Peek at next interval to make sure it doesn't contain any current day
                         // turns
-                        if (turnIntervalNdx + 1 < logData.getTurnIntervalsSpent().size()) {
-                            final TurnInterval next = logData.getTurnIntervalsSpent()
-                                    .get(turnIntervalNdx + 1);
+                        if (tiIndex + 1 < turnIntervals.size()) {
+                            final TurnInterval next = turnIntervals.get(tiIndex + 1);
                             boolean hasOneOnCurrentDay = false;
                             for (final SingleTurn st : next.getTurns()) {
                                 if (st.getDayNumber() == currentDay.getDayNumber()) {
@@ -697,7 +707,7 @@ public class TextLogCreator {
             } else {
                 printTurnIntervalContents(ti, currentDay.getDayNumber());
             }
-
+*/
         }
 
         // Log daily ka at end of run
@@ -746,7 +756,23 @@ public class TextLogCreator {
         DayChange currentDay = dayChangeIter.next();
         DayChange nextDay = dayChangeIter.hasNext() ? dayChangeIter.next() : NO_DAY_CHANGE;
 
-        for (final TurnInterval ti : logData.getTurnIntervalsSpent()) {
+        final List<TurnInterval> turnIntervals = logData.getTurnIntervalsSpent();
+        for (final TurnInterval ti : turnIntervals) {
+            // With the introduction of the Start of Day turn, TurnIntervals will no longer
+            // cross day boundaries.  This makes determining when to not eday changes
+            // MUCH easier.
+            int tiDay = ti.getTurns().last().getDayNumber();
+            int dayNumber = currentDay.getDayNumber();
+            if (tiDay > dayNumber) {
+                final Pair<DayChange, DayChange> newDayChangeData 
+                    = printDayChanges(logData, ti.getStartTurn(), currentDay, 
+                            nextDay, dayChangeIter);
+                currentDay = newDayChangeData.getVar1();
+                nextDay = newDayChangeData.getVar2();
+            }
+            printTurnIntervalContents(ti, currentDay.getDayNumber());
+
+            /*
             // If the current turn interval's end turn spans a day boundary
             if (!nextDay.equals(NO_DAY_CHANGE) && ti.getEndTurn() >= nextDay.getTurnNumber()) {
                 // If the current turn interval ends on a day boundary
@@ -814,6 +840,7 @@ public class TextLogCreator {
             } else {
                 printTurnIntervalContents(ti, currentDay.getDayNumber());
             }
+            */
 
             turnRundown.add(log.toString());
             log.delete(0, log.length());

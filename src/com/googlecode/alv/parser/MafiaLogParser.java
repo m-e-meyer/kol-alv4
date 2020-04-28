@@ -35,7 +35,9 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.logdata.HeaderFooterComment;
+import com.googlecode.alv.logdata.Item;
 import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.summary.LimitedUseData.Counter;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.action.DayChange;
 import com.googlecode.alv.logdata.turn.action.EquipmentChange;
@@ -88,6 +90,10 @@ public final class MafiaLogParser implements LogParser
     private static final String NAUGHTY_SORCERESS_FIGHT_STRING_2015 = "The Naughty Sorceress' Chamber";
     
     private static final String DONATE_BODY = "Took choice 1089/30";
+    
+    private static final String SUMMON_CLIP_ART = "cast 1 Summon Clip Art";
+    
+    private static final String ACQUIRE_ITEM = "You acquire an item: ";
     
     private final Matcher ROUND0 
         = Pattern.compile("Round 0: (.*) +(wins|loses) initiative!").matcher("");
@@ -199,7 +205,7 @@ public final class MafiaLogParser implements LogParser
             while (currentDay < st.getDayNumber()) {
                 currentDay++;
 
-                final DayChange newDay = new DayChange(currentDay, st.getTurnNumber() - 1);
+                final DayChange newDay = new DayChange(currentDay, st.getTurnNumber() );
                 getLogData().addDayChange(newDay);
 
                 final HeaderFooterComment newDayComment = getLogData().getHeaderFooterComment(newDay);
@@ -323,13 +329,35 @@ public final class MafiaLogParser implements LogParser
                 bastilleParser.parseBlock(block.getBlockLines(), logData);
                 break;
             case OTHER_BLOCK:
-                for (final String line : block.getBlockLines())
-                    for (final LineParser lp : lineParsers)
+                // handle Clip Art specially (maybe someday make it its own block)
+                List<String> lines = block.getBlockLines();
+                if (lines.get(0).equalsIgnoreCase(SUMMON_CLIP_ART)) {
+                    if (lines.size() == 1) {
+                        // If only the summon with no drop, it doesn't count
+                        break;
+                    }
+                    // Record item drop
+                    final String acquire = lines.get(1);
+                    final String clipArt = acquire.substring(ACQUIRE_ITEM.length());
+                    final SingleTurn turn = (SingleTurn) logData.getLastTurnSpent();
+                    turn.addDroppedItem(new Item(clipArt, 1, turn.getTurnNumber()));
+                    // Record limited use
+                    logData.addLimitedUse(turn.getDayNumber(), turn.getTurnNumber(),  
+                            Counter.CLIP_ART, clipArt);
+                    break;
+                }
+                // Apply all parsers to each line
+                for (final String line : lines) {
+                    for (final LineParser lp : lineParsers) {
                         // If the line parser can parse the line, this
                         // method also returns true. This is used to cut
                         // back on the amount of loops.
-                        if (lp.parseLine(line, logData))
+                        if (lp.parseLine(line, logData)) {
                             break;
+                        }
+                    }
+                }
+                break;
             }
         }
     }
