@@ -52,6 +52,7 @@ import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.logdata.turn.action.PlayerSnapshot;
 import com.googlecode.alv.logdata.turn.action.Pull;
 import com.googlecode.alv.util.CharacterClass;
+import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.DataNumberPair;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LookAheadIterator;
@@ -554,7 +555,7 @@ public final class LogDataHolder {
     public void addLimitedUse(
             final int day,
             final int turn,
-            final LimitedUseData.Counter counter,
+            final Counter counter,
             final String subUse) {
 
         addLimitedUse(day, turn, counter, subUse, Statgain.NO_STATS);
@@ -572,7 +573,7 @@ public final class LogDataHolder {
     public void addLimitedUse(
             final int day,
             final int turn,
-            final LimitedUseData.Counter counter,
+            final Counter counter,
             final String subUse,
             final Statgain statgain) {
 

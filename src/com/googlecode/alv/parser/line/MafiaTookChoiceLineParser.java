@@ -4,9 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
-import com.googlecode.alv.logdata.summary.LimitedUseData;
-import com.googlecode.alv.logdata.summary.LimitedUseData.CounterUsePair;
 import com.googlecode.alv.logdata.turn.SingleTurn;
+import com.googlecode.alv.util.Counter;
+import com.googlecode.alv.util.Pair;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class MafiaTookChoiceLineParser extends AbstractLineParser
         if (! tookChoiceMatcher.reset(line).find())
             return false;
         String choice = tookChoiceMatcher.group(1);
-        return LimitedUseData.LIMITED_USE_MAP.containsKey(choice);
+        return Counter.LIMITED_USE_MAP.containsKey(choice);
     }
 
     @Override
@@ -38,9 +38,9 @@ public class MafiaTookChoiceLineParser extends AbstractLineParser
     {
         tookChoiceMatcher.reset(line).find();
         String choice = tookChoiceMatcher.group(1);
-        CounterUsePair cu = LimitedUseData.LIMITED_USE_MAP.get(choice);
+        Pair<Counter, String> cu = Counter.LIMITED_USE_MAP.get(choice);
         SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-        logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.counter, cu.use);
+        logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.getVar1(), cu.getVar2());
     }
 
 }
