@@ -185,7 +185,7 @@ public final class EncounterBlockParser implements LogBlockParser
             = block.get(0).startsWith("[") ? block.get(0)
                                                                           : block.get(1);
         final SingleTurn turn;
-        final int dayNumber = logData.getLastDayChange().getDayNumber();
+        final int dayNumber = logData.getCurrentDayNumber();
 
         // Some areas have broken turn spent strings. If a turn is recognised as
         // being spent in such an area, the block will start with the encounter
@@ -217,7 +217,7 @@ public final class EncounterBlockParser implements LogBlockParser
             // be marked as OTHER, so this check has to be done anyway later on.
             final boolean isCraftingTurn = areaName.startsWith(COOKING_START_STRING)
                     || areaName.startsWith(MIXING_START_STRING)
-                    || areaName.startsWith(SMITHING_START_STRING);
+                    || areaName.startsWith(SMITHING_START_STRING);            
 
             // Turn number
             // Special handling for crafting turns, because mafia screws up the
@@ -298,10 +298,13 @@ public final class EncounterBlockParser implements LogBlockParser
             // name is inside the other-encounters set, set the turn version to
             // OTHER, otherwise set it to NONCOMBAT. Combats are recognised
             // separately.
-            if (isCraftingTurn || OTHER_ENCOUNTER_AREAS_SET.contains(areaName))
+            if (isCraftingTurn || OTHER_ENCOUNTER_AREAS_SET.contains(areaName)) {
                 turn.setTurnVersion(TurnVersion.OTHER);
-            else
+                // TODO - Refine when experiment over
+                turn.setFreeTurn(true);
+            } else {
                 turn.setTurnVersion(TurnVersion.NONCOMBAT);
+            }
         }
         
         // Check handling for special encounters. If the encounter is indeed

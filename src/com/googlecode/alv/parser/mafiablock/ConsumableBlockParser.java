@@ -246,7 +246,7 @@ public final class ConsumableBlockParser implements LogBlockParser {
                 tmpCon = Consumable.newSpleenConsumable(itemName, adventureGain, amount, currentTurn);
             } else
                 tmpCon = Consumable.newOtherConsumable(itemName, adventureGain, amount, currentTurn);
-            tmpCon.setDayNumberOfUsage(logData.getLastDayChange().getDayNumber());
+            tmpCon.setDayNumberOfUsage(logData.getCurrentDayNumber());
             tmpCon.setStatGain(consumableStatgain);
 
             currentInterval.addConsumableUsed(tmpCon);
@@ -262,7 +262,7 @@ public final class ConsumableBlockParser implements LogBlockParser {
         // might possibly fix its logging of these turns which is another
         // reason to not do it here.
         final int lastTurnNumber = logData.getLastTurnSpent().getTurnNumber();
-        final int lastDayNumber = logData.getLastDayChange().getDayNumber();
+        final int lastDayNumber = logData.getCurrentDayNumber();
         final EquipmentChange lastEquipment = logData.getLastEquipmentChange();
         final FamiliarChange lastFamiliar = logData.getLastFamiliarChange();
         final SingleTurn tmpTurn1 = new SingleTurn(COCKROACH_AREA_ENCOUNTER_NAME,

@@ -99,13 +99,14 @@ public class BastilleBlockParser implements LogBlockParser
         // "other" consumable.  (There's probably a better way, but I guess there are still
         // parts of this code I have to learn about.)
         final int currentTurn = st.getTurnNumber();
+        final int currentDay = logData.getCurrentDayNumber();
         final Consumable tmpCon 
             = Consumable.newOtherConsumable("Bastille Battalion control rig", 0, 1, currentTurn);
-        tmpCon.setDayNumberOfUsage(logData.getLastDayChange().getDayNumber());
+        tmpCon.setDayNumberOfUsage(currentDay);
         tmpCon.setStatGain(statgain);
         st.addConsumableUsed(tmpCon);
         // Now we can add the limited use to the LogDataHolder.
-        logData.addLimitedUse(st.getDayNumber(), 
+        logData.addLimitedUse(currentDay, 
                               currentTurn, 
                               Counter.BASTILLE, 
                               settings,

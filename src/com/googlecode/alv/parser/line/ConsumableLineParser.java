@@ -137,7 +137,7 @@ public final class ConsumableLineParser extends AbstractLineParser {
                                                        adventureGain,
                                                        consumablesUsed,
                                                        consumedOnTurn);
-        consumable.setDayNumberOfUsage(logData.getLastDayChange().getDayNumber());
+        consumable.setDayNumberOfUsage(logData.getCurrentDayNumber());
         consumable.setStatGain(consumableStats);
 
         // Add the consumable
