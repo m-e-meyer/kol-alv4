@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.Skill;
+import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.parser.UsefulPatterns;
@@ -115,10 +116,18 @@ public final class SkillCastLineParser extends AbstractLineParser
         if (Counter.LIMITED_USE_MAP.containsKey(skillName)) {
             SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
             Pair<Counter, String> cu = Counter.LIMITED_USE_MAP.get(skillName);
-            if (cu.getVar1() != Counter.VAMPYRIC_CLOAKE 
-                    || logData.getCharacterClass() != CharacterClass.VAMPYRE)
-                // Vampyres don't get skills from their Cloakes
-                logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.getVar1(), cu.getVar2());
+            if (cu.getVar1() != Counter.VAMPYRIC_CLOAKE  // Vampyres don't get skills from their Cloakes
+                    || logData.getCharacterClass() != CharacterClass.VAMPYRE) {
+                Counter counter = cu.getVar1();
+                String use = cu.getVar2();
+                // Need to get opponent if the cast involves throwing of offering Latte
+                if (counter == Counter.LATTE_THROW || counter == Counter.LATTE_OFFER ) {
+                    Object[] encounters = st.getEncounters().toArray();
+                    Encounter lastEncounter = (Encounter) encounters[encounters.length - 1];
+                    use = lastEncounter.getEncounterName();
+                }
+                logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.getVar1(), use);
+            }
         }
     }
 

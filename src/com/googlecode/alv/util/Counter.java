@@ -53,6 +53,9 @@ public enum Counter
     DOCTOR_BAG_OTOSCOPE("Doctor Bag/Otoscope", 3),
     DOCTOR_BAG_XRAY("Doctor Bag/X-ray", 3),
     FORTUNE_TELLER("Fortune Teller", 1),
+    LATTE_GULP("Latte/Gulp", 4),
+    LATTE_OFFER("Latte/Offer", 4),
+    LATTE_THROW("Latte/Throw", 4),
     PILLKEEPER("Pillkeeper", 6),
     SABER_UPGRADE("Saber/Upgrade", 1),
     SABER_USE_FORCE("Saber/Use the Force", 5),
@@ -164,86 +167,13 @@ public enum Counter
                         Pair.of(Counter.VAMPYRIC_CLOAKE, "Wolf")),
                 Pair.of("become a cloud of mist", 
                         Pair.of(Counter.VAMPYRIC_CLOAKE, "Mist")),
+                Pair.of("gulp latte", 
+                        Pair.of(Counter.LATTE_GULP, "")),
+                Pair.of("offer latte to opponent", 
+                        Pair.of(Counter.LATTE_OFFER, "")),
+                Pair.of("throw latte on opponent", 
+                        Pair.of(Counter.LATTE_THROW, "")),
                 Pair.of("summon clip art", 
                         Pair.of(Counter.CLIP_ART, ""))
                 );
-        //= new HashMap<String, Pair<Counter, String>>();
-/*
-    static {
-        Pair.of("1387/1", 
-                Pair.of(Counter.SABER_USE_FORCE, "Not the adventurer"));
-        Pair.of("1387/2", 
-                Pair.of(Counter.SABER_USE_FORCE, "Find friends"));
-        Pair.of("1387/3", 
-                Pair.of(Counter.SABER_USE_FORCE, "Drop things"));
-        Pair.of("1386/1", 
-                Pair.of(Counter.SABER_UPGRADE, "MP regen"));
-        Pair.of("1386/2", 
-                Pair.of(Counter.SABER_UPGRADE, "+20 ML"));
-        Pair.of("1386/3", 
-                Pair.of(Counter.SABER_UPGRADE, "+3 prismatic res"));
-        Pair.of("1386/4", 
-                Pair.of(Counter.SABER_UPGRADE, "+10 familiar wt"));
-        Pair.of("1395/1", 
-                Pair.of(Counter.PILLKEEPER, "Explodinall"));
-        Pair.of("1395/2", 
-                Pair.of(Counter.PILLKEEPER, "Extendicillin"));
-        Pair.of("1395/3", 
-                Pair.of(Counter.PILLKEEPER, "Sneakisol"));
-        Pair.of("1395/4", 
-                Pair.of(Counter.PILLKEEPER, "Rainbowolin"));
-        Pair.of("1395/5", 
-                Pair.of(Counter.PILLKEEPER, "Hulkien"));
-        Pair.of("1395/6", 
-                Pair.of(Counter.PILLKEEPER, "Fidoxene"));
-        Pair.of("1395/7", 
-                Pair.of(Counter.PILLKEEPER, "Surprise Me"));
-        Pair.of("1395/8", 
-                Pair.of(Counter.PILLKEEPER, "Telecybin"));
-        Pair.of("cheat code: replace enemy", 
-                Pair.of(Counter.CHEAT_CODE, Counter.REPLACE_ENEMY));
-        Pair.of("cheat code: triple size", 
-                Pair.of(Counter.CHEAT_CODE, "Triple Size"));
-        Pair.of("cheat code: invisible avatar", 
-                Pair.of(Counter.CHEAT_CODE, "Invisible Avatar"));
-        Pair.of("cheat code: shrink enemy", 
-                Pair.of(Counter.CHEAT_CODE, "Shrink Enemy"));
-        Pair.of("hot-headed", 
-                Pair.of(Counter.BEACH_HEAD_HOT, ""));
-        Pair.of("cold as nice", 
-                Pair.of(Counter.BEACH_HEAD_COLD, ""));
-        Pair.of("a brush with grossness", 
-                Pair.of(Counter.BEACH_HEAD_STENCH, ""));
-        Pair.of("does it have a skull in there??", 
-                Pair.of(Counter.BEACH_HEAD_SPOOKY, ""));
-        Pair.of("oiled, slick", 
-                Pair.of(Counter.BEACH_HEAD_SLEAZE, ""));
-        Pair.of("lack of body-building", 
-                Pair.of(Counter.BEACH_HEAD_MUSCLE, ""));
-        Pair.of("we're all made of starfish", 
-                Pair.of(Counter.BEACH_HEAD_MYSTICALITY, ""));
-        Pair.of("pomp & circumsands", 
-                Pair.of(Counter.BEACH_HEAD_MOXIE, ""));
-        Pair.of("resting beach face", 
-                Pair.of(Counter.BEACH_HEAD_INITIATIVE, ""));
-        Pair.of("do i know you from somewhere?", 
-                Pair.of(Counter.BEACH_HEAD_FAMILIAR_WT, ""));
-        Pair.of("you learned something maybe!", 
-                Pair.of(Counter.BEACH_HEAD_STATS, ""));
-        Pair.of("reflex hammer", 
-                Pair.of(Counter.DOCTOR_BAG_HAMMER, ""));
-        Pair.of("otoscope", 
-                Pair.of(Counter.DOCTOR_BAG_OTOSCOPE, ""));
-        Pair.of("chest x-ray", 
-                Pair.of(Counter.DOCTOR_BAG_XRAY, ""));
-        Pair.of("become a bat", 
-                Pair.of(Counter.VAMPYRIC_CLOAKE, "Bat"));
-        Pair.of("become a wolf", 
-                Pair.of(Counter.VAMPYRIC_CLOAKE, "Wolf"));
-        Pair.of("become a cloud of mist", 
-                Pair.of(Counter.VAMPYRIC_CLOAKE, "Mist"));
-        Pair.of("summon clip art", 
-                Pair.of(Counter.CLIP_ART, ""));
-    }
-*/
 }
