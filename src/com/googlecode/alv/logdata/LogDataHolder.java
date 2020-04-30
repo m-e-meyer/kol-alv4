@@ -289,6 +289,8 @@ public final class LogDataHolder {
     private final List<DataNumberPair<String>> huntedCombats = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> lostCombats = Lists.newArrayList();
+    
+    private final List<DataNumberPair<PizzaEvent>> pizzaEvents = Lists.newArrayList();
 
     private final boolean isDetailedLog;
 
@@ -594,6 +596,25 @@ public final class LogDataHolder {
         lostCombats.add(lostCombat);
     }
 
+    /**
+     * Construct a PizzaEvent and add it to the internal collection.
+     * 
+     * @param day Day number of the event
+     * @param turn Turn number of the event
+     * @param description Descriptipon of the event
+     * @param duration Duration of the event.  Zero if pizza creation, non-zero
+     *      if an effect being acquired
+     */
+    public void addPizzaEvent(
+            final int day,
+            final int turn,
+            final String description,
+            final int duration) {
+        
+        final PizzaEvent event = new PizzaEvent(day, turn, description, duration);
+        this.pizzaEvents.add(DataNumberPair.of(event, turn));
+    }
+    
     /**
      * @param playerSnapshot The player snapshot to add.
      */
@@ -1260,6 +1281,10 @@ public final class LogDataHolder {
         return Collections.unmodifiableCollection(levels.values());
     }
 
+    /**
+     * 
+     * @return The limited uses that have been accumulated to this point
+     */
     public List<DataNumberPair<LimitedUseData.Use>> getLimitedUses() {
 
         return Collections.unmodifiableList(this.limitedUses);
@@ -1313,6 +1338,15 @@ public final class LogDataHolder {
      *         LogDataHolder.
      */
     public ParsedLogClass getParsedLogCreator() { return parsedLogCreator; }
+
+    /**
+     * 
+     * @return The pizza events that have been accumulated to this point
+     */
+    public List<DataNumberPair<PizzaEvent>> getPizzaEvents() {
+
+        return Collections.unmodifiableList(this.pizzaEvents);
+    }
 
     /**
      * Returns a sorted collection of all player snapshots of this ascension log.

@@ -53,6 +53,7 @@ public enum Counter
     DOCTOR_BAG_OTOSCOPE("Doctor Bag/Otoscope", 3),
     DOCTOR_BAG_XRAY("Doctor Bag/X-ray", 3),
     FORTUNE_TELLER("Fortune Teller", 1),
+    GAZE("Gaze at the Stars", 4),
     LATTE_GULP("Latte/Gulp", 4),
     LATTE_OFFER("Latte/Offer", 4),
     LATTE_THROW("Latte/Throw", 4),

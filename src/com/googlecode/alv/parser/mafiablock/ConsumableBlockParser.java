@@ -40,6 +40,7 @@ import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.parser.line.EquipmentLineParser;
+import com.googlecode.alv.parser.line.ItemAcquisitionLineParser;
 import com.googlecode.alv.parser.line.MPGainLineParser;
 import com.googlecode.alv.parser.line.MeatLineParser;
 import com.googlecode.alv.parser.line.MeatSpentLineParser;
@@ -107,7 +108,9 @@ public final class ConsumableBlockParser implements LogBlockParser {
     private final MeatLineParser meatGainParser = new MeatLineParser(MeatGainType.OTHER);
 
     private final MeatSpentLineParser meatSpentParser = new MeatSpentLineParser();
-
+    
+    private final ItemAcquisitionLineParser itemDropParser = new ItemAcquisitionLineParser();
+    
     private final EquipmentLineParser outfitChangeParser;
 
     // Only use for Llama cockroach stats parsing.
@@ -191,7 +194,8 @@ public final class ConsumableBlockParser implements LogBlockParser {
             if (mpParser.parseLine(line, logData) || meatGainParser.parseLine(line, logData)
                     || meatSpentParser.parseLine(line, logData)
                     || outfitChangeParser.parseLine(line, logData)
-                    || notesParser.parseLine(line, logData)) {
+                    || notesParser.parseLine(line, logData)
+                    || itemDropParser.parseLine(line, logData)) {
                 // Empty block, because the parsing has already happened if we
                 // get in here.
             } else if (gainLoseMatcher.reset(line).matches()) {
@@ -215,6 +219,16 @@ public final class ConsumableBlockParser implements LogBlockParser {
                 else if (StatClass.SUBSTATS.containsKey(gainIdentifier))
                     consumableStatgain 
                         = consumableStatgain.plus(StatClass.getStatgain(gainIdentifier, gainAmount));
+            } else if ("diabolic pizza".equals(itemName)
+                        && line.startsWith("You acquire an effect: ")) {
+                // We acquired an effect from eating a pizza.  Record it
+                Matcher matcher 
+                    = Pattern.compile("You acquire an effect:\\s*(.*?)\\s*[(](\\d+)[)]").matcher(line);
+                if (matcher.find()) {
+                    SingleTurn turn = (SingleTurn) logData.getLastTurnSpent();
+                    logData.addPizzaEvent(turn.getDayNumber(), turn.getTurnNumber(), 
+                            matcher.group(1), Integer.parseInt(matcher.group(2)));
+                }
             }
         }
 

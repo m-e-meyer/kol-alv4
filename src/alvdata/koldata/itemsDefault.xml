@@ -110,10 +110,12 @@
 	<item name="choco-mint patty" onetimeOnly="false" />
 	<item name="chocolate frosted sugar bomb" onetimeOnly="false" />
 	<item name="chrome ore" onetimeOnly="false" />
-	<item name="claybender glasses" onetimeOnly="true" />
+	<item name="cigarette lighter" onetimeOnly="false" />
+    <item name="claybender glasses" onetimeOnly="true" />
 	<item name="clock-cleaning hammer" onetimeOnly="false" />
 	<item name="cobb's knob lab key" onetimeOnly="true" />
-	<item name="coconut shell" onetimeOnly="false" />
+	<item name="cocktail napkin" onetimeOnly="false" />
+    <item name="coconut shell" onetimeOnly="false" />
 	<item name="coinspiracy" onetimeOnly="false" />
 	<item name="cold mashed potatoes" onetimeOnly="false" />
 	<item name="cold-filtered water" onetimeOnly="false" />
@@ -267,6 +269,7 @@
 	<item name="gene tonic: weird" onetimeOnly="false" />
 	<item name="giant yellow hat" onetimeOnly="false" />
 	<item name="glacial clock" onetimeOnly="false" />
+	<item name="glark cable" onetimeOnly="false" />
 	<item name="glass balls of the goblin king" onetimeOnly="false" />
 	<item name="glass of goat's milk" onetimeOnly="false" />
 	<item name="glimmering roc feather" onetimeOnly="false" />
@@ -517,7 +520,8 @@
 	<item name="sheila take a crossbow" onetimeOnly="false" />
 	<item name="shining halo" onetimeOnly="false" />
 	<item name="shore inc. ship trip scrip" onetimeOnly="false" />
-	<item name="shrapnel jelly donut" onetimeOnly="false" />
+	<item name="short writ of habeas corpus" onetimeOnly="false" />
+    <item name="shrapnel jelly donut" onetimeOnly="false" />
 	<item name="skeleton bone" onetimeOnly="false" />
 	<item name="skull of the bonerdagon" onetimeOnly="false" />
 	<item name="skull with a fuse in it" onetimeOnly="false" />

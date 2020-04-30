@@ -55,6 +55,7 @@ import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.LogDataHolder.AscensionPath;
 import com.googlecode.alv.logdata.MPGain;
 import com.googlecode.alv.logdata.MeatGain;
+import com.googlecode.alv.logdata.PizzaEvent;
 import com.googlecode.alv.logdata.Skill;
 import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.consumables.Consumable;
@@ -123,6 +124,7 @@ public class TextLogCreator {
     protected static final String HYBRIDIZE_PREFIX = "     h> ";
     protected static final String FAMILIAR_CHANGE_PREFIX = "     -> Turn";
     protected static final String LIMITED_USE_PREFIX = "     !> ";
+    protected static final String PIZZA_PREFIX = "     p>";
 
     protected static final String ITEM_MIDDLE_STRING = "Got ";
 
@@ -444,8 +446,12 @@ public class TextLogCreator {
     protected final Iterator<DataNumberPair<String>> learnedSkillIter;
 
     protected final Iterator<DataNumberPair<LimitedUseData.Use>> limitedUseIter;
+    
+    protected final Iterator<DataNumberPair<PizzaEvent>> pizzaEventIter;
 
     protected DataNumberPair<LimitedUseData.Use> currentLimitedUse;
+    
+    protected DataNumberPair<PizzaEvent> currentPizzaEvent;
 
     protected DataNumberPair<String> currentLearnedSkill;
 
@@ -495,6 +501,7 @@ public class TextLogCreator {
         hybridDataIter = logData.getHybridContent().iterator();
         learnedSkillIter = logData.getLearnedSkills().iterator();
         limitedUseIter = logData.getLimitedUses().iterator();
+        pizzaEventIter = logData.getPizzaEvents().iterator();
 
         dailyKaEarned = new HashMap<>();
         setAugmentationsMap();
@@ -535,6 +542,7 @@ public class TextLogCreator {
         currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
         currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
         currentLimitedUse = limitedUseIter.hasNext() ? limitedUseIter.next() : null;
+        currentPizzaEvent = pizzaEventIter.hasNext() ? pizzaEventIter.next() : null;
 
         // Level 1 can be skipped.
         levelIter.next();
@@ -1143,6 +1151,17 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the pizza events for the current turn interval
+     * 
+     * @param logData Data repository for the current parsed log
+     */
+    protected void printCurrentPizzaEvents(
+            Collection<PizzaEvent> pizzaEvents, int currentDayNumber) {
+        
+        System.out.println("" + pizzaEvents.size() + " pizza events");
+    }
+    
+/**
      * Prints all pulls from the given day up to the given turn number.
      *
      * @param currentDayNumber  Number of the day up to which to print pulls.
@@ -2238,6 +2257,29 @@ public class TextLogCreator {
         }
 
         printCurrentConsumables(ti.getConsumablesUsed(), currentDayNumber);
+        
+        while (currentPizzaEvent != null && ti.getEndTurn() >= currentPizzaEvent.getNumber()) {
+            final PizzaEvent event = currentPizzaEvent.getData();
+            printLineBreak();
+            write(PIZZA_PREFIX);
+            write(" ");
+            write(OPENING_TURN_BRACKET);
+            write(event.getTurnNumber());
+            write(CLOSING_TURN_BRACKET);
+            write(" ");
+            if (event.getDuration() == 0) {
+                write("Made pizza from ");
+                write(event.getDescription());
+            } else {
+                write("Pizza gave effect: ");
+                write(event.getDescription());
+                write(" (");
+                write(event.getDuration());
+                write(")");
+            }
+            writeln();
+            currentPizzaEvent = pizzaEventIter.hasNext() ? pizzaEventIter.next() : null;
+        }
 
         printCurrentPulls(currentDayNumber, ti.getEndTurn());
 
