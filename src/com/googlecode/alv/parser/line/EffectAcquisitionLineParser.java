@@ -108,7 +108,6 @@ public class EffectAcquisitionLineParser extends AbstractLineParser {
         }
         
         SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-        int day = logData.getCurrentDayNumber();
         int turn = st.getTurnNumber();
         switch (effect) {
         // Note: Maybe keeping these in order newest to oldest would be more efficient
@@ -120,35 +119,35 @@ public class EffectAcquisitionLineParser extends AbstractLineParser {
             break;
         // Boxing Day spa
         case "muddled":
-            logData.addLimitedUse(day, turn, Counter.DAYCARE_SPA, "Mud bath");
+            logData.addLimitedUse(Counter.DAYCARE_SPA, "Mud bath");
             break;
         case "ten out of ten":
-            logData.addLimitedUse(day, turn, Counter.DAYCARE_SPA, "Mani-pedi");
+            logData.addLimitedUse(Counter.DAYCARE_SPA, "Mani-pedi");
             break;
         case "uncucumbered":
-            logData.addLimitedUse(day, turn, Counter.DAYCARE_SPA, "Eye treatment");
+            logData.addLimitedUse(Counter.DAYCARE_SPA, "Eye treatment");
             break;
         case "flagrantly fragrant":
-            logData.addLimitedUse(day, turn, Counter.DAYCARE_SPA, "Aromatherapy");
+            logData.addLimitedUse(Counter.DAYCARE_SPA, "Aromatherapy");
             break;
         // Fortune Teller
         case "a girl named sue":
-            logData.addLimitedUse(day, turn, Counter.FORTUNE_TELLER, "Susie");
+            logData.addLimitedUse(Counter.FORTUNE_TELLER, "Susie");
             break;
         case "there's no n in love":
-            logData.addLimitedUse(day, turn, Counter.FORTUNE_TELLER, "Hagnk");
+            logData.addLimitedUse(Counter.FORTUNE_TELLER, "Hagnk");
             break;
         case "meet the meat":
-            logData.addLimitedUse(day, turn, Counter.FORTUNE_TELLER, "Meatsmith");
+            logData.addLimitedUse(Counter.FORTUNE_TELLER, "Meatsmith");
             break;
         case "gunther than thou":
-            logData.addLimitedUse(day, turn, Counter.FORTUNE_TELLER, "Gunther");
+            logData.addLimitedUse(Counter.FORTUNE_TELLER, "Gunther");
             break;
         case "everybody calls him gorgon":
-            logData.addLimitedUse(day, turn, Counter.FORTUNE_TELLER, "Gorgonzola");
+            logData.addLimitedUse(Counter.FORTUNE_TELLER, "Gorgonzola");
             break;
         case "they call him shifty because...":
-            logData.addLimitedUse(day, turn, Counter.FORTUNE_TELLER, "Shifty");
+            logData.addLimitedUse(Counter.FORTUNE_TELLER, "Shifty");
             break;
         // Clan swimming pool
         case "mental a-cue-ity":

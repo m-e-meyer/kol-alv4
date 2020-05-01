@@ -95,7 +95,7 @@ public class LogSummaryData
 
     private final QuestTurncounts questTurncounts;
     
-    private final LimitedUseData limitedUseData;
+    private final LimitedUseSummary limitedUseSummary;
 
     private Statgain totalStatgains;
 
@@ -235,7 +235,7 @@ public class LogSummaryData
         goatlet = data.getGoatlet();
         nesRealm = data.get8BitRealm();
         questTurncounts = data.getQuestTurncounts();
-        limitedUseData = data.getLimitedUseData();
+        limitedUseSummary = data.getLimitedUseData();
         totalStatgains = data.getTotalStatgains();
         combatsStatgains = data.getCombatsStatgains();
         noncombatsStatgains = data.getNoncombatsStatgains();
@@ -567,9 +567,9 @@ public class LogSummaryData
     /**
      * @return The data on uses of items or skills with daily limits
      */
-    public LimitedUseData getLimitedUseData()
+    public LimitedUseSummary getLimitedUseSummary()
     {
-        return limitedUseData;
+        return limitedUseSummary;
     }
     
     /**

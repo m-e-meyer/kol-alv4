@@ -350,8 +350,7 @@ public final class MafiaLogParser implements LogParser
                     skill.setMpCost(2);
                     turn.addSkillCast(skill);
                     // Record limited use
-                    logData.addLimitedUse(turn.getDayNumber(), turn.getTurnNumber(),  
-                            Counter.CLIP_ART, clipArt);
+                    logData.addLimitedUse(Counter.CLIP_ART, clipArt);
                     break;
                 } else if (lines.get(0).startsWith("pizza")) {
                     // Made a pizza!  Remember the ingredients
@@ -360,8 +359,7 @@ public final class MafiaLogParser implements LogParser
                     break;
                 } else if (lines.get(0).startsWith("Gazing at the Stars")) {
                     // You can Gaze at the Stars 4 times
-                    final SingleTurn turn = (SingleTurn) logData.getLastTurnSpent();
-                    logData.addLimitedUse(turn.getDayNumber(), turn.getTurnNumber(), Counter.GAZE, "");
+                    logData.addLimitedUse(Counter.GAZE, "");
                     break;
                 }
                 // Apply all parsers to each line

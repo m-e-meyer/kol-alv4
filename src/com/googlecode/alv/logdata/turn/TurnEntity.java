@@ -64,11 +64,15 @@ public interface TurnEntity {
     public MPGain getMPGain();
     
     /**
-     * 
      * @return The list of pizza events for this turn.
      */
     public List<PizzaEvent> getPizzaEvents();
 
+    /**
+     * @return The list of limited-use events for this turn.
+     */
+    public List<LimitedUse> getLimitedUses();
+   
     /**
      * @return The meat data object.
      */
