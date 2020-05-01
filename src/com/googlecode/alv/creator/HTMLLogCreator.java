@@ -107,6 +107,9 @@ public class HTMLLogCreator extends TextLogCreator {
     protected void printTableOfContents(LogDataHolder logData)
     {
         writeln("<table><tr><td class=\"toc\"><b>TABLE OF CONTENTS</b>");
+        for (int i=1; i <= logData.getCurrentDayNumber(); i++) {
+            printTOCLine("Day " + i, "day" + i);
+        }
         printTOCLine("Adventures", "adventures");
         printTOCLine("Quest Turns", "questturns");
         printTOCLine("Pulls", "pulls");
@@ -204,7 +207,7 @@ public class HTMLLogCreator extends TextLogCreator {
     protected void printDayChange(DayChange nextDay) 
     {
         write(logAdditionsMap.get("dayChangeLineStart"));
-        write("<h2>" + nextDay.toString() + "</h2>");
+        printSectionHeader(nextDay.toString(), "day" + nextDay.getDayNumber());
         writeln(logAdditionsMap.get("dayChangeLineEnd"));
     }
     
