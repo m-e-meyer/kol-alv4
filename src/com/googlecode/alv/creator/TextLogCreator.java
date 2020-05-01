@@ -55,6 +55,7 @@ import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.LogDataHolder.AscensionPath;
 import com.googlecode.alv.logdata.MPGain;
 import com.googlecode.alv.logdata.MeatGain;
+import com.googlecode.alv.logdata.PizzaEvent;
 import com.googlecode.alv.logdata.Skill;
 import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.consumables.Consumable;
@@ -123,6 +124,7 @@ public class TextLogCreator {
     protected static final String HYBRIDIZE_PREFIX = "     h> ";
     protected static final String FAMILIAR_CHANGE_PREFIX = "     -> Turn";
     protected static final String LIMITED_USE_PREFIX = "     !> ";
+    protected static final String PIZZA_PREFIX = "     p>";
 
     protected static final String ITEM_MIDDLE_STRING = "Got ";
 
@@ -444,9 +446,9 @@ public class TextLogCreator {
     protected final Iterator<DataNumberPair<String>> learnedSkillIter;
 
     protected final Iterator<DataNumberPair<LimitedUseData.Use>> limitedUseIter;
-
+    
     protected DataNumberPair<LimitedUseData.Use> currentLimitedUse;
-
+    
     protected DataNumberPair<String> currentLearnedSkill;
 
     protected DataNumberPair<String> currentBanishedCombat;
@@ -535,7 +537,7 @@ public class TextLogCreator {
         currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
         currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
         currentLimitedUse = limitedUseIter.hasNext() ? limitedUseIter.next() : null;
-
+        
         // Level 1 can be skipped.
         levelIter.next();
         nextLevel = levelIter.hasNext() ? levelIter.next() : null;
@@ -1143,6 +1145,17 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the pizza events for the current turn interval
+     * 
+     * @param logData Data repository for the current parsed log
+     */
+    protected void printCurrentPizzaEvents(
+            Collection<PizzaEvent> pizzaEvents, int currentDayNumber) {
+        
+        System.out.println("" + pizzaEvents.size() + " pizza events");
+    }
+    
+/**
      * Prints all pulls from the given day up to the given turn number.
      *
      * @param currentDayNumber  Number of the day up to which to print pulls.
@@ -2238,6 +2251,27 @@ public class TextLogCreator {
         }
 
         printCurrentConsumables(ti.getConsumablesUsed(), currentDayNumber);
+        
+        for (final PizzaEvent pizzaEvent : ti.getPizzaEvents()) {
+            printLineBreak();
+            write(PIZZA_PREFIX);
+            write(" ");
+            write(OPENING_TURN_BRACKET);
+            write(pizzaEvent.getTurnNumber());
+            write(CLOSING_TURN_BRACKET);
+            write(" ");
+            if (pizzaEvent.getDuration() == 0) {
+                write("Made pizza from ");
+                write(pizzaEvent.getDescription());
+            } else {
+                write("Pizza gave effect: ");
+                write(pizzaEvent.getDescription());
+                write(" (");
+                write(pizzaEvent.getDuration());
+                write(")");
+            }
+            writeln();
+        }
 
         printCurrentPulls(currentDayNumber, ti.getEndTurn());
 

@@ -338,6 +338,7 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
                                                      e.getSkillsCast(),
                                                      e.getConsumablesUsed(),
                                                      e.getCombatItemsUsed(),
+                                                     e.getPizzaEvents(),
                                                      e.isBanished(),
                                                      e.getBanishedInfo()));
         }
@@ -418,6 +419,7 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
                                       getSkillsCast(),
                                       getConsumablesUsed(),
                                       getCombatItemsUsed(),
+                                      getPizzaEvents(),
                                       isBanished,
                                       getBanishedInfo());
     }

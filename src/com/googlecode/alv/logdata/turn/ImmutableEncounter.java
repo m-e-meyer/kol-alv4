@@ -24,6 +24,7 @@
 
 package com.googlecode.alv.logdata.turn;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +88,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     private final Map<String, CombatItem> combatItemsUsed;
     
     private final CountableSet<Consumable> consumables;
+    
+    private final List<PizzaEvent> pizzaEvents;
 
     public ImmutableEncounter(final String areaName, 
                               final String encounterName,
@@ -104,7 +107,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
                               final Collection<Item> itemdrops, 
                               final Collection<Skill> skillCasts,
                               final Collection<Consumable> consumables,
-                              final Collection<CombatItem> combatItemsUsed, 
+                              final Collection<CombatItem> combatItemsUsed,
+                              final List<PizzaEvent> pizzaEvents,
                               final boolean isBanished, 
                               final String banishedInfo) 
     {
@@ -172,6 +176,11 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         this.consumables = new CountableSet<Consumable>();
         for (final Consumable c : consumables)
             this.consumables.addElement(c);
+        
+        this.pizzaEvents = new ArrayList<PizzaEvent>();
+        for (final PizzaEvent pe : pizzaEvents) {
+            this.pizzaEvents.add(pe);
+        }
     }
 
     /**
@@ -298,6 +307,13 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     public Collection<Item> getDroppedItems() 
     {
         return getCollectionFromMap(itemdrops);
+    }
+    
+    /**
+     * @return The pizza events for this turn.
+     */
+    public List<PizzaEvent> getPizzaEvents() {
+        return pizzaEvents;
     }
 
     /**

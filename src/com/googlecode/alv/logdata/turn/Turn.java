@@ -25,11 +25,13 @@
 package com.googlecode.alv.logdata.turn;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.googlecode.alv.logdata.CombatItem;
 import com.googlecode.alv.logdata.Item;
 import com.googlecode.alv.logdata.MPGain;
 import com.googlecode.alv.logdata.MeatGain;
+import com.googlecode.alv.logdata.PizzaEvent;
 import com.googlecode.alv.logdata.Skill;
 import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.consumables.Consumable;
@@ -88,6 +90,13 @@ public interface Turn extends TurnEntity {
             final String notes);
 
     /**
+     * 
+     * @param pizzaEvent The pizza event to add to this turn
+     */
+    void addPizzaEvent(
+            final PizzaEvent pizzaEvent);
+    
+    /**
      * @param skill The skill to add.
      */
     void addSkillCast(
@@ -141,6 +150,13 @@ public interface Turn extends TurnEntity {
     void setNotes(
             final String notes);
 
+    /**
+     * 
+     * @param pizzaEvents The pizza event list to set.
+     */
+    void setPizzaEvents(
+            final List<PizzaEvent> pizzaEvents);
+        
     /**
      * @param skillsCast The skills cast to set.
      */

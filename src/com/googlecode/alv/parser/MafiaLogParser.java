@@ -353,6 +353,16 @@ public final class MafiaLogParser implements LogParser
                     logData.addLimitedUse(turn.getDayNumber(), turn.getTurnNumber(),  
                             Counter.CLIP_ART, clipArt);
                     break;
+                } else if (lines.get(0).startsWith("pizza")) {
+                    // Made a pizza!  Remember the ingredients
+                    String ingredients = lines.get(0).substring(6);
+                    logData.addPizzaEvent(ingredients, 0);
+                    break;
+                } else if (lines.get(0).startsWith("Gazing at the Stars")) {
+                    // You can Gaze at the Stars 4 times
+                    final SingleTurn turn = (SingleTurn) logData.getLastTurnSpent();
+                    logData.addLimitedUse(turn.getDayNumber(), turn.getTurnNumber(), Counter.GAZE, "");
+                    break;
                 }
                 // Apply all parsers to each line
                 for (final String line : lines) {

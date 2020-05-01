@@ -25,6 +25,7 @@
 package com.googlecode.alv.logdata.turn;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.googlecode.alv.logdata.*;
 import com.googlecode.alv.logdata.consumables.Consumable;
@@ -61,6 +62,12 @@ public interface TurnEntity {
      * @return The mp gains from this turn.
      */
     public MPGain getMPGain();
+    
+    /**
+     * 
+     * @return The list of pizza events for this turn.
+     */
+    public List<PizzaEvent> getPizzaEvents();
 
     /**
      * @return The meat data object.

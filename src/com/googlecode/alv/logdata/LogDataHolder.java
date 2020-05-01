@@ -289,7 +289,7 @@ public final class LogDataHolder {
     private final List<DataNumberPair<String>> huntedCombats = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> lostCombats = Lists.newArrayList();
-
+    
     private final boolean isDetailedLog;
 
     private CharacterClass characterClass = CharacterClass.NOT_DEFINED;
@@ -594,6 +594,26 @@ public final class LogDataHolder {
         lostCombats.add(lostCombat);
     }
 
+    /**
+     * Construct a PizzaEvent and add it to the most recent turn.  The PizzaEvent
+     * is initialized with the day and turn numbers of the last turn in the
+     * LogDataHolder.
+     * 
+     * @param description Description of the event
+     * @param duration Duration of the event.  Zero if pizza creation, non-zero
+     *      if an effect being acquired
+     */
+    public void addPizzaEvent(
+            final String description,
+            final int duration) {
+        
+        SingleTurn turn = (SingleTurn) this.getLastTurnSpent();
+        final PizzaEvent event 
+            = new PizzaEvent(turn.getDayNumber(), turn.getTurnNumber(), 
+                             description, duration);
+        turn.addPizzaEvent(event);
+    }
+    
     /**
      * @param playerSnapshot The player snapshot to add.
      */
@@ -1260,6 +1280,10 @@ public final class LogDataHolder {
         return Collections.unmodifiableCollection(levels.values());
     }
 
+    /**
+     * 
+     * @return The limited uses that have been accumulated to this point
+     */
     public List<DataNumberPair<LimitedUseData.Use>> getLimitedUses() {
 
         return Collections.unmodifiableList(this.limitedUses);
