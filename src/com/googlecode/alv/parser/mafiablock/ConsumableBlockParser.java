@@ -225,9 +225,7 @@ public final class ConsumableBlockParser implements LogBlockParser {
                 Matcher matcher 
                     = Pattern.compile("You acquire an effect:\\s*(.*?)\\s*[(](\\d+)[)]").matcher(line);
                 if (matcher.find()) {
-                    SingleTurn turn = (SingleTurn) logData.getLastTurnSpent();
-                    logData.addPizzaEvent(turn.getDayNumber(), turn.getTurnNumber(), 
-                            matcher.group(1), Integer.parseInt(matcher.group(2)));
+                    logData.addPizzaEvent(matcher.group(1), Integer.parseInt(matcher.group(2)));
                 }
             }
         }

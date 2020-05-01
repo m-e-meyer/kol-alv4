@@ -447,12 +447,8 @@ public class TextLogCreator {
 
     protected final Iterator<DataNumberPair<LimitedUseData.Use>> limitedUseIter;
     
-    protected final Iterator<DataNumberPair<PizzaEvent>> pizzaEventIter;
-
     protected DataNumberPair<LimitedUseData.Use> currentLimitedUse;
     
-    protected DataNumberPair<PizzaEvent> currentPizzaEvent;
-
     protected DataNumberPair<String> currentLearnedSkill;
 
     protected DataNumberPair<String> currentBanishedCombat;
@@ -501,7 +497,6 @@ public class TextLogCreator {
         hybridDataIter = logData.getHybridContent().iterator();
         learnedSkillIter = logData.getLearnedSkills().iterator();
         limitedUseIter = logData.getLimitedUses().iterator();
-        pizzaEventIter = logData.getPizzaEvents().iterator();
 
         dailyKaEarned = new HashMap<>();
         setAugmentationsMap();
@@ -542,8 +537,7 @@ public class TextLogCreator {
         currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
         currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
         currentLimitedUse = limitedUseIter.hasNext() ? limitedUseIter.next() : null;
-        currentPizzaEvent = pizzaEventIter.hasNext() ? pizzaEventIter.next() : null;
-
+        
         // Level 1 can be skipped.
         levelIter.next();
         nextLevel = levelIter.hasNext() ? levelIter.next() : null;
@@ -2258,27 +2252,25 @@ public class TextLogCreator {
 
         printCurrentConsumables(ti.getConsumablesUsed(), currentDayNumber);
         
-        while (currentPizzaEvent != null && ti.getEndTurn() >= currentPizzaEvent.getNumber()) {
-            final PizzaEvent event = currentPizzaEvent.getData();
+        for (final PizzaEvent pizzaEvent : ti.getPizzaEvents()) {
             printLineBreak();
             write(PIZZA_PREFIX);
             write(" ");
             write(OPENING_TURN_BRACKET);
-            write(event.getTurnNumber());
+            write(pizzaEvent.getTurnNumber());
             write(CLOSING_TURN_BRACKET);
             write(" ");
-            if (event.getDuration() == 0) {
+            if (pizzaEvent.getDuration() == 0) {
                 write("Made pizza from ");
-                write(event.getDescription());
+                write(pizzaEvent.getDescription());
             } else {
                 write("Pizza gave effect: ");
-                write(event.getDescription());
+                write(pizzaEvent.getDescription());
                 write(" (");
-                write(event.getDuration());
+                write(pizzaEvent.getDuration());
                 write(")");
             }
             writeln();
-            currentPizzaEvent = pizzaEventIter.hasNext() ? pizzaEventIter.next() : null;
         }
 
         printCurrentPulls(currentDayNumber, ti.getEndTurn());

@@ -24,13 +24,16 @@
 
 package com.googlecode.alv.logdata.turn;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.googlecode.alv.logdata.CombatItem;
 import com.googlecode.alv.logdata.Item;
 import com.googlecode.alv.logdata.LogComment;
 import com.googlecode.alv.logdata.MPGain;
 import com.googlecode.alv.logdata.MeatGain;
+import com.googlecode.alv.logdata.PizzaEvent;
 import com.googlecode.alv.logdata.Skill;
 import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.consumables.Consumable;
@@ -68,6 +71,8 @@ public abstract class AbstractTurn implements Turn {
     private final CountableSet<CombatItem> combatItemsUsed = new CountableSet<>();
 
     private final CountableSet<Consumable> consumablesUsed = new CountableSet<>();
+    
+    private final List<PizzaEvent> pizzaEvents = new ArrayList<>();
 
     private int successfulFreeRunaways = 0;
 
@@ -144,6 +149,13 @@ public abstract class AbstractTurn implements Turn {
      * @see Turn
      */
     @Override
+    public void addPizzaEvent(
+            final PizzaEvent pizzaEvent) { pizzaEvents.add(pizzaEvent); }
+    
+    /**
+     * @see Turn
+     */
+    @Override
     public void addSkillCast(
             final Skill skill) { skillsCast.addElement(skill); }
 
@@ -180,6 +192,9 @@ public abstract class AbstractTurn implements Turn {
         }
         for (final CombatItem ci : turn.getCombatItemsUsed()) {
             addCombatItemUsed(ci);
+        }
+        for (final PizzaEvent pe : turn.getPizzaEvents()) {
+            addPizzaEvent(pe);
         }
     }
 
@@ -271,6 +286,11 @@ public abstract class AbstractTurn implements Turn {
     @Override
     public String getNotes() { return comment.getComments(); }
 
+    /**
+     * @see TurnEntity
+     */
+    public List<PizzaEvent> getPizzaEvents() { return pizzaEvents; }
+    
     /**
      * @see TurnEntity
      */
@@ -447,6 +467,18 @@ public abstract class AbstractTurn implements Turn {
     public void setNotes(
             final String notes) { comment.setComments(notes); }
 
+    /**
+     * @see Turn
+     */
+    @Override
+    public void setPizzaEvents( 
+            final List<PizzaEvent> pizzaEvents) {
+        this.pizzaEvents.clear();
+        for (PizzaEvent pe : pizzaEvents) {
+            this.pizzaEvents.add(pe);
+        }
+    }
+    
     /**
      * @see Turn
      */
