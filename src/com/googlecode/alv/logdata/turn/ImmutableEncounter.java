@@ -89,6 +89,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     
     private final CountableSet<Consumable> consumables;
     
+    private final List<LimitedUse> limitedUses;
+    
     private final List<PizzaEvent> pizzaEvents;
 
     public ImmutableEncounter(final String areaName, 
@@ -108,6 +110,7 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
                               final Collection<Skill> skillCasts,
                               final Collection<Consumable> consumables,
                               final Collection<CombatItem> combatItemsUsed,
+                              final List<LimitedUse> limitedUses,
                               final List<PizzaEvent> pizzaEvents,
                               final boolean isBanished, 
                               final String banishedInfo) 
@@ -176,6 +179,11 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         this.consumables = new CountableSet<Consumable>();
         for (final Consumable c : consumables)
             this.consumables.addElement(c);
+        
+        this.limitedUses = new ArrayList<LimitedUse>();
+        for (final LimitedUse use : limitedUses) {
+            this.limitedUses.add(use);
+        }
         
         this.pizzaEvents = new ArrayList<PizzaEvent>();
         for (final PizzaEvent pe : pizzaEvents) {
@@ -309,6 +317,13 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         return getCollectionFromMap(itemdrops);
     }
     
+    /**
+     * @return The pizza events for this turn.
+     */
+    public List<LimitedUse> getLimitedUses() {
+        return limitedUses;
+    }
+
     /**
      * @return The pizza events for this turn.
      */

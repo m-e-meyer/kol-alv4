@@ -126,7 +126,7 @@ public final class SkillCastLineParser extends AbstractLineParser
                     Encounter lastEncounter = (Encounter) encounters[encounters.length - 1];
                     use = lastEncounter.getEncounterName();
                 }
-                logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.getVar1(), use);
+                logData.addLimitedUse(cu.getVar1(), use);
             }
         }
     }

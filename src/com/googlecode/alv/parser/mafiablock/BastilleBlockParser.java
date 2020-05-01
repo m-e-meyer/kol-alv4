@@ -106,9 +106,7 @@ public class BastilleBlockParser implements LogBlockParser
         tmpCon.setStatGain(statgain);
         st.addConsumableUsed(tmpCon);
         // Now we can add the limited use to the LogDataHolder.
-        logData.addLimitedUse(currentDay, 
-                              currentTurn, 
-                              Counter.BASTILLE, 
+        logData.addLimitedUse(Counter.BASTILLE, 
                               settings,
                               statgain);
     }

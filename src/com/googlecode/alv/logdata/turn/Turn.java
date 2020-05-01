@@ -29,6 +29,7 @@ import java.util.List;
 
 import com.googlecode.alv.logdata.CombatItem;
 import com.googlecode.alv.logdata.Item;
+import com.googlecode.alv.logdata.LimitedUse;
 import com.googlecode.alv.logdata.MPGain;
 import com.googlecode.alv.logdata.MeatGain;
 import com.googlecode.alv.logdata.PizzaEvent;
@@ -68,6 +69,12 @@ public interface Turn extends TurnEntity {
     void addFreeRunaways(
             final int freeRunaways);
 
+    /**
+     * @param limitedUse The limited-use event to add to the turn.
+     */
+    void addLimitedUse(
+            final LimitedUse limitedUse);
+    
     /**
      * @param meat The meat data to add.
      */
@@ -132,6 +139,12 @@ public interface Turn extends TurnEntity {
     void setFreeRunaways(
             final int freeRunaways);
 
+    /**
+     * @param limitedUses The new list of limited-use events.
+     */
+    void setLimitedUses(
+            final List<LimitedUse> limitedUses);
+    
     /**
      * @param meat The meat data to set.
      */

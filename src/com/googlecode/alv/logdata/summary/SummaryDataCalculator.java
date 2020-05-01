@@ -139,7 +139,7 @@ final class SummaryDataCalculator
 
     private final QuestTurncounts questTurncounts;
     
-    private final LimitedUseData limitedUseData;
+    private final LimitedUseSummary limitedUseData;
 
     private Statgain totalStatgains = Statgain.NO_STATS;
 
@@ -386,8 +386,7 @@ final class SummaryDataCalculator
         questTurncounts = new QuestTurncounts(logData.getTurnIntervalsSpent(),
                                               droppedItems.getElements());
         
-        limitedUseData = new LimitedUseData(logData.getLimitedUses(), 
-                                            logData.getCurrentDayNumber());
+        limitedUseData = new LimitedUseSummary(logData.getLimitedUses());
     }
 
     /**
@@ -758,7 +757,7 @@ final class SummaryDataCalculator
     /**
      * @return The data for uses of items with daily limits
      */
-    LimitedUseData getLimitedUseData()
+    LimitedUseSummary getLimitedUseData()
     {
         return limitedUseData;
     }

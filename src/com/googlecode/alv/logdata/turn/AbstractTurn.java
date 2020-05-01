@@ -30,6 +30,7 @@ import java.util.List;
 
 import com.googlecode.alv.logdata.CombatItem;
 import com.googlecode.alv.logdata.Item;
+import com.googlecode.alv.logdata.LimitedUse;
 import com.googlecode.alv.logdata.LogComment;
 import com.googlecode.alv.logdata.MPGain;
 import com.googlecode.alv.logdata.MeatGain;
@@ -71,6 +72,8 @@ public abstract class AbstractTurn implements Turn {
     private final CountableSet<CombatItem> combatItemsUsed = new CountableSet<>();
 
     private final CountableSet<Consumable> consumablesUsed = new CountableSet<>();
+    
+    private final List<LimitedUse> limitedUses = new ArrayList<>();
     
     private final List<PizzaEvent> pizzaEvents = new ArrayList<>();
 
@@ -124,6 +127,13 @@ public abstract class AbstractTurn implements Turn {
     public void addFreeRunaways(
             final int freeRunaways) { successfulFreeRunaways += freeRunaways; }
 
+    /**
+     * @see Turn
+     */
+    @Override
+    public void addLimitedUse(
+            final LimitedUse limitedUse) { limitedUses.add(limitedUse); }
+    
     /**
      * @see Turn
      */
@@ -192,6 +202,9 @@ public abstract class AbstractTurn implements Turn {
         }
         for (final CombatItem ci : turn.getCombatItemsUsed()) {
             addCombatItemUsed(ci);
+        }
+        for (final LimitedUse use : turn.getLimitedUses()) {
+            addLimitedUse(use);
         }
         for (final PizzaEvent pe : turn.getPizzaEvents()) {
             addPizzaEvent(pe);
@@ -267,6 +280,12 @@ public abstract class AbstractTurn implements Turn {
      */
     @Override
     public int getFreeRunaways() { return successfulFreeRunaways; }
+
+    /**
+     * @see TurnEntity
+     */
+    @Override
+    public List<LimitedUse> getLimitedUses() { return limitedUses; }
 
     /**
      * @see TurnEntity
@@ -446,6 +465,18 @@ public abstract class AbstractTurn implements Turn {
     public void setFreeTurn(
             final boolean isFreeTurn) { this.isFreeTurn = isFreeTurn; }
 
+    /**
+     * @see Turn
+     */
+    @Override
+    public void setLimitedUses( 
+            final List<LimitedUse> limitedUses) {
+        this.limitedUses.clear();
+        for (LimitedUse use : limitedUses) {
+            this.limitedUses.add(use);
+        }
+    }
+    
     /**
      * @see Turn
      */

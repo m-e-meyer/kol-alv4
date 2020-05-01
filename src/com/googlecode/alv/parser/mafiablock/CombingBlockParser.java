@@ -29,7 +29,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
-import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.Pair;
 
@@ -52,8 +51,7 @@ public class CombingBlockParser implements LogBlockParser {
              String effect = m.group(1).toLowerCase();
              Pair<Counter, String> cu = Counter.LIMITED_USE_MAP.get(effect);
              if (cu != null) {
-                 SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-                 logData.addLimitedUse(st.getDayNumber(), st.getTurnNumber(), cu.getVar1(), cu.getVar2());
+                 logData.addLimitedUse(cu.getVar1(), cu.getVar2());
              } else {
                  System.out.println("You shouldn't be here with effect: " + effect);
              }

@@ -24,6 +24,7 @@
 
 package com.googlecode.alv.logdata;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,10 +36,9 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import com.googlecode.alv.logdata.LimitedUse;
 import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.summary.LevelData;
-import com.googlecode.alv.logdata.summary.LimitedUseData;
-import com.googlecode.alv.logdata.summary.LimitedUseData.Use;
 import com.googlecode.alv.logdata.summary.LogSummaryData;
 import com.googlecode.alv.logdata.turn.DetailedTurnInterval;
 import com.googlecode.alv.logdata.turn.SimpleTurnInterval;
@@ -281,8 +281,6 @@ public final class LogDataHolder {
     private final List<Pull> pulls = Lists.newArrayList(100);
 
     private final List<DataNumberPair<String>> learnedSkills = Lists.newArrayList();
-
-    private final List<DataNumberPair<LimitedUseData.Use>> limitedUses = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> hybridization = Lists.newArrayList();
 
@@ -553,32 +551,30 @@ public final class LogDataHolder {
      * @param subUse  String denoting the use decrementing the counter
      */
     public void addLimitedUse(
-            final int day,
-            final int turn,
             final Counter counter,
             final String subUse) {
 
-        addLimitedUse(day, turn, counter, subUse, Statgain.NO_STATS);
+        addLimitedUse(counter, subUse, Statgain.NO_STATS);
     }
 
     /**
      * Adds a use of a daily-limited item to the list of uses.
      *
-     * @param day      Day number of th euse event
+     * @param day      Day number of the use event
      * @param turn     Turn number of the use event
      * @param counter  Use counter applicable to the event
      * @param subUse   String denoting the use decrementing the counter
      * @param statgain Statgain for stats, if any, accrued by using this item
      */
     public void addLimitedUse(
-            final int day,
-            final int turn,
             final Counter counter,
             final String subUse,
             final Statgain statgain) {
 
-        final Use use = new Use(day, turn, counter, subUse, statgain);
-        this.limitedUses.add(DataNumberPair.of(use, turn));
+        SingleTurn turn = (SingleTurn) this.getLastTurnSpent();
+        final LimitedUse use = new LimitedUse(turn.getDayNumber(), turn.getTurnNumber(), 
+                counter, subUse, statgain);
+        turn.addLimitedUse(use);
     }
 
     /**
@@ -1282,11 +1278,18 @@ public final class LogDataHolder {
 
     /**
      * 
-     * @return The limited uses that have been accumulated to this point
+     * @return The limited uses that have been accumulated to this point.  This is
+     *      done by gathering them from the turn intervals.
      */
-    public List<DataNumberPair<LimitedUseData.Use>> getLimitedUses() {
+    public List<LimitedUse> getLimitedUses() {
 
-        return Collections.unmodifiableList(this.limitedUses);
+        ArrayList<LimitedUse> limitedUses = new ArrayList<>();
+        for (TurnInterval st : this.getTurnIntervalsSpent()) {
+            for (LimitedUse use : st.getLimitedUses()) {
+                limitedUses.add(use);
+            }
+        }
+        return Collections.unmodifiableList(limitedUses);
     }
 
     /**
