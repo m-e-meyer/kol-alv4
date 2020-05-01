@@ -22,14 +22,13 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.googlecode.alv.logdata.summary;
+package com.googlecode.alv.logdata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
-import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.DataNumberPair;
 
@@ -38,7 +37,7 @@ import com.googlecode.alv.util.DataNumberPair;
  * per day, such as the Cosplay Saber's Force and the Powerful Glove cheat codes.
  *
  */
-public class LimitedUseData {
+public class LimitedUse {
         
     /**
      * 
@@ -178,7 +177,7 @@ public class LimitedUseData {
      * @param uses List of item/skill use events
      * @param daycount Number of days in the run
      */
-    public LimitedUseData(List<DataNumberPair<Use>> uses, int daycount) {
+    public LimitedUse(List<DataNumberPair<Use>> uses, int daycount) {
         ensureDaycount(daycount);
         for (DataNumberPair<Use> use : uses) {
             add(use.getData());
