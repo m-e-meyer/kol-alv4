@@ -57,11 +57,14 @@ public enum Counter
     LATTE_GULP("Latte/Gulp", 4),
     LATTE_OFFER("Latte/Offer", 4),
     LATTE_THROW("Latte/Throw", 4),
+    LECTURE("Lecture", 5),  // Really familiar-weight dependent
     PILLKEEPER("Pillkeeper", 6),
     SABER_UPGRADE("Saber/Upgrade", 1),
     SABER_USE_FORCE("Saber/Use the Force", 5),
     VAMPYRIC_CLOAKE("Vampyric Cloake", 10)
     ;
+    
+    public static final String RELATIVITY = "Relativity";
     
     public static final String REPLACE_ENEMY = "Replace Enemy";
     
@@ -95,13 +98,9 @@ public enum Counter
                 Pair.of("1387/1", 
                         Pair.of(Counter.SABER_USE_FORCE, "Not the adventurer")),
                 Pair.of("1387/2", 
-                        Pair.of(Counter.SABER_USE_FORCE, "Find friends")),
-                Pair.of("1387/1", 
-                        Pair.of(Counter.SABER_USE_FORCE, "Not the adventurer")),
-                Pair.of("1387/2", 
-                        Pair.of(Counter.SABER_USE_FORCE, "Find friends")),
+                        Pair.of(Counter.SABER_USE_FORCE, "Find 2 friends")),
                 Pair.of("1387/3", 
-                        Pair.of(Counter.SABER_USE_FORCE, "Drop things")),
+                        Pair.of(Counter.SABER_USE_FORCE, "Drop your things")),
                 Pair.of("1386/1", 
                         Pair.of(Counter.SABER_UPGRADE, "MP regen")),
                 Pair.of("1386/2", 
@@ -175,6 +174,9 @@ public enum Counter
                 Pair.of("throw latte on opponent", 
                         Pair.of(Counter.LATTE_THROW, "")),
                 Pair.of("summon clip art", 
-                        Pair.of(Counter.CLIP_ART, ""))
+                        Pair.of(Counter.CLIP_ART, "")),
+                Pair.of("lecture on mass", Pair.of(Counter.LECTURE, "Mass")),
+                Pair.of("lecture on relativity", Pair.of(Counter.LECTURE, "Relativity")),
+                Pair.of("lecture on velocity", Pair.of(Counter.LECTURE, "Velocity"))
                 );
 }
