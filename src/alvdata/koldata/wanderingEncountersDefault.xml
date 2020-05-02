@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <wanderingAdventures>
 	<adventure name="ambulatory pirate" />
+    <adventure name="angry ghost"/>
+    <adventure name="annoyed snake"/>
 	<adventure name="argarggagarg the dire hellseal" />
 	<adventure name="b&amp;eacute;arnaise zombie" />
 	<adventure name="bee swarm" />
@@ -17,6 +19,7 @@
 	<adventure name="el padre cadáver" />
 	<adventure name="evil spaghetti cult assassin" />
 	<adventure name="flock of seagulls" />
+    <adventure name="government bureaucrat"/>
 	<adventure name="heimandatz, nacho golem" />
 	<adventure name="hunting seal" />
 	<adventure name="jocko homo" />
@@ -35,7 +38,10 @@
 	<adventure name="possessed can of cranberry sauce" />
 	<adventure name="queen bee" />
 	<adventure name="safari jack, small-game hunter" />
+	<adventure name="sausage goblin"/>
+    <adventure name="slime blob"/>
 	<adventure name="stuffing golem" />
+    <adventure name="terrible mutant"/>
 	<adventure name="the mariachi with no name" />
 	<adventure name="turtle trapper" />
 	<adventure name="yakisoba the executioner" />
