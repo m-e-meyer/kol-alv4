@@ -74,7 +74,7 @@ import com.googlecode.alv.util.Constants;
 public final class Settings 
 {
     public static final String VERSION_PROPERTY_NAME = "Version";
-    public static final String ALV_VERSION = "4.0.0.0b";
+    public static final String ALV_VERSION = "4.0.0.0c";
     
     public static final String XML_VERSION_PROPERTY_NAME = "XML format version";
     public static final String XML_VERSION = "1.4";
