@@ -32,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -290,7 +291,7 @@ public final class LogVisualizer
         private final Matcher VALID_DATE = Pattern.compile("^[0-9]{8}$").matcher(""); 
         public boolean isParsing = false;
         public boolean hasError = false;
-        public LogOutputFormat format = LogOutputFormat.TEXT_LOG;
+        public EnumSet<LogOutputFormat> formats = EnumSet.noneOf(LogOutputFormat.class);
         public File srcDir = null;
         public File destDir = null;
         public int ascensionCount = Integer.MAX_VALUE;
@@ -316,19 +317,19 @@ public final class LogVisualizer
                     break;
                 case "-html":
                 case "--html":
-                    format = LogOutputFormat.HTML_LOG;
+                    formats.add(LogOutputFormat.HTML_LOG);
                     break;
                 case "-bbcode":
                 case "--bbcode":
-                    format = LogOutputFormat.BBCODE_LOG;
+                    formats.add(LogOutputFormat.BBCODE_LOG);
                     break;
                 case "-xml":
                 case "--xml":
-                    format = LogOutputFormat.XML_LOG;
+                    formats.add(LogOutputFormat.XML_LOG);
                     break;
                 case "-text":
                 case "--text":
-                    format = LogOutputFormat.TEXT_LOG;
+                    formats.add(LogOutputFormat.TEXT_LOG);
                     break;
                 case "-c":
                 case "-count":

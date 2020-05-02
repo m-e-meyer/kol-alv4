@@ -26,6 +26,7 @@ package com.googlecode.alv;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.EnumSet;
 import java.util.List;
 
 import com.googlecode.alv.gui.InternalMafiaLogParserDialog;
@@ -49,7 +50,10 @@ public final class LogVisualizerCLI {
     public static void runCLIParsing(
             final LogVisualizer.ALVParameters params) {
 
-        final LogOutputFormat outputFormat = params.format;
+        EnumSet<LogOutputFormat> outputFormats = params.formats;
+        if (outputFormats.isEmpty()) {
+            outputFormats = EnumSet.of(LogOutputFormat.TEXT_LOG);
+        }
         int numberToParse = params.ascensionCount;
         final File mafiaLogsDirectory = (params.srcDir == null)
                 ? new File(Settings.getString("Mafia logs location"))
@@ -116,7 +120,7 @@ public final class LogVisualizerCLI {
         try {
             System.out.println("Parsing, please wait.");
             final List<Pair<String, Encounter>> errorFileList = LogsProcessor.createParsedLogs(
-                    mafiaLogs, parsedLogsSavingDirectory, outputFormat, numberToParse);
+                    mafiaLogs, parsedLogsSavingDirectory, outputFormats, numberToParse);
             System.out.println("Parsing finished.\n\n");
 
             // If there were error logs, give the user feedback on them.

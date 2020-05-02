@@ -36,6 +36,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -111,7 +112,7 @@ public final class InternalMafiaLogParserDialog extends JDialog {
 
     private final JSpinner numberToParseSpinner;
 
-    private LogOutputFormat logOutputFormat = LogOutputFormat.TEXT_LOG;
+    private EnumSet<LogOutputFormat> logOutputFormats = EnumSet.of(LogOutputFormat.TEXT_LOG);
 
     InternalMafiaLogParserDialog(
             final JFrame owner) {
@@ -264,11 +265,11 @@ public final class InternalMafiaLogParserDialog extends JDialog {
                     final ActionEvent e) {
 
                 if (htmlButton.isSelected()) {
-                    logOutputFormat = LogOutputFormat.HTML_LOG;
+                    logOutputFormats = EnumSet.of(LogOutputFormat.HTML_LOG);
                 } else if (bbcodeButton.isSelected()) {
-                    logOutputFormat = LogOutputFormat.BBCODE_LOG;
+                    logOutputFormats = EnumSet.of(LogOutputFormat.BBCODE_LOG);
                 } else {
-                    logOutputFormat = LogOutputFormat.TEXT_LOG;
+                    logOutputFormats = EnumSet.of(LogOutputFormat.TEXT_LOG);
                 }
             }
         };
@@ -280,7 +281,7 @@ public final class InternalMafiaLogParserDialog extends JDialog {
             public void actionPerformed(
                     final ActionEvent e) {
 
-                logOutputFormat = LogOutputFormat.XML_LOG;
+                logOutputFormats = EnumSet.of(LogOutputFormat.XML_LOG);
             }
         });
 
@@ -329,7 +330,7 @@ public final class InternalMafiaLogParserDialog extends JDialog {
                     final int logToParse = ((Integer) numberToParseSpinner.getModel().getValue())
                             .intValue();
                     final List<Pair<String, Encounter>> errorFileList = LogsProcessor
-                            .createParsedLogs(mafiaLogs, parsedLogsSavingDirectory, logOutputFormat,
+                            .createParsedLogs(mafiaLogs, parsedLogsSavingDirectory, logOutputFormats,
                                     logToParse > 0 ? logToParse : Integer.MAX_VALUE);
 
                     EventQueue.invokeLater(new Runnable() {
