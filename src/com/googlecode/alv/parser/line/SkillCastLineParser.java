@@ -30,7 +30,6 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.Skill;
-import com.googlecode.alv.logdata.turn.Encounter;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.Turn;
 import com.googlecode.alv.parser.UsefulPatterns;
@@ -121,10 +120,12 @@ public final class SkillCastLineParser extends AbstractLineParser
                 Counter counter = cu.getVar1();
                 String use = cu.getVar2();
                 // Need to get opponent if the cast involves throwing of offering Latte
-                if (counter == Counter.LATTE_THROW || counter == Counter.LATTE_OFFER ) {
-                    Object[] encounters = st.getEncounters().toArray();
-                    Encounter lastEncounter = (Encounter) encounters[encounters.length - 1];
-                    use = lastEncounter.getEncounterName();
+                if (counter == Counter.LATTE_THROW || counter == Counter.LATTE_OFFER 
+                        || counter == Counter.DOCTOR_BAG_HAMMER || counter == Counter.DOCTOR_BAG_OTOSCOPE
+                        || counter == Counter.DOCTOR_BAG_XRAY) {
+                    use = st.toEncounter().getEncounterName();
+                } else if (counter == Counter.LECTURE) {
+                    use = use + " to " + st.toEncounter().getEncounterName();
                 }
                 logData.addLimitedUse(cu.getVar1(), use);
             }

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
@@ -331,10 +332,10 @@ public final class LogsProcessor {
     public static List<Pair<String, Encounter>> createParsedLogs(
             final File[] mafiaLogs,
             final File savingDestDir,
-            final LogOutputFormat logFormat)
+            final EnumSet<LogOutputFormat> logFormats)
             throws IOException {
 
-        return createParsedLogs(mafiaLogs, savingDestDir, logFormat, Integer.MAX_VALUE);
+        return createParsedLogs(mafiaLogs, savingDestDir, logFormats, Integer.MAX_VALUE);
     }
 
     /**
@@ -372,7 +373,7 @@ public final class LogsProcessor {
     public static List<Pair<String, Encounter>> createParsedLogs(
             final File[] mafiaLogs,
             final File savingDestDir,
-            final LogOutputFormat logFormat,
+            final EnumSet<LogOutputFormat> logFormats,
             final int logsToParse)
             throws IOException {
 
@@ -399,7 +400,7 @@ public final class LogsProcessor {
                 .newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4);
 
         int logsLeftToParse = logsToParse;
-        for (final File f : condensedMafiaLogs) {
+        for (final File condensedLog : condensedMafiaLogs) {
             if (logsLeftToParse <= 0) {
                 break;
             } else {
@@ -410,27 +411,37 @@ public final class LogsProcessor {
                 @Override
                 public void run() {
 
-                    final MafiaLogParser parser = new MafiaLogParser(f,
+                    final MafiaLogParser parser = new MafiaLogParser(condensedLog,
                             Settings.getBoolean("Include mafia log notes"));
-
+                    LogOutputFormat format = null;
+                    
                     try {
                         parser.parse();
 
-                        final File newLogFile = createNewLog(f, savingDestDir, logFormat);
-                        System.out.println("Writing " + newLogFile.getAbsolutePath() + "...");
-                        final LogDataHolder logData = parser.getLogData();
-                        if (logFormat == LogOutputFormat.XML_LOG) {
-                            XMLLogCreator.createXMLLog(logData, savingDestDir);
-                        } else {
-                            TextLogCreator.saveTextualLogToFile(logData, newLogFile, logFormat);
+                        for (LogOutputFormat logFormat : logFormats) {
+                            format = logFormat;
+                            final File newLogFile = createNewLog(condensedLog, savingDestDir, logFormat);
+                            System.out.println("Writing " + newLogFile.getAbsolutePath() + "...");
+                            final LogDataHolder logData = parser.getLogData();
+                            if (logFormat == LogOutputFormat.XML_LOG) {
+                                XMLLogCreator.createXMLLog(logData, savingDestDir);
+                            } else {
+                                TextLogCreator.saveTextualLogToFile(logData, newLogFile, logFormat);
+                            }
                         }
                     } catch (final Exception e) {
                         // Add the erroneous log to the error file list.
-                        errorFileList.add(Pair.of(parsedLogName(f.getName(), logFormat),
-                                (Encounter) parser.getLogData().getLastTurnSpent()));
+                        if (format == null) {
+                            // If here, we haven't started writing parsed logs yet
+                            errorFileList.add(Pair.of(condensedLog.getName(),
+                                    (Encounter) parser.getLogData().getLastTurnSpent()));
+                        } else {
+                            errorFileList.add(Pair.of(parsedLogName(condensedLog.getName(), format),
+                                    (Encounter) parser.getLogData().getLastTurnSpent()));
+                        }
                         // Print stack trace and the file name of the file in
                         // which the error happened.
-                        System.err.println(f.getName());
+                        System.err.println(condensedLog.getName());
                         e.printStackTrace();
                     }
                 }

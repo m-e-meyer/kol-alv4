@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.Pair;
 
@@ -38,7 +39,14 @@ public class MafiaTookChoiceLineParser extends AbstractLineParser
         tookChoiceMatcher.reset(line).find();
         String choice = tookChoiceMatcher.group(1);
         Pair<Counter, String> cu = Counter.LIMITED_USE_MAP.get(choice);
-        logData.addLimitedUse(cu.getVar1(), cu.getVar2());
+        Counter counter = cu.getVar1();
+        String use = cu.getVar2();
+        // If using the Force, find out on whom
+        SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
+        if (counter == Counter.SABER_USE_FORCE) {
+            use = use + ", " + st.toEncounter().getEncounterName();
+        }
+        logData.addLimitedUse(counter, use);
     }
 
 }
