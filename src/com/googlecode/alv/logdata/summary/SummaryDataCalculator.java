@@ -451,6 +451,9 @@ final class SummaryDataCalculator
             case ACCORDION_THIEF:
                 stats = new Statgain(1, 4, 9);
                 break;
+            case PLUMBER:
+                stats = new Statgain(5, 5, 5);
+                break;
             default:
                 stats = new Statgain(4, 4, 4);  // I really don't know about the special classes
                 break;
