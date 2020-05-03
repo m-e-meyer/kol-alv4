@@ -312,7 +312,7 @@ public final class LogsProcessor {
     }
 
     /**
-     * @see #createParsedLogs(File[], File, LogOutputFormat, int)
+     * @see #createParsedLogs(File[], File, EnumSet, int)
      *
      *      The number of logs to parse defaults to the maximum possible.
      *
@@ -320,7 +320,7 @@ public final class LogsProcessor {
      *                      ascension logs.
      * @param savingDestDir The directory inside which the parsed ascension logs
      *                      should be saved in.
-     * @param logFormat     The output format of the parsed logs.
+     * @param logFormats    The output formats in which to print the parsed logs.
      * @return A list containing pairs with filenames and turns of condensed mafia
      *         log files that were attempted to be parsed, but had an exception
      *         thrown during the parsing process. The included turn the turn after
@@ -353,7 +353,7 @@ public final class LogsProcessor {
      *                      ascension logs.
      * @param savingDestDir The directory inside which the parsed ascension logs
      *                      should be saved in.
-     * @param logFormat     The output format of the parsed logs.
+     * @param logFormats    The output format in which to print the parsed logs.
      * @param logsToParse   The last n ascensions that should be parsed. If n is not
      *                      given, then all ascensions should be parsed.
      * @return A list containing pairs with filenames and turns of condensed mafia

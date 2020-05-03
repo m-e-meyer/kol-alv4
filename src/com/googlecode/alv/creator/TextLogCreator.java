@@ -567,140 +567,6 @@ public class TextLogCreator {
                 nextDay = newDayChangeData.getVar2();
             }
             printTurnIntervalContents(ti, currentDay.getDayNumber());
-/*
-            if (!nextDay.equals(NO_DAY_CHANGE) && ti.getEndTurn() >= nextDay.getTurnNumber()) {
-                if (ti.getEndTurn() == nextDay.getTurnNumber()) {
-                    printTurnIntervalContents(ti, currentDay.getDayNumber());
-
-                    // Peek at next interval to make sure it doesn't contain any current day turns
-                    if (tiIndex + 1 < turnIntervals.size()) {
-                        final TurnInterval next = turnIntervals.get(tiIndex + 1);
-                        boolean hasOneOnCurrentDay = false;
-                        for (final SingleTurn st : next.getTurns()) {
-                            if (st.getDayNumber() == currentDay.getDayNumber()) {
-                                hasOneOnCurrentDay = true;
-                            }
-                        }
-
-                        if (hasOneOnCurrentDay) {
-                            continue;
-                        }
-                    }
-
-                    final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                            ti.getEndTurn(), currentDay, nextDay, dayChangeIter);
-                    currentDay = newDayChangeData.getVar1();
-                    nextDay = newDayChangeData.getVar2();
-
-                    // Consumables usage or pulls that happened nominally on the
-                    // last turn before the day change, but were actually done
-                    // on the next day.
-                    printCurrentConsumables(ti.getConsumablesUsed(), currentDay.getDayNumber());
-                    printCurrentPulls(currentDay.getDayNumber(), ti.getEndTurn());
-                } else if (ti.getStartTurn() < nextDay.getTurnNumber()) {
-                    SingleTurn dayChangeTurn = null;
-                    for (final SingleTurn st : ti.getTurns()) {
-                        if (st.getTurnNumber() > nextDay.getTurnNumber()) {
-                            dayChangeTurn = st;
-                            break;
-                        }
-                    }
-
-                    final TurnInterval turnsBeforeDayChange = new DetailedTurnInterval(
-                            ti.getTurns().headSet(dayChangeTurn), dayChangeTurn.getAreaName());
-                    final TurnInterval turnsAfterDayChange = new DetailedTurnInterval(
-                            ti.getTurns().tailSet(dayChangeTurn), dayChangeTurn.getAreaName());
-
-                    printTurnIntervalContents(turnsBeforeDayChange, currentDay.getDayNumber());
-
-                    final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                            ti.getEndTurn(), currentDay, nextDay, dayChangeIter);
-                    currentDay = newDayChangeData.getVar1();
-                    nextDay = newDayChangeData.getVar2();
-
-                    // Consumables usage or pulls that happened nominally on the
-                    // last turn before the day change, but were actually done
-                    // on the next day.
-                    printCurrentConsumables(turnsBeforeDayChange.getConsumablesUsed(),
-                            currentDay.getDayNumber());
-                    printCurrentPulls(currentDay.getDayNumber(), turnsBeforeDayChange.getEndTurn());
-
-                    printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
-                } else if (ti.getStartTurn() >= nextDay.getTurnNumber()) {
-                    // Check to see if a day change occurs within block
-                    SingleTurn dayChangeTurn = null;
-                    for (final SingleTurn st : ti.getTurns()) {
-                        if (st.getDayNumber() == nextDay.getDayNumber()) {
-                            dayChangeTurn = st;
-                            break;
-                        }
-                    }
-
-                    if (dayChangeTurn == null) {
-                        // No Day change occurred
-                        printTurnIntervalContents(ti, currentDay.getDayNumber());
-
-                        // Peek at next interval to make sure it doesn't contain any current day
-                        // turns
-                        if (tiIndex + 1 < turnIntervals.size()) {
-                            final TurnInterval next = turnIntervals.get(tiIndex + 1);
-                            boolean hasOneOnCurrentDay = false;
-                            for (final SingleTurn st : next.getTurns()) {
-                                if (st.getDayNumber() == currentDay.getDayNumber()) {
-                                    hasOneOnCurrentDay = true;
-                                }
-                            }
-
-                            if (hasOneOnCurrentDay) {
-                                continue;
-                            }
-                        }
-
-                        final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                                ti.getEndTurn(), currentDay, nextDay, dayChangeIter);
-                        currentDay = newDayChangeData.getVar1();
-                        nextDay = newDayChangeData.getVar2();
-
-                        // Consumables usage or pulls that happened nominally on the
-                        // last turn before the day change, but were actually done
-                        // on the next day.
-                        printCurrentConsumables(ti.getConsumablesUsed(), currentDay.getDayNumber());
-                        printCurrentPulls(currentDay.getDayNumber(), ti.getEndTurn());
-                    } else {
-                        final TurnInterval turnsBeforeDayChange = new DetailedTurnInterval(
-                                ti.getTurns().headSet(dayChangeTurn), dayChangeTurn.getAreaName());
-                        final TurnInterval turnsAfterDayChange = new DetailedTurnInterval(
-                                ti.getTurns().tailSet(dayChangeTurn), dayChangeTurn.getAreaName());
-
-                        printTurnIntervalContents(turnsBeforeDayChange, currentDay.getDayNumber());
-
-                        final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                                ti.getEndTurn(), currentDay, nextDay, dayChangeIter);
-                        currentDay = newDayChangeData.getVar1();
-                        nextDay = newDayChangeData.getVar2();
-
-                        // Consumables usage or pulls that happened nominally on the
-                        // last turn before the day change, but were actually done
-                        // on the next day.
-                        printCurrentConsumables(turnsBeforeDayChange.getConsumablesUsed(),
-                                currentDay.getDayNumber());
-                        printCurrentPulls(currentDay.getDayNumber(),
-                                turnsBeforeDayChange.getEndTurn());
-
-                        printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
-                    }
-                } else {
-                    final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                            ti.getEndTurn(), currentDay, nextDay, dayChangeIter);
-                    currentDay = newDayChangeData.getVar1();
-                    nextDay = newDayChangeData.getVar2();
-
-                    printTurnIntervalContents(ti, currentDay.getDayNumber());
-                }
-            } else {
-                printTurnIntervalContents(ti, currentDay.getDayNumber());
-            }
-*/
         }
 
         // Log daily ka at end of run
@@ -764,76 +630,6 @@ public class TextLogCreator {
                 nextDay = newDayChangeData.getVar2();
             }
             printTurnIntervalContents(ti, currentDay.getDayNumber());
-
-            /*
-            // If the current turn interval's end turn spans a day boundary
-            if (!nextDay.equals(NO_DAY_CHANGE) && ti.getEndTurn() >= nextDay.getTurnNumber()) {
-                // If the current turn interval ends on a day boundary
-                if (ti.getEndTurn() == nextDay.getTurnNumber()) {
-                    printTurnIntervalContents(ti, currentDay.getDayNumber());
-
-                    final int currentStringLenght = log.length();
-                    final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                            ti.getEndTurn(), currentDay, nextDay, dayChangeIter);
-                    currentDay = newDayChangeData.getVar1();
-                    nextDay = newDayChangeData.getVar2();
-                    log.delete(currentStringLenght, log.length());
-
-                    // Consumables usage or pulls that happened nominally on the
-                    // last turn before the day change, but were actually done
-                    // on the next day.
-                    printCurrentConsumables(ti.getConsumablesUsed(), currentDay.getDayNumber());
-                    printCurrentPulls(currentDay.getDayNumber(), ti.getEndTurn());
-                } else if (ti.getStartTurn() < nextDay.getTurnNumber()) {
-                    // Validate that start of the interval is in the previous day
-                    // Split the interval into two pieces one for each day.
-                    // This handles adventuring in the same area at the end of one day
-                    // and the start of the next.
-                    SingleTurn dayChangeTurn = null;
-                    for (final SingleTurn st : ti.getTurns()) {
-                        if (st.getTurnNumber() > nextDay.getTurnNumber()) {
-                            dayChangeTurn = st;
-                            break;
-                        }
-                    }
-
-                    final TurnInterval turnsBeforeDayChange = new DetailedTurnInterval(
-                            ti.getTurns().headSet(dayChangeTurn), dayChangeTurn.getAreaName());
-                    final TurnInterval turnsAfterDayChange = new DetailedTurnInterval(
-                            ti.getTurns().tailSet(dayChangeTurn), dayChangeTurn.getAreaName());
-
-                    printTurnIntervalContents(turnsBeforeDayChange, currentDay.getDayNumber());
-
-                    final int currentStringLenght = log.length();
-                    final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                            ti.getEndTurn(), currentDay, nextDay, dayChangeIter);
-                    currentDay = newDayChangeData.getVar1();
-                    nextDay = newDayChangeData.getVar2();
-                    log.delete(currentStringLenght, log.length());
-
-                    // Consumables usage or pulls that happened nominally on the
-                    // last turn before the day change, but were actually done
-                    // on the next day.
-                    printCurrentConsumables(turnsBeforeDayChange.getConsumablesUsed(),
-                            currentDay.getDayNumber());
-                    printCurrentPulls(currentDay.getDayNumber(), turnsBeforeDayChange.getEndTurn());
-                    log.append(NEW_LINE);
-                    printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
-                } else {
-                    // New turn interval area at the start of the next day
-                    final int currentStringLenght = log.length();
-                    final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                            ti.getEndTurn(), currentDay, nextDay, dayChangeIter);
-                    currentDay = newDayChangeData.getVar1();
-                    nextDay = newDayChangeData.getVar2();
-                    log.delete(currentStringLenght, log.length());
-
-                    printTurnIntervalContents(ti, currentDay.getDayNumber());
-                }
-            } else {
-                printTurnIntervalContents(ti, currentDay.getDayNumber());
-            }
-            */
 
             turnRundown.add(log.toString());
             log.delete(0, log.length());
@@ -1093,11 +889,6 @@ public class TextLogCreator {
             if (c.getDayNumberOfUsage() == currentDayNumber) {
                 if (c.getAdventureGain() > 0 || !c.getStatGain().isAllStatsZero()
                         || UsefulPatterns.SPECIAL_CONSUMABLES.contains(c.getName())) {
-                    // Bastille Battalion is a special case - Don't print it, it's already
-                    // in the Limited Use section
-                    if (c.getName().equalsIgnoreCase("bastille battalion control rig")) {
-                        continue;
-                    }
 
                     printLineBreak();
                     write(CONSUMABLE_PREFIX);
@@ -1136,17 +927,6 @@ public class TextLogCreator {
     }
 
     /**
-     * Print the pizza events for the current turn interval
-     * 
-     * @param logData Data repository for the current parsed log
-     */
-    protected void printCurrentPizzaEvents(
-            Collection<PizzaEvent> pizzaEvents, int currentDayNumber) {
-        
-        System.out.println("" + pizzaEvents.size() + " pizza events");
-    }
-    
-/**
      * Prints all pulls from the given day up to the given turn number.
      *
      * @param currentDayNumber  Number of the day up to which to print pulls.

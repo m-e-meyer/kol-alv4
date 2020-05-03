@@ -545,8 +545,6 @@ public final class LogDataHolder {
     /**
      * Adds a use of a daily-limited item to the list of uses.
      *
-     * @param day     Day number of th euse event
-     * @param turn    Turn number of the use event
      * @param counter Use counter applicable to the event
      * @param subUse  String denoting the use decrementing the counter
      */
@@ -558,10 +556,9 @@ public final class LogDataHolder {
     }
 
     /**
-     * Adds a use of a daily-limited item to the list of uses.
+     * Adds a use of a daily-limited item to the list of uses.  The day and turn
+     * numbers are taken from the last turn spent.
      *
-     * @param day      Day number of the use event
-     * @param turn     Turn number of the use event
      * @param counter  Use counter applicable to the event
      * @param subUse   String denoting the use decrementing the counter
      * @param statgain Statgain for stats, if any, accrued by using this item
