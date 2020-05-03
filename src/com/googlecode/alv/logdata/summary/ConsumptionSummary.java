@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.googlecode.alv.logdata.LimitedUse;
 import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.turn.action.DayChange;
@@ -49,17 +50,23 @@ public final class ConsumptionSummary
      * @param consumables
      *            A collection containing all the consumables used during an
      *            ascension.
+     * @param limitedUses Collection containing all limited use events during
+     *      an ascension. 
      * @param dayChanges
      *            A collection containing all day changes of an ascension.
      */
     ConsumptionSummary(final Collection<Consumable> consumables,
-                       final Collection<DayChange> dayChanges) 
+            final Collection<LimitedUse> limitedUses,
+            final Collection<DayChange> dayChanges) 
     {
         for (final DayChange dc : dayChanges) {
             final ConsumptionDayStats dayStats = new ConsumptionDayStats(dc.getDayNumber());
             for (final Consumable c : consumables)
                 if (c.getDayNumberOfUsage() == dc.getDayNumber())
                     dayStats.addConsumable(c);
+            for (final LimitedUse use : limitedUses)
+                if (use.getDay() == dc.getDayNumber())
+                    dayStats.addLimitedUse(use);
 
             dayStatistics.add(dayStats);
         }
@@ -225,6 +232,11 @@ public final class ConsumptionSummary
                     totalTurnsFromOther += c.getAdventureGain();
                     usedConsumablesStatgains = usedConsumablesStatgains.plus(c.getStatGain());
             }
+        }
+        
+        private void addLimitedUse(final LimitedUse use) {
+            totalConsumablesStatgains = totalConsumablesStatgains.plus(use.getStatgain());
+            usedConsumablesStatgains = usedConsumablesStatgains.plus(use.getStatgain());
         }
 
         /**

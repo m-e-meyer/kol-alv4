@@ -6,8 +6,6 @@ import java.util.regex.Pattern;
 
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.Statgain;
-import com.googlecode.alv.logdata.consumables.Consumable;
-import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.parser.line.ItemAcquisitionLineParser;
 import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.StatClass;
@@ -94,18 +92,6 @@ public class BastilleBlockParser implements LogBlockParser
             }
         }
         String settings = barbican + " " + drawbridge + " " + murderhole;
-        SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-        // To get these stats to count officially, we need to add them to the turn as an
-        // "other" consumable.  (There's probably a better way, but I guess there are still
-        // parts of this code I have to learn about.)
-        final int currentTurn = st.getTurnNumber();
-        final int currentDay = logData.getCurrentDayNumber();
-        final Consumable tmpCon 
-            = Consumable.newOtherConsumable("Bastille Battalion control rig", 0, 1, currentTurn);
-        tmpCon.setDayNumberOfUsage(currentDay);
-        tmpCon.setStatGain(statgain);
-        st.addConsumableUsed(tmpCon);
-        // Now we can add the limited use to the LogDataHolder.
         logData.addLimitedUse(Counter.BASTILLE, 
                               settings,
                               statgain);
