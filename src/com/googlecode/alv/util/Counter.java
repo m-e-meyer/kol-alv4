@@ -54,6 +54,7 @@ public enum Counter
     DOCTOR_BAG_XRAY("Doctor Bag/X-ray", 3),
     FORTUNE_TELLER("Fortune Teller", 1),
     GAZE("Gaze at the Stars", 4),
+    GOD_LOBSTER("God Lobster", 3),
     LATTE_GULP("Latte/Gulp", 4),
     LATTE_OFFER("Latte/Offer", 4),
     LATTE_THROW("Latte/Throw", 4),
@@ -177,6 +178,7 @@ public enum Counter
                         Pair.of(Counter.CLIP_ART, "")),
                 Pair.of("lecture on mass", Pair.of(Counter.LECTURE, "Mass")),
                 Pair.of("lecture on relativity", Pair.of(Counter.LECTURE, "Relativity")),
-                Pair.of("lecture on velocity", Pair.of(Counter.LECTURE, "Velocity"))
+                Pair.of("lecture on velocity", Pair.of(Counter.LECTURE, "Velocity")),
+                Pair.of("the god lobster", Pair.of(Counter.GOD_LOBSTER, ""))
                 );
 }

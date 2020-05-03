@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.logdata.LogDataHolder;
 import com.googlecode.alv.logdata.MeatGain;
+import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.LogDataHolder.AscensionPath;
 import com.googlecode.alv.logdata.turn.SingleTurn;
 import com.googlecode.alv.logdata.turn.TurnVersion;
@@ -68,6 +69,7 @@ import com.googlecode.alv.util.Maps;
 import com.googlecode.alv.util.Sets;
 import com.googlecode.alv.util.Stack;
 import com.googlecode.alv.util.Constants;
+import com.googlecode.alv.util.Counter;
 
 /**
  * A parser for the turn spent notation in mafia logs.
@@ -314,6 +316,11 @@ public final class EncounterBlockParser implements LogBlockParser
             // Add the turn to the given LogDataHolder instance.
             logData.addTurnSpent(turn);
 
+        // If fighting a God Lobster, record this limited-use event
+        if (turn.getEncounterName().equalsIgnoreCase("the god lobster")) {
+            logData.addLimitedUse(Counter.GOD_LOBSTER, "", Statgain.NO_STATS);
+        }
+        
         parseAllLines(block, logData);
 
         lostCombatHandling(block, turn, logData);
