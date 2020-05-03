@@ -300,7 +300,7 @@ public final class EncounterBlockParser implements LogBlockParser
             // separately.
             if (isCraftingTurn || OTHER_ENCOUNTER_AREAS_SET.contains(areaName)) {
                 turn.setTurnVersion(TurnVersion.OTHER);
-                // TODO - Refine when experiment over
+                // TODO - Make sure turn is really free
                 turn.setFreeTurn(true);
             } else {
                 turn.setTurnVersion(TurnVersion.NONCOMBAT);
