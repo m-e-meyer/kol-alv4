@@ -177,6 +177,8 @@ final class SummaryDataCalculator
             throw new NullPointerException("Log data holder must not be null.");
 
         final List<Consumable> consumables = Lists.newArrayList(100);
+        
+        final List<LimitedUse> limitedUses = Lists.newArrayList(100);
 
         int totalFreeRunawaysTries = 0;
         int successfulFreeRunaways = 0;
@@ -195,6 +197,11 @@ final class SummaryDataCalculator
                 consumablesUsed.addElement(tmp);
             }
             consumables.addAll(ti.getConsumablesUsed());
+            
+            for (final LimitedUse use : ti.getLimitedUses()) {
+                totalStatgains = totalStatgains.plus(use.getStatgain());
+            }
+            limitedUses.addAll(ti.getLimitedUses());
 
             // Item summary
             for (final Item i : ti.getDroppedItems())
@@ -343,7 +350,7 @@ final class SummaryDataCalculator
         this.totalTurnsOther = totalTurnsOther;
 
         // Consumption summary
-        consumptionSummary = new ConsumptionSummary(consumables, logData.getDayChanges());
+        consumptionSummary = new ConsumptionSummary(consumables, limitedUses, logData.getDayChanges());
         final int tempRolloverTurns = logData.getLastTurnSpent().getTurnNumber()
                                       - consumptionSummary.getTotalTurnsFromFood()
                                       - consumptionSummary.getTotalTurnsFromBooze()
@@ -465,10 +472,8 @@ final class SummaryDataCalculator
         for (final TurnInterval ti : logData.getTurnIntervalsSpent())
             for (final SingleTurn st : ti.getTurns()) {
                 // Add stats to the stat counter.
-                stats = stats.plus(st.getStatGain());
-                for (final Consumable c : st.getConsumablesUsed())
-                    stats = stats.plus(c.getStatGain());
-
+                stats = stats.plus(st.getTotalStatGain());
+                
                 if (currentPlayerSnapshot != null
                     && currentPlayerSnapshot.getTurnNumber() <= st.getTurnNumber()) {
                     final int playerMus = currentPlayerSnapshot.getMuscleStats()

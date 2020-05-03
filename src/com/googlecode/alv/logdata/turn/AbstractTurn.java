@@ -332,6 +332,10 @@ public abstract class AbstractTurn implements Turn {
         for (final Consumable c : consumablesUsed.getElements()) {
             totalStatgain = totalStatgain.plus(c.getStatGain());
         }
+        // One limited use, the Bastille, has stat gains too
+        for (final LimitedUse use : limitedUses) {
+            totalStatgain = totalStatgain.plus(use.getStatgain());
+        }
 
         return totalStatgain;
     }

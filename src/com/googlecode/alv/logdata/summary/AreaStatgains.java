@@ -26,6 +26,7 @@ package com.googlecode.alv.logdata.summary;
 
 import java.util.*;
 
+import com.googlecode.alv.logdata.LimitedUse;
 import com.googlecode.alv.logdata.Statgain;
 import com.googlecode.alv.logdata.consumables.Consumable;
 import com.googlecode.alv.logdata.turn.TurnInterval;
@@ -106,6 +107,7 @@ public final class AreaStatgains
         final Set<String> areas = Sets.newHashSet(initialHashCapacity);
         final Map<String, Statgain> areaStatgains = Maps.newHashMap(initialHashCapacity);
         Statgain consumablesStatgain = Statgain.NO_STATS;
+        Statgain limitedUsesStatgain = Statgain.NO_STATS;
 
         // Count the statgains.
         for (final TurnInterval ti : turns) {
@@ -122,6 +124,11 @@ public final class AreaStatgains
             // Add consumable statgains.
             for (final Consumable c : ti.getConsumablesUsed())
                 consumablesStatgain = consumablesStatgain.plus(c.getStatGain());
+            
+            // Add limited-use item stat gains
+            for (final LimitedUse use : ti.getLimitedUses()) {
+                limitedUsesStatgain = limitedUsesStatgain.plus(use.getStatgain());
+            }
         }
 
         // Create area statgain list.
@@ -131,6 +138,9 @@ public final class AreaStatgains
 
         // Add consumable statgains as its own area.
         areaStatgainsList.add(new AreaStatgains("From consumables", consumablesStatgain));
+        
+        // Add limited use statgains as its own area.
+        areaStatgainsList.add(new AreaStatgains("From limited-use items", limitedUsesStatgain));
 
         // Sort the area statgains and return them.
         return Lists.sort(areaStatgainsList, comparator);

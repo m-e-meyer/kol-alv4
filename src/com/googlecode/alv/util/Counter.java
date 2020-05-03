@@ -27,7 +27,8 @@ package com.googlecode.alv.util;
 import java.util.Map;
 
 /**
- * 
+ * Enumeration of all the limited-use items tracked by ALV.  This is called 
+ * Counter because the uses are counted each day.
  *
  */
 public enum Counter
@@ -54,10 +55,12 @@ public enum Counter
     DOCTOR_BAG_XRAY("Doctor Bag/X-ray", 3),
     FORTUNE_TELLER("Fortune Teller", 1),
     GAZE("Gaze at the Stars", 4),
+    GOD_LOBSTER("God Lobster", 3),
     LATTE_GULP("Latte/Gulp", 4),
     LATTE_OFFER("Latte/Offer", 4),
     LATTE_THROW("Latte/Throw", 4),
     LECTURE("Lecture", 5),  // Really familiar-weight dependent
+    MUSHROOM("Mushroom Garden", 1),
     PILLKEEPER("Pillkeeper", 6),
     SABER_UPGRADE("Saber/Upgrade", 1),
     SABER_USE_FORCE("Saber/Use the Force", 5),
@@ -177,6 +180,9 @@ public enum Counter
                         Pair.of(Counter.CLIP_ART, "")),
                 Pair.of("lecture on mass", Pair.of(Counter.LECTURE, "Mass")),
                 Pair.of("lecture on relativity", Pair.of(Counter.LECTURE, "Relativity")),
-                Pair.of("lecture on velocity", Pair.of(Counter.LECTURE, "Velocity"))
+                Pair.of("lecture on velocity", Pair.of(Counter.LECTURE, "Velocity")),
+                Pair.of("the god lobster", Pair.of(Counter.GOD_LOBSTER, "")),
+                Pair.of("1410/1", Pair.of(Counter.MUSHROOM, "Fertilize")),
+                Pair.of("1410/2", Pair.of(Counter.MUSHROOM, "Pick"))
                 );
 }
