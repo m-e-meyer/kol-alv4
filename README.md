@@ -24,9 +24,9 @@ Running it without the `-p` option or its synonyms brings up a GUI, with all opt
 
 * `-p` or `-parse` or `--parse`: Generate the parsed logs for the specified ascensions and quit.
 
-The following format options are mutually exclusive, so specify only one, if any:
+The following format options are available.  They are not mutually exclusive.  If no format options are given, then only a plaintext parsed log (`--text`) will be generated:
 
-* `-text` or `--text`: Generate parsed logs in plaintext format.  This is the default.  
+* `-text` or `--text`: Generate parsed logs in plaintext format.  
 * `-xml` or `--xml`: Generate parsed logs in XML format.  
 * `-html` or `--html`: Generate parsed logs in HTML format.  
 * `-bbcode` or `--bbcode`: Generate parsed logs in BBcode format.  
@@ -43,6 +43,25 @@ ALV takes the following optional arguments:
 * `<mafia-log-directory>`: Specifies the directory from which to read the Mafia logs.  Defaults to the directory from which Mafia logs were read most recently.
 * `<parsed-log-directory>`: Specifies the directory to which to write the parsed logs.  Defaults to the directory to which parsed logs were written most recently.
 
-## Licensing and Contributors
+## Licensing
 
-TODO
+Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Contributors
+
+The current author wishes to acknowledge those who have gone before him in creating this software, and those whose software we use in this software:
+
+* VladimirPootin and QuantumNightmare, creators of the original AFH MafiaLog Parser. 
+* Phazic, from whom I forked this project.
+* The tireless developers of KoLMafia, without whose logs ALV would have nothing to do.
+* Flolle (#610092), the developer before Phazic, I think.
+* jfree.org, provider of JCommon and JFreeChart.
+* BEA Systems, creators of the StAX API.
+
+Thank you all!
