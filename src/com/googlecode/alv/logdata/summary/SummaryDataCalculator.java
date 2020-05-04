@@ -343,6 +343,7 @@ final class SummaryDataCalculator
                 totalMeatGain += ti.getMeat().encounterMeatGain;
             totalMeatGain += ti.getMeat().otherMeatGain;
             totalMeatSpent += ti.getMeat().meatSpent;
+
         }
         freeRunaways = new FreeRunaways(totalFreeRunawaysTries, successfulFreeRunaways);
         this.totalTurnsCombat = totalTurnsCombat;
@@ -379,15 +380,18 @@ final class SummaryDataCalculator
                 levels.add(ld);
 
         // Meat and MP gain per level summary
-        for (final TurnInterval ti : logData.getTurnIntervalsSpent())
+        for (final TurnInterval ti : logData.getTurnIntervalsSpent()) {
             for (final SingleTurn st : ti.getTurns()) {
                 final int currentLevel = logData.getCurrentLevel(st.getTurnNumber())
                                                 .getLevelNumber();
-                if (!st.getMeat().isMeatGainSpentZero())
+                if (!st.getMeat().isMeatGainSpentZero()) {
                     meatSummary.addLevelData(currentLevel, st.getMeat());
-                if (!st.getMPGain().isMPGainZero())
+                }
+                if (!st.getMPGain().isMPGainZero()) {
                     mpGainSummary.addLevelData(currentLevel, st.getMPGain());
+                }
             }
+        }
 
         // Quest turncount summary
         questTurncounts = new QuestTurncounts(logData.getTurnIntervalsSpent(),
