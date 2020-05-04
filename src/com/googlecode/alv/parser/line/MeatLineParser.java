@@ -38,10 +38,8 @@ import com.googlecode.alv.logdata.MeatGain;
  * {@code You gain _amount_ Meat}
  */
 public final class MeatLineParser extends AbstractLineParser {
-    // String lenght of "You gain " is 9.
-    private static final int GAIN_START_STRING_LENGHT = 9;
 
-    private static final Pattern MEAT_GAIN = Pattern.compile("^You gain \\d*,?\\d+ Meat");
+    private static final Pattern MEAT_GAIN = Pattern.compile("^You (gain|lose) (\\d*,?\\d+) Meat");
 
     private final Matcher meatGainMatcher = MEAT_GAIN.matcher("");
 
@@ -49,7 +47,7 @@ public final class MeatLineParser extends AbstractLineParser {
 
     /**
      * @param type
-     *            The mp gain type which decides to which kind of mp gain all
+     *            The meat gain type which decides to which kind of meat gain all
      *            parsed mp gains from this line parser will be added to.
      */
     public MeatLineParser(
@@ -63,16 +61,20 @@ public final class MeatLineParser extends AbstractLineParser {
     @Override
     protected void doParsing(
                              final String line, final LogDataHolder logData) {
-        final String informationPart = line.substring(GAIN_START_STRING_LENGHT);
-        final int whiteSpaceIndex = informationPart.indexOf(" ");
+        meatGainMatcher.reset(line).find();
+        final int amount = Integer.parseInt(meatGainMatcher.group(2).replace(",", ""));
 
-        final String amountString = informationPart.substring(0, whiteSpaceIndex);
-        final int amount = Integer.parseInt(amountString.replace(",", ""));
-
-        if (meatGainType == MeatGainType.ENCOUNTER)
-            logData.getLastTurnSpent().addMeat(new MeatGain(amount, 0, 0));
-        else
-            logData.getLastTurnSpent().addMeat(new MeatGain(0, amount, 0));
+        MeatGain meatgain; 
+        if (meatGainMatcher.group(1).equals("lose")) {
+            meatgain = new MeatGain(0, 0, amount);
+        } else if (meatGainType == MeatGainType.ENCOUNTER) {
+            meatgain = new MeatGain(amount, 0, 0);
+            //logData.getLastTurnSpent().addMeat(new MeatGain(amount, 0, 0));
+        } else {
+            meatgain = new MeatGain(0, amount, 0);
+            //logData.getLastTurnSpent().addMeat(new MeatGain(0, amount, 0));
+        }
+        logData.getLastTurnSpent().addMeat(meatgain);
     }
 
     /**
