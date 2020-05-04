@@ -557,7 +557,8 @@ public class TextLogCreator {
             // With the introduction of the Start of Day turn, TurnIntervals will no longer
             // cross day boundaries.  This makes determining when to not eday changes
             // MUCH easier.
-            int tiDay = ti.getTurns().last().getDayNumber();
+            List<SingleTurn> turns = ti.getTurns();
+            int tiDay = turns.get(turns.size()-1).getDayNumber();
             int dayNumber = currentDay.getDayNumber();
             if (tiDay > dayNumber) {
                 final Pair<DayChange, DayChange> newDayChangeData 
@@ -620,7 +621,8 @@ public class TextLogCreator {
             // With the introduction of the Start of Day turn, TurnIntervals will no longer
             // cross day boundaries.  This makes determining when to not eday changes
             // MUCH easier.
-            int tiDay = ti.getTurns().last().getDayNumber();
+            List<SingleTurn> turns = ti.getTurns();
+            int tiDay = turns.get(turns.size()-1).getDayNumber();
             int dayNumber = currentDay.getDayNumber();
             if (tiDay > dayNumber) {
                 final Pair<DayChange, DayChange> newDayChangeData 

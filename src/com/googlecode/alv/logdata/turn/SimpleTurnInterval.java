@@ -24,10 +24,10 @@
 
 package com.googlecode.alv.logdata.turn;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.List;
 
 /**
  * An implementation for a {@link TurnInterval}. It consists of a specified
@@ -45,7 +45,8 @@ import java.util.TreeSet;
  * Note: This class has a natural ordering that is inconsistent with equals.
  */
 public final class SimpleTurnInterval extends AbstractTurnInterval {
-    private static final SortedSet<SingleTurn> emptySet = Collections.unmodifiableSortedSet(new TreeSet<SingleTurn>());
+    private static final List<SingleTurn> emptyList 
+        = Collections.unmodifiableList(new ArrayList<SingleTurn>());
 
     private final int startTurn;
 
@@ -142,8 +143,8 @@ public final class SimpleTurnInterval extends AbstractTurnInterval {
      * 
      * @see TurnInterval
      */
-    public SortedSet<SingleTurn> getTurns() {
-        return emptySet;
+    public List<SingleTurn> getTurns() {
+        return emptyList;
     }
 
     @Override

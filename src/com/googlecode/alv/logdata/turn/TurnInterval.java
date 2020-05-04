@@ -25,7 +25,7 @@
 package com.googlecode.alv.logdata.turn;
 
 import java.util.Collection;
-import java.util.SortedSet;
+import java.util.List;
 
 import com.googlecode.alv.logdata.LogComment;
 
@@ -85,7 +85,7 @@ public interface TurnInterval extends Turn {
      * @return The single turns of this turn interval. Can be empty, if no turns
      *         have been set.
      */
-    public SortedSet<SingleTurn> getTurns();
+    public List<SingleTurn> getTurns();
 
     /**
      * @return The runaway data of this turn.
