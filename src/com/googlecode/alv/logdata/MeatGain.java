@@ -177,6 +177,11 @@ public final class MeatGain {
     }
 
     @Override
+    public String toString() {
+        return "[" + this.encounterMeatGain + "," + this.otherMeatGain + "," + this.meatSpent + "]";
+    }
+    
+    @Override
     public int hashCode() {
         int result = 852;
         result = 31 * result + encounterMeatGain;
