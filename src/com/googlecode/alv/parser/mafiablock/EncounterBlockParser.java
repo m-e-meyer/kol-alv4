@@ -184,8 +184,7 @@ public final class EncounterBlockParser implements LogBlockParser
     public void parseBlock(final List<String> block, final LogDataHolder logData) 
     {
         String turnSpentLine 
-            = block.get(0).startsWith("[") ? block.get(0)
-                                                                          : block.get(1);
+            = block.get(0).startsWith("[") ? block.get(0) : block.get(1);
         final SingleTurn turn;
         final int dayNumber = logData.getCurrentDayNumber();
 
