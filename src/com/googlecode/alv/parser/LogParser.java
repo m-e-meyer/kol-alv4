@@ -28,6 +28,7 @@ import java.io.IOException;
 
 import com.googlecode.alv.creator.TextLogCreator;
 import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.run.Run;
 
 /**
  * An interface for an ascension log parser.
@@ -53,6 +54,8 @@ public interface LogParser {
      */
     public LogDataHolder getLogData();
 
+    public Run getRun();
+    
     /**
      * @return True if the log data created by this parser is detailed enough to
      *         create a textual log from it with {@link TextLogCreator} class.

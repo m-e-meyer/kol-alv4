@@ -30,6 +30,7 @@ import java.util.List;
 
 import com.googlecode.alv.creator.TextLogCreator;
 import com.googlecode.alv.logdata.LogDataHolder;
+import com.googlecode.alv.run.Run;
 import com.googlecode.alv.util.Lists;
 
 /**
@@ -43,6 +44,8 @@ import com.googlecode.alv.util.Lists;
 public abstract class AbstractLogParser implements LogParser 
 {
     private final LogDataHolder logData;
+    
+    private final Run run = new Run(true);
 
     private final List<LineParser> lineParsers = Lists.newArrayList();
 
@@ -130,6 +133,8 @@ public abstract class AbstractLogParser implements LogParser
     {
         return logData;
     }
+    
+    public Run getRun() { return run; }
 
     /**
      * Calls through to {@link LogDataHolder#isDetailedLog()} in this

@@ -51,6 +51,7 @@ import com.googlecode.alv.logdata.turn.action.EquipmentChange;
 import com.googlecode.alv.logdata.turn.action.FamiliarChange;
 import com.googlecode.alv.logdata.turn.action.PlayerSnapshot;
 import com.googlecode.alv.logdata.turn.action.Pull;
+import com.googlecode.alv.run.Run;
 import com.googlecode.alv.util.CharacterClass;
 import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.DataNumberPair;
@@ -307,6 +308,9 @@ public final class LogDataHolder {
     private String logName;
 
     private LogSummaryData logSummary;
+    
+    // TODO - Remove when dome with reimplementation
+    private Run run;
 
     public LogDataHolder(
             final boolean isDetailedLog) {
@@ -333,8 +337,12 @@ public final class LogDataHolder {
         }
         penultimateTurn = first;
         lastTurn = first;
+        
+        run = new Run(isDetailedLog);
     }
 
+    public Run getRun() { return run; }
+    
     /**
      * @param dayChange The day change to add.
      */

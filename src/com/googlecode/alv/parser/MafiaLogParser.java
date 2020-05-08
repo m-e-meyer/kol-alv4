@@ -68,6 +68,7 @@ import com.googlecode.alv.parser.mafiablock.EncounterBlockParser;
 import com.googlecode.alv.parser.mafiablock.HybridDataBlockParser;
 import com.googlecode.alv.parser.mafiablock.PlayerSnapshotBlockParser;
 import com.googlecode.alv.parser.mafiablock.ServiceBlockParser;
+import com.googlecode.alv.run.Run;
 import com.googlecode.alv.util.Counter;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.Maps;
@@ -104,7 +105,7 @@ public final class MafiaLogParser implements LogParser
         = Pattern.compile("Encounter: (.*) *$").matcher("");
 
     private final LogDataHolder logData = new LogDataHolder(true);
-
+    
     private final File log;
 
     private final Stack<EquipmentChange> equipmentStack = Stack.newStack();
@@ -189,6 +190,7 @@ public final class MafiaLogParser implements LogParser
         }
         
         logData.handleParseFinished();
+        logData.getRun().dump();
 
         // Before creating the summary data, we first need to add MP
         // regeneration from equipment where applicable.
@@ -461,6 +463,10 @@ public final class MafiaLogParser implements LogParser
         return logData;
     }
 
+    public Run getRun() {
+        return logData.getRun();
+    }
+    
     /**
      * {@inheritDoc}
      */

@@ -100,6 +100,7 @@ public class ServiceBlockParser implements LogBlockParser
                                              familiarChange);
             turn.setTurnVersion(TurnVersion.OTHER);
             logData.addTurnSpent(turn);
+            logData.getRun().addTurn(turn.getDayNumber(), turn.getTurnNumber(), turn.getAreaName(), turn.getEncounterName());
             adventures --;
         }
         // Acquire item

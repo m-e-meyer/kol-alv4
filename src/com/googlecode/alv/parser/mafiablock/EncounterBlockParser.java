@@ -284,6 +284,7 @@ public final class EncounterBlockParser implements LogBlockParser
                             logData.getLastFamiliarChange());
                     tmp.setTurnVersion(TurnVersion.COMBAT);
                     logData.addTurnSpent(tmp);
+                    logData.getRun().addTurn(turnNumber, dayNumber, tmp.getAreaName(), tmp.getEncounterName());
                     turnNumber++;
                 }
             }
@@ -311,9 +312,11 @@ public final class EncounterBlockParser implements LogBlockParser
         // Check handling for special encounters. If the encounter is indeed
         // a special encounter, the specialEncounterHandling() method will
         // handle adding the turn to the LogDataHolder.
-        if (!specialEncounterHandling(turn, block, logData))
+        if (!specialEncounterHandling(turn, block, logData)) {
             // Add the turn to the given LogDataHolder instance.
             logData.addTurnSpent(turn);
+            logData.getRun().addTurn(turn.getDayNumber(), turn.getTurnNumber(), turn.getAreaName(), turn.getEncounterName());
+        }
 
         // If fighting a God Lobster, record this limited-use event
         if (turn.getEncounterName().equalsIgnoreCase("the god lobster")) {
@@ -421,6 +424,7 @@ public final class EncounterBlockParser implements LogBlockParser
             for (final SingleTurn st : shoreTrips) {
                 st.setTurnVersion(TurnVersion.OTHER);
                 logData.addTurnSpent(st);
+                logData.getRun().addTurn(st.getDayNumber(), st.getTurnNumber(), st.getAreaName(), st.getEncounterName());
             }
 
             return true;
@@ -447,7 +451,9 @@ public final class EncounterBlockParser implements LogBlockParser
                         logData.getLastFamiliarChange());
 
                 logData.addTurnSpent(turn);
+                logData.getRun().addTurn(turn.getDayNumber(), turn.getTurnNumber(), turn.getAreaName(), turn.getEncounterName());
                 logData.addTurnSpent(clownlord);
+                logData.getRun().addTurn(clownlord.getDayNumber(), clownlord.getTurnNumber(), clownlord.getAreaName(), clownlord.getEncounterName());
 
                 return true;
             }
@@ -457,6 +463,7 @@ public final class EncounterBlockParser implements LogBlockParser
 
             turn.setTurnVersion(TurnVersion.OTHER);
             logData.addTurnSpent(turn);
+            logData.getRun().addTurn(turn.getDayNumber(), turn.getTurnNumber(), turn.getAreaName(), turn.getEncounterName());
             for (int i = 1; i < 5; i++) {
                 final SingleTurn tmpTurn = new SingleTurn(turn.getAreaName(),
                         turn.getEncounterName(),
@@ -466,6 +473,7 @@ public final class EncounterBlockParser implements LogBlockParser
                         lastFamiliar);
                 tmpTurn.setTurnVersion(TurnVersion.OTHER);
                 logData.addTurnSpent(tmpTurn);
+                logData.getRun().addTurn(tmpTurn.getDayNumber(), tmpTurn.getTurnNumber(), tmpTurn.getAreaName(), tmpTurn.getEncounterName());
             }
 
             return true;

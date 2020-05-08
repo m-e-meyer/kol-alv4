@@ -301,8 +301,11 @@ public final class ConsumableBlockParser implements LogBlockParser {
         tmpTurn3.setTurnVersion(TurnVersion.OTHER);
 
         logData.addTurnSpent(tmpTurn1);
+        logData.getRun().addTurn(lastDayNumber, lastTurnNumber+1, COCKROACH_AREA_ENCOUNTER_NAME, COCKROACH_AREA_ENCOUNTER_NAME);
         logData.addTurnSpent(tmpTurn2);
+        logData.getRun().addTurn(lastDayNumber, lastTurnNumber+2, COCKROACH_AREA_ENCOUNTER_NAME, COCKROACH_AREA_ENCOUNTER_NAME);
         logData.addTurnSpent(tmpTurn3);
+        logData.getRun().addTurn(lastDayNumber, lastTurnNumber+3, COCKROACH_AREA_ENCOUNTER_NAME, COCKROACH_AREA_ENCOUNTER_NAME);
 
         // Parse lines of interest from cockroach path.
         for (final String line : block) {
